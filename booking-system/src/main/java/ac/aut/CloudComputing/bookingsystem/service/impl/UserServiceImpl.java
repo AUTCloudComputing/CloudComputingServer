@@ -2,61 +2,76 @@ package ac.aut.CloudComputing.bookingsystem.service.impl;
 
 import java.io.IOException;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import ac.aut.CloudComputing.bookingsystem.dto.UserLoginRequest;
-import ac.aut.CloudComputing.bookingsystem.dto.UserRegisterRequest;
+import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO;
+import ac.aut.CloudComputing.bookingsystem.dto.UserLoginDTO;
+import ac.aut.CloudComputing.bookingsystem.dto.UserRegisterDTO;
+import ac.aut.CloudComputing.bookingsystem.model.Order;
 import ac.aut.CloudComputing.bookingsystem.model.User;
 import ac.aut.CloudComputing.bookingsystem.repository.UserRepository;
 import ac.aut.CloudComputing.bookingsystem.service.S3Service;
 import ac.aut.CloudComputing.bookingsystem.service.UserService;
 
+
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+
+
 @Service
 public class UserServiceImpl implements UserService {
+ 
+    
 
-    private final UserRepository userRepository;
+    private final DynamoDBMapper dynamoDBMapper;
+    
     
     @Autowired
     S3Service s3Service;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(DynamoDBMapper dynamoDBMapper) {
+        this.dynamoDBMapper = dynamoDBMapper;
     }
   
 
     @Override
-    public User loginUser(UserLoginRequest request) {
-        // Implement user login logic
-		return null;
+    public boolean loginUser(UserLoginDTO dto) {
+
+
+    	Order order = dynamoDBMapper.load(Order.class, dto.getUserName()); 
+		return true;
     }
 
 
 	@Override
-	public User registerUser(UserRegisterRequest request) throws IOException { 
+	public UserRegisterDTO registerUser(UserRegisterDTO dto) throws IOException { 
 		
 		// Validate user data
-
+		 
         // Upload profile image to S3
-        String imageUrl = uploadProfileImage(request.getProfileImage());
+        String imageUrl =  s3Service.uploadFile(dto.getProfileImage());
 
         // Store user data in DynamoDB
-        storeUserDataInDynamoDB(request, imageUrl);
         
-		return null;
-	}
-	
-	 private String uploadProfileImage(MultipartFile profileImage) throws IOException {
 
-		 return s3Service.uploadFile(profileImage);
-	  }
+  	  	User user = new User();
+        BeanUtils.copyProperties(dto, user);
+        user.setProfileImageS3Key(imageUrl);
+        dynamoDBMapper.save(user);
+        return convertToDTO(user);
+         
+         
+	} 
 
-    private void storeUserDataInDynamoDB(UserRegisterRequest registrationRequest, String imageUrl) {
-    	
-    	
-        // Implement DynamoDB data storage logic here
+    private UserRegisterDTO convertToDTO(User user) {
+    	UserRegisterDTO dto = new UserRegisterDTO();
+        BeanUtils.copyProperties(user, dto);
+        return dto;
     }
  
 

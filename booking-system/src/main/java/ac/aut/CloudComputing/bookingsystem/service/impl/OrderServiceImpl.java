@@ -1,57 +1,79 @@
 package ac.aut.CloudComputing.bookingsystem.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ac.aut.CloudComputing.bookingsystem.repository.OrderRepository;
 import ac.aut.CloudComputing.bookingsystem.service.OrderService;
-import ac.aut.CloudComputing.bookingsystem.dto.OrderRequest;
+import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO;
 import ac.aut.CloudComputing.bookingsystem.model.Order;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 
 @Service
 public class OrderServiceImpl implements OrderService{
 
-    private final OrderRepository orderRepository;
+    private final DynamoDBMapper dynamoDBMapper;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrderServiceImpl(DynamoDBMapper dynamoDBMapper) {
+        this.dynamoDBMapper = dynamoDBMapper;
     }
- 
     
 
     @Override
-    public List<Order> getAllOrders() {
-        // Implement logic to get all orders
-		return null;
+    public List<OrderDTO> getAllOrders() {
+    	
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        List<Order> Orders = dynamoDBMapper.scan(Order.class, scanExpression);
+        return Orders.stream().map(this::convertToDTO).collect(Collectors.toList()); 
     }
 
     @Override
-    public Order getOrderById(String orderId) {
-        // Implement logic to get an order by ID
-		return null;
+    public OrderDTO getOrderById(String id) {
+    	Order order = dynamoDBMapper.load(Order.class, id);
+        return convertToDTO(order); 
     }
 
     @Override
-    public Order createOrder(OrderRequest request) {
-        // Implement logic to create an order
-		return null;
+    public OrderDTO createOrder(OrderDTO dto) {
+    	  Order Order = new Order();
+          BeanUtils.copyProperties(dto, Order);
+
+          dynamoDBMapper.save(Order);
+
+          return convertToDTO(Order);
+          
     }
 
     @Override
-    public Order updateOrder(String orderId, OrderRequest request) {
-        // Implement logic to update an order
-		return null;
+    public OrderDTO updateOrder(String id, OrderDTO dto) {
+    	  Order Order = dynamoDBMapper.load(Order.class, id);
+          BeanUtils.copyProperties(dto, Order);
+
+          dynamoDBMapper.save(Order);
+
+          return convertToDTO(Order);
     }
 
     @Override
-    public void deleteOrder(String orderId) {
-        // Implement logic to delete an order
+    public void deleteOrder(String id) {
+    	  Order Order = dynamoDBMapper.load(Order.class, id);
+          if (Order != null) {
+              dynamoDBMapper.delete(Order);
+          }
     }
 
 
+    private OrderDTO convertToDTO(Order Order) {
+        OrderDTO dto = new OrderDTO();
+        BeanUtils.copyProperties(Order, dto);
+        return dto;
+    }
  
 }
 

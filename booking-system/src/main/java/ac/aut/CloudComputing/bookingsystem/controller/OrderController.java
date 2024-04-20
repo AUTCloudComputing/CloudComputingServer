@@ -1,7 +1,7 @@
 package ac.aut.CloudComputing.bookingsystem.controller;
  
 
-import ac.aut.CloudComputing.bookingsystem.dto.OrderRequest;
+import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO;
 import ac.aut.CloudComputing.bookingsystem.model.Order;
 import ac.aut.CloudComputing.bookingsystem.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -21,20 +21,20 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+    	List<OrderDTO> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest orderRequest) {
-        Order order = orderService.createOrder(orderRequest);
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderRequest) {
+    	OrderDTO order = orderService.createOrder(orderRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
-    @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getOrderById(@PathVariable String orderId) {
-        Order order = orderService.getOrderById(orderId);
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable String orderId) {
+    	OrderDTO order = orderService.getOrderById(orderId);
         if (order != null) {
             return ResponseEntity.ok(order);
         } else {
@@ -42,9 +42,9 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/{orderId}")
-    public ResponseEntity<Order> updateOrder(@PathVariable String orderId, @RequestBody OrderRequest orderRequest) {
-        Order updatedOrder = orderService.updateOrder(orderId, orderRequest);
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable String orderId, @RequestBody OrderDTO orderRequest) {
+    	OrderDTO updatedOrder = orderService.updateOrder(orderId, orderRequest);
         if (updatedOrder != null) {
             return ResponseEntity.ok(updatedOrder);
         } else {
@@ -54,7 +54,7 @@ public class OrderController {
 
 
     
-    @DeleteMapping("/{orderId}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable String orderId) {
         orderService.deleteOrder(orderId);
         return ResponseEntity.noContent().build();

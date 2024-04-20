@@ -2,18 +2,17 @@ package ac.aut.CloudComputing.bookingsystem.service;
 
 import java.util.List;
 
-import ac.aut.CloudComputing.bookingsystem.dto.OrderRequest;
-import ac.aut.CloudComputing.bookingsystem.model.Order;
+import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO; 
 
 public interface  OrderService {
 
-	List<Order> getAllOrders();
+	List<OrderDTO> getAllOrders();
 	
-    Order getOrderById(String orderId);
+	OrderDTO getOrderById(String orderId);
     
-    Order createOrder(OrderRequest request);
+	OrderDTO createOrder(OrderDTO request);
     
-    Order updateOrder(String orderId, OrderRequest request);
+	OrderDTO updateOrder(String orderId, OrderDTO request);
     
     void deleteOrder(String orderId);
     
