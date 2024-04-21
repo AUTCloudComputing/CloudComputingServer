@@ -3,6 +3,7 @@ package ac.aut.CloudComputing.bookingsystem.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+@Schema(description = "The order")
 @Data
 public class OrderDTO {
 
