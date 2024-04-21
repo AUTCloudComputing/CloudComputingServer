@@ -1,7 +1,6 @@
 package ac.aut.CloudComputing.bookingsystem.controller;
 
-import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO;
-import ac.aut.CloudComputing.bookingsystem.model.Order;
+import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO; 
 import ac.aut.CloudComputing.bookingsystem.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
