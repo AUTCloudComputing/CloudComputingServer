@@ -17,7 +17,8 @@ public class UserRegisterDTO {
     @Schema(description = "Email address of the user", example = "john@example.com", required = true)
     private String email;
 
-    @Schema(description = "Profile image file", required = true)
-    private MultipartFile profileImage; // Use appropriate type for file upload
-
+	/*
+	 * @Schema(description = "Profile image file", required = true) private
+	 * MultipartFile profileImage; // Use appropriate type for file upload
+	 */
 }

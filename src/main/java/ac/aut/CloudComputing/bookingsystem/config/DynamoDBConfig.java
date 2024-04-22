@@ -5,14 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration; 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB; 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 @Configuration
 @EnableDynamoDBRepositories(basePackages = "ac.aut.CloudComputing.bookingsystem.repositories")
@@ -33,23 +35,26 @@ public class DynamoDBConfig {
 
 	@Autowired
 	private ApplicationContext context;
- 
-//	
-//	@Bean
-//	public DynamoDBMapper mapper() {
-//		return new DynamoDBMapper(amazonDynamoDB());
-//	}
-//	
-	
+/*
 	@Bean
-    public AmazonDynamoDB amazonDynamoDB() {
-        final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
-        return AmazonDynamoDBClientBuilder
-                .standard()
-                .withRegion(region)
-                .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
-                .build();
-    }
+	public AmazonDynamoDB amazonDynamoDB() {
+		AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(amazonAWSCredentials());
+		if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
+			amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
+		}
+		return amazonDynamoDB;
+	}
+	*/
+	
+	 @Bean
+	    public AmazonDynamoDB amazonDynamoDB() {
+	        final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
+	        return AmazonDynamoDBClientBuilder
+	                .standard()
+	                .withRegion(region)
+	                .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
+	                .build();
+	    }
 	 
 
 	@Bean
@@ -57,5 +62,10 @@ public class DynamoDBConfig {
 		return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
 	}
 
-	 
+	/*
+	@Bean(name = "mvcHandlerMappingIntrospectorCustom")
+	public HandlerMappingIntrospector mvcHandlerMappingIntrospectorCustom() {
+		return new HandlerMappingIntrospector(context);
+	}
+	*/
 }
