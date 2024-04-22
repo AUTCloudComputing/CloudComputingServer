@@ -9,12 +9,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ac.aut.CloudComputing.bookingsystem.dto.LoginResponse;
 import ac.aut.CloudComputing.bookingsystem.dto.UserDetailsDTO;
 import ac.aut.CloudComputing.bookingsystem.dto.UserLoginDTO;
 import ac.aut.CloudComputing.bookingsystem.dto.UserRegisterDTO;
 import ac.aut.CloudComputing.bookingsystem.mapper.UserMapper;
 import ac.aut.CloudComputing.bookingsystem.model.User;
 import ac.aut.CloudComputing.bookingsystem.repository.UserRepository;
+import ac.aut.CloudComputing.bookingsystem.service.JwtService;
 import ac.aut.CloudComputing.bookingsystem.service.S3Service;
 import ac.aut.CloudComputing.bookingsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,29 +30,40 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+ 	private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+ 
+    private final S3Service s3Service;
 
-    @Autowired
-    private S3Service s3Service;
  
     @Override
-    public UserDetailsDTO loginUser(UserLoginDTO dto) {
-    	 authenticationManager.authenticate(
-    	            new UsernamePasswordAuthenticationToken(
-    	                dto.getUserName(),
-    	                dto.getPassword()
-    	            )
-    	        );
-    	 
-    	 
-        User user = userRepository.findByUserName(dto.getUserName()).orElse(null);
-
-        return UserMapper.INSTANCE.userToUserDTO(user);
+    public LoginResponse loginUser(UserLoginDTO dto) {
+		 
+		
+		 authenticationManager.authenticate(
+		            new UsernamePasswordAuthenticationToken(
+		                dto.getUserName(),
+		                dto.getPassword()
+		            )
+		        );
+		 
+		 
+	    User user = userRepository.findByUserName(dto.getUserName()).orElse(null);
+	
+	    UserDetailsDTO dto2 = UserMapper.INSTANCE.userToUserDTO(user);
+	     
+	
+	    String jwtToken = jwtService.generateToken(dto2); 
+	    LoginResponse loginResponse = new LoginResponse();
+	    loginResponse.setToken(jwtToken);
+	    loginResponse.setExpiresIn(jwtService.getExpirationTime());
+	    
+	    return loginResponse;
     }
 
     @Override
-    public UserDetailsDTO registerUser(UserRegisterDTO dto) throws IOException {
+    public LoginResponse registerUser(UserRegisterDTO dto) throws IOException {
 
     	// Map UserRegisterDTO to User entity
         User user = UserMapper.INSTANCE.userRegisterDTOToUser(dto); 
@@ -63,7 +76,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         userRepository.save(user);
         
-        return UserMapper.INSTANCE.userToUserDTO(user);
+        UserDetailsDTO dto2 = UserMapper.INSTANCE.userToUserDTO(user);
+
+        String jwtToken = jwtService.generateToken(dto2); 
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(jwtToken);
+        loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        
+        return loginResponse;
     }
 
     
