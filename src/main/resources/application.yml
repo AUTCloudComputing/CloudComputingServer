@@ -1,6 +1,6 @@
 aws:
-  #accesskey: <your>
-  #secretkey: <your>
+  accesskey: AKIA5FTZAWC5THEKIQGQ
+  secretkey: q9gJtVKCjOryyMJp9ho6Ca0pEhzKSzl2teuBPVpH
   dynamodb:
     endpoint: arn:aws:dynamodb:ap-southeast-2:905418158267
   region: ap-southeast-2
@@ -28,7 +28,7 @@ spring:
       
 security:
   jwt:
-    secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+    secret-key: d3a37a2acbde17d4b5538a1a0cd3aa30c157d4e7b58d1b1f31eb36e1ea834a39
     expiration-time: 86400000
  
 
