@@ -1,6 +1,6 @@
 aws:
-  #accesskey: <your>
-  #secretkey: <your>
+  accesskey: AKIA5FTZAWC5576PYWUS
+  secretkey: vJXnDyh9GmZJTUHssRU7dCc/fiMM2jA/7LKTkhRx
   dynamodb:
     endpoint: arn:aws:dynamodb:ap-southeast-2:905418158267
   region: ap-southeast-2

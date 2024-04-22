@@ -106,3 +106,8 @@ public class UserRepositoryImpl implements UserRepository {
         return users.stream().findFirst();
     }
 }
+
+
+// reference: https://github.com/JoseLuisSR/springboot-aws-serverless/blob/master/Customer/src/main/java/com/aws/lambda/customer/repositories/CustomerRepositoryImpl.java
+//https://github.com/Java-Techie-jt/springboot-dynamodb-example/blob/master/src/main/java/com/javatechiue/aws/repository/PersonRepository.java
+//https://github.com/JoseLuisSR/springboot-aws-serverless/blob/master/Customer/src/main/java/com/aws/lambda/customer/repositories/CustomerRepositoryImpl.java
