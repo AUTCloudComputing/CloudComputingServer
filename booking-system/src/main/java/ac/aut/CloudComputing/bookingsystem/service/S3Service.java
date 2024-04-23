@@ -7,6 +7,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +44,8 @@ public class S3Service {
         try {
             String fileName = file.getOriginalFilename();
             // Upload file to S3
-            s3Client.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(), null));
+            s3Client.putObject(
+            		new PutObjectRequest(bucketName, fileName, file.getInputStream(), null).withCannedAcl(CannedAccessControlList.PublicRead));
             // Return the URL of the uploaded file
             return s3Client.getUrl(bucketName, fileName).toString();
         } catch (AmazonServiceException e) {
