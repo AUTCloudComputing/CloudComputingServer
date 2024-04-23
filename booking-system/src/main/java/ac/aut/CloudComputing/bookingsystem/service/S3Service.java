@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 public class S3Service { 
@@ -42,7 +43,13 @@ public class S3Service {
 
     public String uploadFile(MultipartFile file) throws IOException {
         try {
-            String fileName = file.getOriginalFilename();
+
+            // Generate a unique filename with original extension
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String uuid = UUID.randomUUID().toString();
+            String fileName = uuid + extension;
+             
             // Upload file to S3
             s3Client.putObject(
             		new PutObjectRequest(bucketName, fileName, file.getInputStream(), null).withCannedAcl(CannedAccessControlList.PublicRead));
