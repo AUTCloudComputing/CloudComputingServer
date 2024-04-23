@@ -31,6 +31,7 @@ public class ApplicationConfiguration {
     @Bean
     public UserDetailsService userDetailsService() {
     	 
+    	// this code is hard to debug 
     	
 //    	 return username -> userRepository.findByUserName(username)
 // 		        .map(user -> UserMapper.INSTANCE.userToUserDTO(user))

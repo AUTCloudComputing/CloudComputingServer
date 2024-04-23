@@ -2,78 +2,61 @@ package ac.aut.CloudComputing.bookingsystem.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils; 
 import org.springframework.stereotype.Service;
-
-import ac.aut.CloudComputing.bookingsystem.service.OrderService;
+ 
+import ac.aut.CloudComputing.bookingsystem.service.OrderService; 
+import lombok.RequiredArgsConstructor;
 import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO;
+import ac.aut.CloudComputing.bookingsystem.mapper.OrderMapper;
 import ac.aut.CloudComputing.bookingsystem.model.Order;
-
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import ac.aut.CloudComputing.bookingsystem.repository.OrderRepository; 
 
 @Service
-public class OrderServiceImpl implements OrderService{
-
-    private final DynamoDBMapper dynamoDBMapper;
-
-    @Autowired
-    public OrderServiceImpl(DynamoDBMapper dynamoDBMapper) {
-        this.dynamoDBMapper = dynamoDBMapper;
-    }
-    
+@RequiredArgsConstructor 
+public class OrderServiceImpl implements OrderService {
+ 
+    private final OrderRepository orderRepository; 
+ 
 
     @Override
     public List<OrderDTO> getAllOrders() {
     	
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        List<Order> Orders = dynamoDBMapper.scan(Order.class, scanExpression);
-        return Orders.stream().map(this::convertToDTO).collect(Collectors.toList()); 
+    	Iterable<Order> ordersIterable = orderRepository.findAll();
+        return StreamSupport.stream(ordersIterable.spliterator(), false)
+                .map(OrderMapper.INSTANCE::OrderToOrderDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public OrderDTO getOrderById(String id) {
-    	Order order = dynamoDBMapper.load(Order.class, id);
-        return convertToDTO(order); 
+        return orderRepository.findById(id)
+                .map(OrderMapper.INSTANCE::OrderToOrderDTO)
+                .orElse(null);
     }
 
     @Override
     public OrderDTO createOrder(OrderDTO dto) {
-    	  Order Order = new Order();
-          BeanUtils.copyProperties(dto, Order);
-
-          dynamoDBMapper.save(Order);
-
-          return convertToDTO(Order);
-          
+        Order order = new Order();
+        BeanUtils.copyProperties(dto, order);
+        order = orderRepository.save(order);
+        return OrderMapper.INSTANCE.OrderToOrderDTO(order);
     }
 
     @Override
     public OrderDTO updateOrder(String id, OrderDTO dto) {
-    	  Order Order = dynamoDBMapper.load(Order.class, id);
-          BeanUtils.copyProperties(dto, Order);
-
-          dynamoDBMapper.save(Order);
-
-          return convertToDTO(Order);
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No Order found with id: " + id));
+        BeanUtils.copyProperties(dto, order);
+        order = orderRepository.save(order);
+        return OrderMapper.INSTANCE.OrderToOrderDTO(order);
     }
 
     @Override
     public void deleteOrder(String id) {
-    	  Order Order = dynamoDBMapper.load(Order.class, id);
-          if (Order != null) {
-              dynamoDBMapper.delete(Order);
-          }
+        orderRepository.deleteById(id);
     }
-
-
-    private OrderDTO convertToDTO(Order Order) {
-        OrderDTO dto = new OrderDTO();
-        BeanUtils.copyProperties(Order, dto);
-        return dto;
-    }
- 
 }
 

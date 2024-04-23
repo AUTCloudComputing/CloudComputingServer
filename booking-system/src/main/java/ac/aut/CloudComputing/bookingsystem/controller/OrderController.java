@@ -25,10 +25,10 @@ public class OrderController {
 
     @GetMapping
     @ApiOperation(value = "Get all orders")
-    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {  
     	List<OrderDTO> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
-    }
+    } 
 
     @PostMapping
     @ApiOperation(value = "Create an order")
@@ -37,7 +37,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{orderId}")
     @ApiOperation(value = "Get order by ID")
     public ResponseEntity<OrderDTO> getOrderById(@PathVariable @ApiParam("Order ID") String orderId) {
     	OrderDTO order = orderService.getOrderById(orderId);
@@ -48,7 +48,7 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{orderId}")
     @ApiOperation(value = "Update an order")
     public ResponseEntity<OrderDTO> updateOrder(@PathVariable @ApiParam("Order ID") String orderId, @RequestBody @ApiParam("Updated order details") OrderDTO orderRequest) {
     	OrderDTO updatedOrder = orderService.updateOrder(orderId, orderRequest);
@@ -59,7 +59,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{orderId}")
     @ApiOperation(value = "Delete an order")
     public ResponseEntity<Void> deleteOrder(@PathVariable @ApiParam("Order ID") String orderId) {
         orderService.deleteOrder(orderId);
