@@ -1,7 +1,7 @@
 package ac.aut.CloudComputing.bookingsystem.controller;
 
-import ac.aut.CloudComputing.bookingsystem.dto.courtDTO; 
-import ac.aut.CloudComputing.bookingsystem.service.courtService;
+import ac.aut.CloudComputing.bookingsystem.dto.CourtDTO; 
+import ac.aut.CloudComputing.bookingsystem.service.CourtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,23 +17,23 @@ import io.swagger.annotations.ApiParam;
 @Api(tags = "court Management")
 public class CourtController {
 
-    private final courtService courtService;
+    private final CourtService courtService;
 
-    public CourtController(courtService courtService) {
+    public CourtController(CourtService courtService) {
         this.courtService = courtService;
     }
 
     @GetMapping
     @ApiOperation(value = "Get all courts")
-    public ResponseEntity<List<courtDTO>> getAllcourts() {  
-    	List<courtDTO> courts = courtService.getAllcourts();
+    public ResponseEntity<List<CourtDTO>> getAllCourts() {  
+    	List<CourtDTO> courts = courtService.getAllCourts();
         return ResponseEntity.ok(courts);
     } 
 
     @PostMapping
     @ApiOperation(value = "Create an court")
-    public ResponseEntity<courtDTO> createcourt(@RequestBody @ApiParam("court details") courtDTO courtRequest) {
-    	courtDTO court = courtService.createcourt(courtRequest);
+    public ResponseEntity<CourtDTO> createCourt(@RequestBody @ApiParam("court details") CourtDTO courtRequest) {
+    	CourtDTO court = courtService.createCourt(courtRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(court);
     }
 
@@ -47,8 +47,8 @@ public class CourtController {
     
     @GetMapping("/{courtId}")
     @ApiOperation(value = "Get court by ID")
-    public ResponseEntity<courtDTO> getcourtById(@PathVariable @ApiParam("court ID") String courtId) {
-    	courtDTO court = courtService.getcourtById(courtId);
+    public ResponseEntity<CourtDTO> getcourtById(@PathVariable @ApiParam("court ID") String courtId) {
+    	CourtDTO court = courtService.getCourtById(courtId);
         if (court != null) {
             return ResponseEntity.ok(court);
         } else {
@@ -58,8 +58,8 @@ public class CourtController {
 
     @PutMapping("/{courtId}")
     @ApiOperation(value = "Update an court")
-    public ResponseEntity<courtDTO> updatecourt(@PathVariable @ApiParam("court ID") String courtId, @RequestBody @ApiParam("Updated court details") courtDTO courtRequest) {
-    	courtDTO updatedcourt = courtService.updatecourt(courtId, courtRequest);
+    public ResponseEntity<CourtDTO> updateCourt(@PathVariable @ApiParam("court ID") String courtId, @RequestBody @ApiParam("Updated court details") CourtDTO courtRequest) {
+    	CourtDTO updatedcourt = courtService.updateCourt(courtId, courtRequest);
         if (updatedcourt != null) {
             return ResponseEntity.ok(updatedcourt);
         } else {
@@ -69,8 +69,8 @@ public class CourtController {
 
     @DeleteMapping("/{courtId}")
     @ApiOperation(value = "Delete an court")
-    public ResponseEntity<Void> deletecourt(@PathVariable @ApiParam("court ID") String courtId) {
-        courtService.deletecourt(courtId);
+    public ResponseEntity<Void> deleteCourt(@PathVariable @ApiParam("court ID") String courtId) {
+        courtService.deleteCourt(courtId);
         return ResponseEntity.noContent().build();
     }
 }
