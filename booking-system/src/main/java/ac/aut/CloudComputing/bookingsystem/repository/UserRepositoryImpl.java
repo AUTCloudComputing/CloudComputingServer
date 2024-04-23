@@ -94,19 +94,15 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findByUserName(String userName) {
     	// Create a mutable map to hold expression attribute values
     	
-        HashMap<String, AttributeValue> expressionAttributeValues = new HashMap<>();
-        expressionAttributeValues.put(":val", new AttributeValue().withS(userName));
+        HashMap<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":val", new AttributeValue().withS(userName)); 
 
-        // Construct DynamoDB query expression
-        DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
-            //.withIndexName("user_name-index")
-            .withConsistentRead(false)
-            .withKeyConditionExpression("user_name = :val")
-            .withExpressionAttributeValues(expressionAttributeValues);
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("user_name = :val").withExpressionAttributeValues(eav);
 
-
-        List<User> users = dynamoDBMapper.query(User.class, queryExpression);
-        return users.stream().findFirst(); 
+        List<User> users = dynamoDBMapper.scan(User.class, scanExpression);
+        
+        return users.stream().findFirst();  
         
          
     }
