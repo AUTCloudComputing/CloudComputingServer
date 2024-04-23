@@ -15,4 +15,6 @@ public interface UserService {
 
 	List<UserDetailsDTO> allUsers();
     Optional<UserDetailsDTO> findByUserName(String userName);
+    
+    void clearUsers();
 }

@@ -38,6 +38,7 @@ public class SecurityConfiguration  {
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers("/api/users/register", 
                         		"/api/users/login", 
+                        		"/api/users/**", 
                         		"/api/orders/**",  
                                 "/swagger-ui/**",
                                 "/swagger-ui/").permitAll())

@@ -71,3 +71,5 @@ public class ApplicationConfiguration {
     }
 }
 
+
+//https://github.com/tericcabrel/blog-tutorials/blob/main/springboot-jwt-auth/src/main/java/com/tericcabrel/authapi/configs/ApplicationConfiguration.java

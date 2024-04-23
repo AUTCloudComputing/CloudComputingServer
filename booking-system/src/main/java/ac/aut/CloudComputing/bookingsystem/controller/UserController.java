@@ -13,13 +13,17 @@ import ac.aut.CloudComputing.bookingsystem.dto.UserLoginDTO;
 import ac.aut.CloudComputing.bookingsystem.dto.UserRegisterDTO;
 import ac.aut.CloudComputing.bookingsystem.service.JwtService;
 import ac.aut.CloudComputing.bookingsystem.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody; 
  
@@ -45,7 +49,15 @@ public class UserController {
 	        return ResponseEntity.ok(r);
 	    }
  
+	    
+	    @GetMapping("/clear")
+	    public ResponseEntity<Void> clearUsers() {
 
+	    	userService.clearUsers();
+	        return ResponseEntity.noContent().build();
+	    }
+
+	    
 	    @GetMapping("/me")
 	    public ResponseEntity<UserDetailsDTO> authenticatedUser() {
 	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
