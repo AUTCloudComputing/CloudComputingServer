@@ -50,6 +50,8 @@ public class UserController {
         return ResponseEntity.ok(r);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/clear")
     @ApiOperation("Clear all users (for testing)")
     public ResponseEntity<Void> clearUsers() {
@@ -65,8 +67,7 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
-    //@PreAuthorize("hasRole(‘ADMIN’)")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     @ApiOperation("Get all users")
     public ResponseEntity<List<UserDetailsDTO>> allUsers() {

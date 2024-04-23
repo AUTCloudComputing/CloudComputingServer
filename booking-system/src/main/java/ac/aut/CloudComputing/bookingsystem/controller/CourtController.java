@@ -5,6 +5,7 @@ import ac.aut.CloudComputing.bookingsystem.dto.CourtRspDTO;
 import ac.aut.CloudComputing.bookingsystem.service.CourtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +26,7 @@ public class CourtController {
     public CourtController(CourtService courtService) {
         this.courtService = courtService;
     }
-
+ 
     @GetMapping
     @ApiOperation(value = "Get all courts")
     public ResponseEntity<List<CourtRspDTO>> getAllCourts() {  
@@ -33,6 +34,7 @@ public class CourtController {
         return ResponseEntity.ok(courts);
     } 
 
+    @PreAuthorize("hasRole('ADMIN')") 
     @PostMapping
     @ApiOperation(value = "Create an court")
     public ResponseEntity<CourtRspDTO> createCourt(
@@ -54,6 +56,7 @@ public class CourtController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')") 
     @GetMapping("/clear")
     public ResponseEntity<Void> clear() {
 
@@ -72,6 +75,7 @@ public class CourtController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')") 
     @PutMapping("/{courtId}")
     @ApiOperation(value = "Update an court")
     public ResponseEntity<CourtRspDTO> updateCourt(@PathVariable @ApiParam("court ID") String courtId
@@ -96,6 +100,7 @@ public class CourtController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')") 
     @DeleteMapping("/{courtId}")
     @ApiOperation(value = "Delete an court")
     public ResponseEntity<Void> deleteCourt(@PathVariable @ApiParam("court ID") String courtId) {

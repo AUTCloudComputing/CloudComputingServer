@@ -1,13 +1,16 @@
 package ac.aut.CloudComputing.bookingsystem.dto;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -26,6 +29,7 @@ public class UserDetailsDTO implements UserDetails{
 	
 	@Schema(description = "The role of the user")
 	private String role;
+	 
 	
 	@Schema(description = "The password of the user")
 	private String password;
@@ -39,7 +43,22 @@ public class UserDetailsDTO implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    	return Collections.unmodifiableList(Arrays.asList());
+
+        // 角色集合
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        // 角色必须以`ROLE_`开头，数据库中没有，则在这里加
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+
+        
+        //
+        // 添加用户拥有的多个角色
+//        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+//        Set<Role> roles = user.getRoles();
+//        for (Role role : roles) {
+//            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
+//        }
+        
+    	return authorities;
     }
 
     public String getPassword() {
