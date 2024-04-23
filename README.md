@@ -22,3 +22,5 @@ Languages/Framework:  Java for Backend Service, and JS/ React/Vue to develop web
 Code on GitHub:  https://github.com/AUTCloudComputing/CloudComputingServer 
 Code on GitHub:  https://github.com/AUTCloudComputing/CloudComputingWebApp 
 
+API document
+http://localhost:8082/swagger-ui/index.html
