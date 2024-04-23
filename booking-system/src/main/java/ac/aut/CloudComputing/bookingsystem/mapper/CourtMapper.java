@@ -14,6 +14,7 @@ public interface CourtMapper {
 
     CourtRspDTO Court2CourtRspDTO(Court court);
     Court CourtReqDTO2Court(CourtReqDTO req);
+    Court CourtRspDTO2Court(CourtRspDTO rsp);
      
      
      

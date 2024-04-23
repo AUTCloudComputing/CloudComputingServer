@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.aut.CloudComputing.bookingsystem.dto.LoginResponse;
+import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO;
 import ac.aut.CloudComputing.bookingsystem.dto.UserDetailsDTO;
 import ac.aut.CloudComputing.bookingsystem.dto.UserLoginDTO;
 import ac.aut.CloudComputing.bookingsystem.dto.UserRegisterDTO;
+import ac.aut.CloudComputing.bookingsystem.mapper.OrderMapper;
 import ac.aut.CloudComputing.bookingsystem.mapper.UserMapper;
 import ac.aut.CloudComputing.bookingsystem.model.User;
 import ac.aut.CloudComputing.bookingsystem.repository.UserRepository;
@@ -35,6 +37,15 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
  
     private final S3Service s3Service;
+    
+
+    @Override
+    public UserDetailsDTO getUserById(String id) {
+        return userRepository.findById(id)
+                .map(UserMapper.INSTANCE::userToUserDTO)
+                .orElse(null);
+    }
+
 
     @Override
     public void clearUsers() {

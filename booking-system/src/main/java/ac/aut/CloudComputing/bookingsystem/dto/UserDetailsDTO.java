@@ -20,9 +20,12 @@ public class UserDetailsDTO implements UserDetails{
 	
 	@Schema(description = "The username of the user")
 	private String userName;
-	
+
 	@Schema(description = "The email address of the user")
 	private String email;
+	
+	@Schema(description = "The role of the user")
+	private String role;
 	
 	@Schema(description = "The password of the user")
 	private String password;
