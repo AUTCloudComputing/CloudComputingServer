@@ -32,6 +32,10 @@ public class User{
 	private String password;
 	@DynamoDBAttribute(attributeName="profile_image_S3Key")
 	private String profileImageS3Key; // Reference to the user's profile image stored in S3
+	
+
+    @DynamoDBAttribute  
+    private int status;
 	 
 
 }

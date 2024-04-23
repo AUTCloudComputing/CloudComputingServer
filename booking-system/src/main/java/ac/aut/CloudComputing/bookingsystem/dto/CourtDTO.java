@@ -21,7 +21,11 @@ public class CourtDTO {
     @Schema(description = "The status of the court")
     private int status;
 
+    @Schema(description = "The description of the court")
+    private String description;
+    
     @Schema(description = "The list of orders associated with the court")
     private List<OrderDTO> orderList;
+
 
 }
