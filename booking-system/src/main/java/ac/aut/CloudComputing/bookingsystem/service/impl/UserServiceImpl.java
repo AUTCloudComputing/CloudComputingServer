@@ -36,6 +36,10 @@ public class UserServiceImpl implements UserService {
  
     private final S3Service s3Service;
 
+    @Override
+    public void clearUsers() {
+    	userRepository.deleteAll();
+    }
  
     @Override
     public LoginResponse loginUser(UserLoginDTO dto) {

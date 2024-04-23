@@ -29,6 +29,14 @@ public class OrderServiceImpl implements OrderService {
                 .map(OrderMapper.INSTANCE::OrderToOrderDTO)
                 .collect(Collectors.toList());
     }
+    
+
+
+    @Override
+    public void clear() {
+    	orderRepository.deleteAll();
+    }
+ 
 
     @Override
     public OrderDTO getOrderById(String id) {

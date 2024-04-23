@@ -14,6 +14,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.QueryRequest;
+import com.amazonaws.services.dynamodbv2.model.QueryResult;
 
 import ac.aut.CloudComputing.bookingsystem.model.User;
 
@@ -91,21 +93,39 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findByUserName(String userName) {
     	// Create a mutable map to hold expression attribute values
+    	
         HashMap<String, AttributeValue> expressionAttributeValues = new HashMap<>();
         expressionAttributeValues.put(":val", new AttributeValue().withS(userName));
 
         // Construct DynamoDB query expression
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
-            .withIndexName("userName-index")
+            //.withIndexName("user_name-index")
             .withConsistentRead(false)
-            .withKeyConditionExpression("userName = :val")
+            .withKeyConditionExpression("user_name = :val")
             .withExpressionAttributeValues(expressionAttributeValues);
 
 
         List<User> users = dynamoDBMapper.query(User.class, queryExpression);
-        return users.stream().findFirst();
+        return users.stream().findFirst(); 
+        
+         
     }
 }
+
+
+//
+//public String editPerson(Person person) {
+//    mapper.save(person, buildExpression(person));
+//    return "record updated ...";
+//}
+//
+//private DynamoDBSaveExpression buildExpression(Person person) {
+//    DynamoDBSaveExpression dynamoDBSaveExpression = new DynamoDBSaveExpression();
+//    Map<String, ExpectedAttributeValue> expectedMap = new HashMap<>();
+//    expectedMap.put("personId", new ExpectedAttributeValue(new AttributeValue().withS(person.getPersonId())));
+//    dynamoDBSaveExpression.setExpected(expectedMap);
+//    return dynamoDBSaveExpression;
+//}
 
 
 // reference: https://github.com/JoseLuisSR/springboot-aws-serverless/blob/master/Customer/src/main/java/com/aws/lambda/customer/repositories/CustomerRepositoryImpl.java

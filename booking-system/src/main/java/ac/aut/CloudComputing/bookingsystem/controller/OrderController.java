@@ -37,6 +37,14 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
+
+    @GetMapping("/clear")
+    public ResponseEntity<Void> clear() {
+
+    	orderService.clear();
+        return ResponseEntity.noContent().build();
+    }
+    
     @GetMapping("/{orderId}")
     @ApiOperation(value = "Get order by ID")
     public ResponseEntity<OrderDTO> getOrderById(@PathVariable @ApiParam("Order ID") String orderId) {
