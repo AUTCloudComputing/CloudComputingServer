@@ -18,11 +18,19 @@ Decoupling Services:  Restful API design:
 - Administrator: DELETE /api/courts/{id}
 
 Security: Spring Security and JWT
+
 API document: Swagger, document URL for loalhost: http://localhost:8082/swagger-ui/index.html
+
 Deployment on the cloud: deploy client side and back end (Restful API) on  AWS Lambda.
+
 Cloud Database: We will choose NoSQL databases DynamoDB
+
 Storage: web application assets such as pictures, files, etc., will be stored on cloud storage services such as AWS S3.
+
 Languages/Framework:  Java for Backend Service, and JS/ React/Vue to develop web applications.
+
 Code on GitHub:  https://github.com/AUTCloudComputing/CloudComputingServer 
+
 Code on GitHub:  https://github.com/AUTCloudComputing/CloudComputingWebApp 
+
  
