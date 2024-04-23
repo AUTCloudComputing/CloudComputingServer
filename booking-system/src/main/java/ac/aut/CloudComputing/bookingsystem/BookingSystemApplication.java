@@ -10,8 +10,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
  
 @SpringBootApplication
 //@ComponentScan(basePackages = { "ac.aut.CloudComputing.bookingsystem.repository" }) 
-@ComponentScan(basePackages = { "ac.aut.CloudComputing.bookingsystem.repository"
-		, "ac.aut.CloudComputing.bookingsystem" }) 
+@ComponentScan(basePackages = {  "ac.aut.CloudComputing.bookingsystem" }) 
 public class BookingSystemApplication {
 
 	public static void main(String[] args) {

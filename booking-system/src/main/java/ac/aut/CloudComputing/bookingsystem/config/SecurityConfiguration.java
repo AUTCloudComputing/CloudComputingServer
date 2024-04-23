@@ -33,10 +33,12 @@ public class SecurityConfiguration  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 
+    	//todo: should care about /api/**/**, if we can replace with anyRequest()
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers("/api/users/register", 
-                        		"/api/users/login",
+                        		"/api/users/login", 
+                        		"/api/orders/**",  
                                 "/swagger-ui/**",
                                 "/swagger-ui/").permitAll())
                 .authorizeHttpRequests(requests -> requests.antMatchers("/api/**")
