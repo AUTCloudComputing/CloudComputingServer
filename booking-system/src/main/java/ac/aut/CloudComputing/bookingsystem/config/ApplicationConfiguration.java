@@ -40,7 +40,7 @@ public class ApplicationConfiguration {
     	 return username -> {
     		    Optional<User> userOptional = userRepository.findByUserName(username);
     		    if (userOptional.isPresent()) {
-    		        User user = userOptional.get();
+    		        User user = userOptional.get();      		        
     		        UserDetailsDTO userDTO = UserMapper.INSTANCE.userToUserDTO(user); 
     		        return userDTO;
     		    } else { 
