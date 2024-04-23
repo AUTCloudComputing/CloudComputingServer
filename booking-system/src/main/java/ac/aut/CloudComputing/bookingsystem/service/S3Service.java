@@ -53,3 +53,5 @@ public class S3Service {
         }
     }
 }
+
+//https://issackpaul95.medium.com/aws-s3-bucket-file-upload-with-spring-boot-719ede4e7f78

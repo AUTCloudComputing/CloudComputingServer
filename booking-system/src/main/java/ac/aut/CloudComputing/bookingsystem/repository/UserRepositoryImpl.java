@@ -109,6 +109,9 @@ public class UserRepositoryImpl implements UserRepository {
 }
 
 
+//https://docs.aws.amazon.com/zh_cn/amazondynamodb/latest/developerguide/DynamoDBMapper.QueryScanExample.html
+//http://www.mxblog.top/toBlog/183
+
 //
 //public String editPerson(Person person) {
 //    mapper.save(person, buildExpression(person));

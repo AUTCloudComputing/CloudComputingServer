@@ -1,18 +1,20 @@
 package ac.aut.CloudComputing.bookingsystem.service;
 
+import java.io.IOException;
 import java.util.List;
 
-import ac.aut.CloudComputing.bookingsystem.dto.CourtDTO; 
+import ac.aut.CloudComputing.bookingsystem.dto.CourtReqDTO;
+import ac.aut.CloudComputing.bookingsystem.dto.CourtRspDTO; 
 
 public interface  CourtService {
 
-	List<CourtDTO> getAllCourts();
+	List<CourtRspDTO> getAllCourts();
 	
-	CourtDTO getCourtById(String courtId);
+	CourtRspDTO getCourtById(String courtId);
     
-	CourtDTO createCourt(CourtDTO request);
+	CourtRspDTO createCourt(CourtReqDTO request) throws IOException;
     
-	CourtDTO updateCourt(String courtId, CourtDTO request);
+	CourtRspDTO updateCourt(String courtId, CourtReqDTO request) throws IOException;
     
     void deleteCourt(String courtId);
     
