@@ -18,6 +18,7 @@ Decoupling Services:  Restful API design:
 - Administrator: DELETE /api/courts/{id}
 
 Security: Spring Security and JWT
+Host: cloudcomputingserver-env-1.eba-kts3pt8t.us-east-1.elasticbeanstalk.com
 
 API document: Swagger, document URL for loalhost: http://localhost:8082/swagger-ui/index.html
 
