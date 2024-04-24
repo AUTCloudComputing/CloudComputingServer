@@ -27,12 +27,16 @@ public class User{
 	//user_name-index
 	@DynamoDBAttribute(attributeName="user_name")
 	private String userName;
+	
 	@DynamoDBAttribute
 	private String email;
+	
 	@DynamoDBAttribute
 	private String password;
+	
 	@DynamoDBAttribute
 	private String role;
+	
 	@DynamoDBAttribute(attributeName="profile_image_S3Key")
 	private String profileImageS3Key; // Reference to the user's profile image stored in S3
 	

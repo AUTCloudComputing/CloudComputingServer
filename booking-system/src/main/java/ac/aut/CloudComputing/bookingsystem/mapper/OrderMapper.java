@@ -16,8 +16,8 @@ public interface OrderMapper {
 	OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class); 
 
 	//output
-	@Mapping(source = "user", target = "user")
-	@Mapping(source = "court.id", target = "courtId")
+	//@Mapping(source = "user", target = "user")
+	//@Mapping(source = "court.id", target = "courtId")
 	OrderDTO order2OrderDTO(Order order); 
 	
 	default UserDetailsDTO mapUser(User user) {

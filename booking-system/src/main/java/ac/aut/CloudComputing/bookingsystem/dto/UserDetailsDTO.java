@@ -60,10 +60,10 @@ public class UserDetailsDTO implements UserDetails{
         
     	return authorities;
     }
-
-    public String getPassword() {
-        return password;
-    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
 
     @Override
     public String getUsername() {
