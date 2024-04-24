@@ -9,6 +9,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.util.StringUtils;
+
 import ac.aut.CloudComputing.bookingsystem.dto.LoginResponse;
 import ac.aut.CloudComputing.bookingsystem.dto.OrderDTO;
 import ac.aut.CloudComputing.bookingsystem.dto.UserDetailsDTO;
@@ -91,7 +93,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         
         //trick
-        if(user.getEmail().endsWith("@aut.ac.nz"))
+        if(!StringUtils.isNullOrEmpty(dto.getEmail()) 
+        		&&  dto.getEmail().endsWith("@aut.ac.nz"))
         	user.setRole("ADMIN");
         
         userRepository.save(user);
