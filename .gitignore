@@ -25,3 +25,8 @@ replay_pid*
 
 #ignore all bin
 bin/
+
+#development files
+/.gradle/
+/build/
+booking-system/src/main/resources/application.yml
