@@ -1,0 +1,35 @@
+aws:
+  accesskey:
+  secretkey:
+  dynamodb:
+    endpoint: arn:aws:dynamodb:ap-southeast-2:905418158267
+  region: ap-southeast-2
+  s3:
+    bucket: booking-bkt
+
+server:
+  port: 8082
+
+
+spring:
+  application:
+    name: booking-system
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+      #security:
+      #  user:
+      #    password: 111111
+      #autoconfigure:
+      #  exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      #,org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+
+
+
+security:
+  jwt:
+    secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+    expiration-time: 86400000
+
+
+
