@@ -20,7 +20,7 @@ spring:
       #security:
       #  user:
       #    password: 111111
-      #autoconfigure:
+      #autoconfigure: 
       #  exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
       #,org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
 
