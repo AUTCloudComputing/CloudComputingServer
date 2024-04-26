@@ -13,6 +13,9 @@ public class Main {
     @Value("${aws.region}")
     private String region;
 
+    @Value("${aws.dynamodb.endpoint}")
+    private String amazonDynamoDBEndpoint;
+
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args); // Start the Spring context
     }
@@ -20,6 +23,6 @@ public class Main {
     @PostConstruct
     public void init() {
         System.out.println("Hello world! Confirmed that resource files work well");
-        System.out.println("AWS Region = " + region);
+        System.out.println("AWS Region = " + region + ", AWS Endpoint = " + amazonDynamoDBEndpoint);
     }
 }
