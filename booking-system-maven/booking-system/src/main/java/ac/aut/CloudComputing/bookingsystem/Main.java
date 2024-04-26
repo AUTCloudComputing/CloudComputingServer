@@ -3,26 +3,17 @@ package ac.aut.CloudComputing.bookingsystem.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import javax.annotation.PostConstruct;
+import org.springframework.context.annotation.ComponentScan;
+//import javax.annotation.PostConstruct;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 @SpringBootApplication
+@ComponentScan(basePackages = {  "ac.aut.CloudComputing.bookingsystem" })
+
 public class Main {
-
-    @Value("${aws.region}")
-    private String region;
-
-    @Value("${aws.dynamodb.endpoint}")
-    private String amazonDynamoDBEndpoint;
-
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args); // Start the Spring context
     }
 
-    @PostConstruct
-    public void init() {
-        System.out.println("Hello world! Confirmed that resource files work well");
-        System.out.println("AWS Region = " + region + ", AWS Endpoint = " + amazonDynamoDBEndpoint);
-    }
 }
