@@ -1,0 +1,13 @@
+package ac.aut.CloudComputing.bookingsystem.repository;
+ 
+import java.util.Optional;
+ 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import ac.aut.CloudComputing.bookingsystem.model.User;
+
+@Repository  
+public interface UserRepository extends CrudRepository<User, String> { 
+    Optional<User> findByUserName(String userName);  
+}

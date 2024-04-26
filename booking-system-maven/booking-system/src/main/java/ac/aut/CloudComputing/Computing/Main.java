@@ -1,4 +1,4 @@
-package ac.aut.Cloud.Computing;
+package ac.aut.CloudComputing.bookingsystem.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
