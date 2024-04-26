@@ -1,4 +1,4 @@
-package ac.aut.CloudComputing.bookingsystem.service;
+package ac.aut.CloudComputing.bookingsystem;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 @SpringBootApplication
-@ComponentScan(basePackages = {  "ac.aut.CloudComputing.bookingsystem" })
+//@ComponentScan(basePackages = {  "ac.aut.CloudComputing.bookingsystem" })
 
 public class Main {
     public static void main(String[] args) {
