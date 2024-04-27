@@ -31,3 +31,5 @@ bin/
 /build/
 booking-system/src/main/resources/application.yml
 booking-system-maven/booking-system/src/main/resources/application.yml
+booking-system-maven/booking_system_backend/src/main/resources/application.yml
+booking-system-maven/booking_system_backend/target/classes/application.yml

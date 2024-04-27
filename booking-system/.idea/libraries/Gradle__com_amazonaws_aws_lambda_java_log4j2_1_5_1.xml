@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.amazonaws:aws-lambda-java-log4j2:1.5.1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.amazonaws" artifactId="aws-lambda-java-log4j2" version="1.5.1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-lambda-java-log4j2/1.5.1/761088df79ab1d0b9f0a3d8c10da3c9a58eb36a9/aws-lambda-java-log4j2-1.5.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-lambda-java-log4j2/1.5.1/d98e11bc838a0ea1d77015997fe7a98c04f65368/aws-lambda-java-log4j2-1.5.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

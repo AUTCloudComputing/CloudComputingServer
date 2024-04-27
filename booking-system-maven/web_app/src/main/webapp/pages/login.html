@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>传智健康</title>
+    <meta name="description" content="传智健康">
+    <meta name="keywords" content="传智健康">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div id="app">
+    <div class="login-container">
+        <div class="loginBox">
+            <form method="post" class="login-form" id="loginForm">
+                <div class="title-container">
+                    <div class="logoInfo clearfix">
+                        <em class="logo"></em>
+                    </div>
+                </div>
+                <div>
+                        <span class="svg-container svg-container_login">
+                          <span class="user"></span>
+                        </span>
+                    <input type="text" id="userName" v-model="formData.userName" name="userName" placeholder="请输入用户名"/>
+                </div>
+                <div>
+                        <span class="svg-container">
+                          <span class="username"></span>
+                        </span>
+                    <input type="password" id="password"  v-model="formData.password" name="password" placeholder="请输入密码"/>
+                </div>
+                <input type="button" style="width:100%;margin-bottom:30px;" value="登录" @click="login()"></input>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/vue.js"></script>
+<script src="../plugins/elementui/index.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script src="../js/jquery-heima-0.0.1.js"></script>
+<script>
+    // axios跨域访问，如果需要携带cookie，withCredentials必须为true
+    axios.defaults.withCredentials = true;
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            backend_url: "http://localhost:5000",
+            formData: {
+                userName: "",
+                password: ""
+            }
+        },
+        created() {
+            const token = this.getCookie('jwtToken');
+            console.log("Token on role.html:", token);
+
+            if (!token) {
+                console.error("No token found in cookies.");
+            } else {
+                console.log("Token :", token);
+            }
+        },
+        methods: {
+            getCookie(name) {
+                let matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                return matches ? decodeURIComponent(matches[1]) : undefined;
+            },
+            login() {
+                axios.post(this.backend_url + "/api/users/login", this.formData, {
+                    headers: { 'Content-Type': 'application/json' }
+                }).then((response) => {
+                    if (response.data.token) {
+                        console.log("Token received and saving to cookie:", response.data.token);
+                        // Save JWT to a cookie
+                        document.cookie = `jwtToken=${response.data.token};max-age=${response.data.expiresIn};path=/;`
+
+                        // Redirect to user.html
+                        location.href = "user.html";
+                    } else {
+                        this.$message.error(response.data.message);
+                    }
+                }).catch((error) => {
+                    console.error("Login error:", error);
+                    this.showMessage(error);
+                });
+            },
+            // 后台异常提示
+            showMessage(error) {
+                console.log(error);
+                let errorMsg = null;
+                try {
+                    errorMsg = error.response.data.message;
+                } catch (e) {}
+                console.log(errorMsg); // 正确
+                if (errorMsg != null) {
+                    this.$message.error(errorMsg);
+                    return;
+                }
+                this.$message.error("网络异常");
+            }
+        }
+    });
+
+</script>
+</html>

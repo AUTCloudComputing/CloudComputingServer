@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: aws-lambda-java-events-3.11.1">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws/aws-lambda-java-events/3.11.1/cf338fc18481fd67e973c554e3e68b81e5b38e72/aws-lambda-java-events-3.11.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
