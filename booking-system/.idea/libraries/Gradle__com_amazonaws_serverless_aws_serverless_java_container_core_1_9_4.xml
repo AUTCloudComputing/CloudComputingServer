@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.amazonaws.serverless:aws-serverless-java-container-core:1.9.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.amazonaws.serverless" artifactId="aws-serverless-java-container-core" version="1.9.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws.serverless/aws-serverless-java-container-core/1.9.4/7b6435a0e0e06ea4b2c54b4440b61fc2b5cc2f9/aws-serverless-java-container-core-1.9.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.amazonaws.serverless/aws-serverless-java-container-core/1.9.4/2e79967447943047b1f8c0bf4e0c48bf7c14f8ce/aws-serverless-java-container-core-1.9.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
