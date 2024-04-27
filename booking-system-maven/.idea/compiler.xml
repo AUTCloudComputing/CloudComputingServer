@@ -8,11 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="booking_system_backend" />
+        <module name="web_app" />
         <module name="health_oms_web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="web_app" target="1.7" />
+      <module name="health_oms_web" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

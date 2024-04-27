@@ -1,0 +1,6 @@
+0:0:0:0:0:0:0:1 - - [28/Apr/2024:10:33:43 +1200] "GET /pages/login.html HTTP/1.1" 200 4497 http-bio-8080-exec-1 47
+0:0:0:0:0:0:0:1 - - [28/Apr/2024:10:33:43 +1200] "GET /plugins/elementui/index.js HTTP/1.1" 200 494238 http-bio-8080-exec-3 34
+0:0:0:0:0:0:0:1 - - [28/Apr/2024:10:33:43 +1200] "GET /img/loginLogo.png HTTP/1.1" 200 6107 http-bio-8080-exec-4 5
+0:0:0:0:0:0:0:1 - - [28/Apr/2024:10:33:45 +1200] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-5 14
+0:0:0:0:0:0:0:1 - - [28/Apr/2024:10:33:54 +1200] "GET /pages/user.html HTTP/1.1" 200 41499 http-bio-8080-exec-6 2
+0:0:0:0:0:0:0:1 - - [28/Apr/2024:10:33:58 +1200] "GET /js/axios.min.map HTTP/1.1" 404 983 http-bio-8080-exec-7 2
