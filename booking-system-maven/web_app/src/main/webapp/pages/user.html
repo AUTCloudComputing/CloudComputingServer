@@ -87,11 +87,11 @@
                     <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
                         <el-table-column type="index" align="center" label="序号"></el-table-column>
                         <el-table-column prop="id" label="用户编号" align="center"></el-table-column>
-                        <el-table-column prop="username" label="用户名" align="center"></el-table-column>
+                        <el-table-column prop="courtName" label="courtName" align="center"></el-table-column>
                         <!--- gender 性别 适用性别 -->
-                        <el-table-column label="性别" align="center">
+                        <el-table-column label="status" align="center">
                             <template slot-scope="scope">
-                                <span>{{ scope.row.gender == null ? '未设置' : scope.row.gender == '0' ? '男' : '女'}}</span>
+                                <span>{{ scope.row.status == null ? 'NO SET' : scope.row.status == 1 ? 'avaiable' : 'not avaiable'}}</span>
                             </template>
                         </el-table-column>
 
@@ -103,7 +103,7 @@
 
                         <el-table-column prop="telephone" label="联系电话" align="center"></el-table-column>
                         <el-table-column prop="password" label="密码" align="center"></el-table-column>
-                        <el-table-column prop="remark" label="备注" align="center"></el-table-column>
+                        <el-table-column prop="description" label="description" align="center"></el-table-column>
                         <el-table-column label="是否启用" align="center">
                             <template slot-scope="scope">
                                 <span>{{ scope.row.station == null ? '是' : scope.row.station == '1' ? '是' : '否'}}</span>
@@ -168,17 +168,17 @@
                                             </el-row>
                                             <el-row>
                                                 <el-col :span="12">
-                                                    <el-form-item label="性别">
-                                                        <el-select v-model="formData.gender">
-                                                            <el-option label="不限" value="0"></el-option>
-                                                            <el-option label="男" value="1"></el-option>
-                                                            <el-option label="女" value="2"></el-option>
+                                                    <el-form-item label="status">
+                                                        <el-select v-model="formData.status">
+                                                            <el-option label="NOT SET" value=0></el-option>
+                                                            <el-option label="avaiable" value=1></el-option>
+                                                            <el-option label="not avaiable" value=2></el-option>
                                                         </el-select>
                                                     </el-form-item>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-form-item label="用户名">
-                                                        <el-input v-model="formData.username"/>
+                                                    <el-form-item label="courtName">
+                                                        <el-input v-model="formData.courtName"/>
                                                     </el-form-item>
                                                 </el-col>
                                             </el-row>
@@ -226,14 +226,14 @@
                                             </el-row>
                                             <el-row>
                                                 <el-col :span="24">
-                                                    <el-form-item label="备注">
-                                                        <el-input v-model="formData.remark" type="textarea"></el-input>
+                                                    <el-form-item label="description">
+                                                        <el-input v-model="formData.description" type="textarea"></el-input>
                                                     </el-form-item>
                                                 </el-col>
                                             </el-row>
                                         </el-form>
                                     </el-tab-pane>
-                                    <el-tab-pane label="角色信息" name="second">
+                                    <el-tab-pane label="order information" name="second">
 										<div class="checkScrol">
 											<table class="datatable">
 												<thead>
@@ -262,8 +262,8 @@
                                 </el-tabs>
                             </template>
                             <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">取消</el-button>
-                                <el-button type="primary" @click="handleAdd()">确定</el-button>
+                                <el-button @click="dialogFormVisible = false">cancel</el-button>
+                                <el-button type="primary" @click="handleAdd()">confirm</el-button>
                             </div>
                         </el-dialog>
                     </div>
@@ -309,17 +309,17 @@
                                             </el-row>
                                             <el-row>
                                                 <el-col :span="12">
-                                                    <el-form-item label="性别">
-                                                        <el-select v-model="formData.gender">
-                                                            <el-option label="不限" value="0"></el-option>
-                                                            <el-option label="男" value="1"></el-option>
-                                                            <el-option label="女" value="2"></el-option>
+                                                    <el-form-item label="status">
+                                                        <el-select v-model="formData.status">
+                                                            <el-option label="NOT SET" value=0></el-option>
+                                                            <el-option label="avaiable" value=1></el-option>
+                                                            <el-option label="not avaiable" value=2></el-option>
                                                         </el-select>
                                                     </el-form-item>
                                                 </el-col>
                                                 <el-col :span="12">
-                                                    <el-form-item label="用户名">
-                                                        <el-input v-model="formData.username"/>
+                                                    <el-form-item label="court name">
+                                                        <el-input v-model="formData.courtName"/>
                                                     </el-form-item>
                                                 </el-col>
                                             </el-row>
@@ -367,8 +367,8 @@
                                             </el-row>
                                             <el-row>
                                                 <el-col :span="24">
-                                                    <el-form-item label="备注">
-                                                        <el-input v-model="formData.remark" type="textarea"></el-input>
+                                                    <el-form-item label="description">
+                                                        <el-input v-model="formData.description" type="textarea"></el-input>
                                                     </el-form-item>
                                                 </el-col>
                                             </el-row>
@@ -523,30 +523,6 @@
                         this.findPage();
                     });
                 },
-
-                // //添加
-                // handleAdd () {
-                //     // 使用 formData 对象作为 POST 请求的 body
-                //     //TODO:  read JWT token and send to server
-                //     axios.post(this.backend_url + "/api/courts", this.formData, {
-                //         headers: { 'Content-Type': 'application/json' }
-                //     }).then((response) => {
-                //
-                //         this.dialogFormVisible = false;
-                //         if(response.data.flag){
-                //             this.$message.success( response.data.message);
-                //         }else{
-                //             this.$message.error(response.data.message);
-                //         }
-                //     }).catch((error)=>{
-                //         console.log(error);
-                //         this.showMessage(error);
-                //     }).finally(()=> {
-                //         this.findPage();
-                //     });
-                // },
-
-                // Add new data
                 handleAdd() {
                     // Get JWT token from cookies
                     const token = this.getCookie('jwtToken');
@@ -555,10 +531,18 @@
                         return;
                     }
 
-                    // Use formData object as the POST request's body
-                    axios.post(this.backend_url + "/api/courts", this.formData, {
+                    // Prepare URLSearchParams to properly encode the data for sending as form data
+                    const params = new URLSearchParams();
+                    params.append('courtName', this.formData.courtName);
+                    params.append('status', this.formData.status.toString());  // Ensure status is sent as a string
+                    if (this.formData.description) {  // Only append description if it is provided
+                        params.append('description', this.formData.description);
+                    }
+
+                    // Use axios to send a POST request with URL encoded form data
+                    axios.post(this.backend_url + "/api/courts", params, {
                         headers: {
-                            'Content-Type': 'application/json',
+                            'Content-Type': 'application/x-www-form-urlencoded',  // Set content type as URL encoded form
                             'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
                         }
                     }).then((response) => {
@@ -575,8 +559,6 @@
                         this.findPage();
                     });
                 },
-
-
                 //分页查询
                 findPage(currentPage) {
                     if(currentPage){
@@ -617,7 +599,7 @@
                 handleCreate() {
                     this.dialogFormVisible = true;
                     this.resetForm();
-                    //TODO:  等待姜瀚淇的角色管理书写完毕，再进行设置，回写。
+                    //TODO:  等待角色管理书写完毕，再进行设置，回写。
                     axios.get(this.backend_url+"/role/findAll.do").then((res)=> {
                         if (res.data.flag) {
                             this.tableData = res.data.data;

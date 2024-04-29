@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
         
         //trick
         if(!StringUtils.isNullOrEmpty(dto.getEmail()) 
-        		&&  dto.getEmail().endsWith("@aut.ac.nz"))
+        		&&  dto.getEmail().endsWith("@autuni.ac.nz"))
         	user.setRole("ADMIN");
         
         userRepository.save(user);
