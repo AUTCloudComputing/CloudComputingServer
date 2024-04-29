@@ -435,7 +435,7 @@
                 checkgroupIds:[],//添加表单窗口中角色复选框对应id
                 dialogFormVisible: false,//控制添加窗口显示/隐藏
                 dialogFormVisible4Edit:false,
-                backend_url:"http://localhost:5000"
+                backend_url:"http://chenyilong.com"
             },
             created() {
                 const token = this.getCookie('jwtToken');
@@ -542,7 +542,6 @@
                     // Use axios to send a POST request with URL encoded form data
                     axios.post(this.backend_url + "/api/courts", params, {
                         headers: {
-                            'crossDomain': true,
                             'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
                             'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
                         }
