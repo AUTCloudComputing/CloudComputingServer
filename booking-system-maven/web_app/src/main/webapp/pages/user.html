@@ -570,22 +570,32 @@
                         pageSize:this.pagination.pageSize,
                         queryString:this.pagination.queryString
                     };
-                    axios.get(this.backend_url+"/user/findPage.do",{params:param}).then((response)=> {
 
-                        if(response.data.flag){
-                            //请求成功
-                            //数据集和总数赋值给模型
-                            // response.data  =》Result
-                            // response.data.data =》PageResult
-                            this.dataList=response.data.data.rows;
-                            this.pagination.total = response.data.data.total;
-                        }else{
-                            //请求失败
+                    // Get JWT token from cookies
+                    const token = this.getCookie('jwtToken');
+                    if (!token) {
+                        this.$message.error("Not authenticated.");
+                        return;
+                    }
+
+                    // Use axios to send a POST request with URL encoded form data
+                    axios.get(this.backend_url + "/api/courts", {
+                        headers: {
+                            'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                        }
+                    }).then((response) => {
+                        this.dialogFormVisible = false;
+                        if (response.data.flag) {
+                            this.$message.success(response.data.message);
+                        } else {
                             this.$message.error(response.data.message);
                         }
-                    }).catch((error)=>{
+                    }).catch((error) => {
                         console.log(error);
                         this.showMessage(error);
+                    }).finally(() => {
+                        // this.findPage();
+                        this.showMessage("get courts data successful");
                     });
                 },
                 // 重置表单
