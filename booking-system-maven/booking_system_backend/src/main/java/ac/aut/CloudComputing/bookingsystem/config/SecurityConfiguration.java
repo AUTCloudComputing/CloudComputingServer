@@ -39,7 +39,8 @@ public class SecurityConfiguration  {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers("/api/users/register", 
-                        		"/api/users/login", 
+                        		"/api/users/login",
+                                "/api/courts",
 //                        		"/api/users/**", // debug switch
 //                        		"/api/orders/**",  // debug switch
                                 "/swagger-ui/**",

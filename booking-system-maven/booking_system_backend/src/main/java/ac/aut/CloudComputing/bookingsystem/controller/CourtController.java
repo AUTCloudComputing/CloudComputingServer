@@ -40,9 +40,9 @@ public class CourtController {
     public ResponseEntity<CourtRspDTO> createCourt(
 
             @RequestParam("courtName") String courtName,
-            @RequestParam("imageFile") MultipartFile image,
+            @RequestParam(value = "imageFile", required = false) MultipartFile image,
             @RequestParam("status") int status,
-            @RequestParam("description") String description
+            @RequestParam(value = "description", required = false) String description
             ) throws IOException {
     	
     	 CourtReqDTO courtRequest = new CourtReqDTO();
@@ -75,26 +75,25 @@ public class CourtController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')") 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{courtId}")
     @ApiOperation(value = "Update an court")
     public ResponseEntity<CourtRspDTO> updateCourt(@PathVariable @ApiParam("court ID") String courtId
     		,
             @RequestParam("courtName") String courtName,
-            @RequestParam("imageFile") MultipartFile image,
+            @RequestParam(value = "imageFile", required = false) MultipartFile image,
             @RequestParam("status") int status,
-            @RequestParam("description") String description
-            ) throws IOException {
-    	
-    	 CourtReqDTO courtRequest = new CourtReqDTO();
-    	    courtRequest.setCourtName(courtName);
-    	    courtRequest.setImageFile(image);
-    	    courtRequest.setStatus(status);
-    	    courtRequest.setDescription(description);
-    	    
-    	CourtRspDTO updatedcourt = courtService.updateCourt(courtId, courtRequest);
-        if (updatedcourt != null) {
-            return ResponseEntity.ok(updatedcourt);
+            @RequestParam(value = "description", required = false) String description
+    ) throws IOException {
+        CourtReqDTO courtRequest = new CourtReqDTO();
+        courtRequest.setCourtName(courtName);
+        courtRequest.setImageFile(image);
+        courtRequest.setStatus(status);
+        courtRequest.setDescription(description);
+
+        CourtRspDTO updatedCourt = courtService.updateCourt(courtId, courtRequest);
+        if (updatedCourt != null) {
+            return ResponseEntity.ok(updatedCourt);
         } else {
             return ResponseEntity.notFound().build();
         }
