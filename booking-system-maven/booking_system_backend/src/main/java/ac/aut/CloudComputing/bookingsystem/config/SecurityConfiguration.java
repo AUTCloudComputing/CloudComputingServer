@@ -38,9 +38,9 @@ public class SecurityConfiguration  {
     	//todo: should care about /api/**/**, if we can replace with anyRequest()
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .antMatchers("/api/users/register", 
+                        .antMatchers("/api/users/register",
                         		"/api/users/login",
-                                "/api/courts",
+//                                "/api/courts",
 //                        		"/api/users/**", // debug switch
 //                        		"/api/orders/**",  // debug switch
                                 "/swagger-ui/**",

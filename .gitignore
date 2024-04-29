@@ -33,3 +33,4 @@ booking-system/src/main/resources/application.yml
 booking-system-maven/booking-system/src/main/resources/application.yml
 booking-system-maven/booking_system_backend/src/main/resources/application.yml
 booking-system-maven/booking_system_backend/target/classes/application.yml
+booking-system-maven/web_app/target/tomcat/logs/access_log.2024-04-29

@@ -532,7 +532,7 @@
                     }
 
                     // Prepare URLSearchParams to properly encode the data for sending as form data
-                    const params = new URLSearchParams();
+                    const params = new FormData();
                     params.append('courtName', this.formData.courtName);
                     params.append('status', this.formData.status.toString());  // Ensure status is sent as a string
                     if (this.formData.description) {  // Only append description if it is provided
@@ -542,7 +542,8 @@
                     // Use axios to send a POST request with URL encoded form data
                     axios.post(this.backend_url + "/api/courts", params, {
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',  // Set content type as URL encoded form
+                            'crossDomain': true,
+                            'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
                             'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
                         }
                     }).then((response) => {
