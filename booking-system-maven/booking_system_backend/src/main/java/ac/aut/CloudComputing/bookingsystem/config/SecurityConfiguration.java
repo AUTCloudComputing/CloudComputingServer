@@ -40,7 +40,7 @@ public class SecurityConfiguration  {
                 .authorizeHttpRequests(requests -> requests
                         .antMatchers("/api/users/register",
                         		"/api/users/login",
-//                                "/api/courts",
+//                                "/api/courts", // debug switch
 //                        		"/api/users/**", // debug switch
 //                        		"/api/orders/**",  // debug switch
                                 "/swagger-ui/**",
