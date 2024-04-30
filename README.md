@@ -18,9 +18,18 @@ Decoupling Services:  Restful API design:
 - Administrator: DELETE /api/courts/{id}
 
 Security: Spring Security and JWT
-Host: cloudcomputingserver-env-1.eba-kts3pt8t.us-east-1.elasticbeanstalk.com
 
-API document: Swagger, document URL for loalhost: http://localhost:8082/swagger-ui/index.html
+Host Mapping in development environment: 
+
+
+
+
+
+host | mock host | description
+-|-|-
+127.0.0.1|              chenyilong.com | mock host
+
+API document: Swagger, document URL for localhost: http://chenyilong.com:5000/swagger-ui/index.html
 
 Deployment on the cloud: deploy client side and back end (Restful API) on  AWS Lambda.
 
@@ -32,9 +41,87 @@ Languages/Framework:  Java for Backend Service, and JS/ React/Vue to develop web
 
 Code on GitHub:  https://github.com/AUTCloudComputing/CloudComputingServer 
 
-Code on GitHub:  https://github.com/AUTCloudComputing/CloudComputingWebApp 
-
  
+ 
+## nginx config
+
+
+mock host | description
+-|-
+chenyilong.com/api/ | backend/server host
+chenyilong.com/ | frontend/web host
+
+
+Nginx Config: 
+
+start nginx
+
+ ```shell
+nginx
+ ```
+
+
+
+reload nginx
+
+
+ ```shell
+sudo nginx -s stop && sudo nginx
+
+ ```
+
+
+ ```Java
+# Load dynamic module configurations
+include /usr/local/etc/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include mime.types;
+    default_type application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+
+    # Universal server for handling both backend API and front-end
+    server {
+        listen 80;
+        server_name chenyilong.com;
+
+        # Location block for API
+        location /api/ {
+            # CORS headers
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+
+            # Set headers for proxying
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+            # Proxy pass to backend API
+            proxy_pass http://127.0.0.1:5000;  # API server
+        }
+
+        # Location block for front-end
+        location / {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+            # Proxy pass to front-end
+            proxy_pass http://127.0.0.1:8082;  # front-end server 
+        }
+    }
+}
+
+ ```
+
+
 ## CICD
 
 To Do LIST:
