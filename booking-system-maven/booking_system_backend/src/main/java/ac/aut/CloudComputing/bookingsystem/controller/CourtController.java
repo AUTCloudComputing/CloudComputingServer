@@ -38,13 +38,11 @@ public class CourtController {
     @PostMapping
     @ApiOperation(value = "Create an court")
     public ResponseEntity<CourtRspDTO> createCourt(
-
             @RequestParam("courtName") String courtName,
             @RequestParam(value = "imageFile", required = false) MultipartFile image,
             @RequestParam("status") int status,
             @RequestParam(value = "description", required = false) String description
             ) throws IOException {
-    	
     	 CourtReqDTO courtRequest = new CourtReqDTO();
     	    courtRequest.setCourtName(courtName);
     	    courtRequest.setImageFile(image);
