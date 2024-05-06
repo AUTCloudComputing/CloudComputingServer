@@ -1,5 +1,5 @@
 # CloudComputingServer
-![Blue Modern Badminton Tournament Facebook Cover](assets/Blue%20Modern%20Badminton%20Tournament%20Facebook%20Cover.gif)
+![Blue Modern Badminton Tournament Facebook Cover](booking-system-maven/web_app/src/main/webapp/img/logingBg.gif)
 
 Technical Introduction:
 Proposal type: Option B (develop a web application and deploy the application in the cloud)
