@@ -45,6 +45,8 @@ Code on GitHub:  https://github.com/AUTCloudComputing/CloudComputingServer
  
 ## nginx config
 
+![](assets/nginx_map.jpg)
+
 
 mock host | description
 -|-
