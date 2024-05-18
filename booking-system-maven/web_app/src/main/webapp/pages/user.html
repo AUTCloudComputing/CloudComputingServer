@@ -17,7 +17,12 @@
     <!-- 引入组件库 -->
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script src="../js/vue.js"></script>
-    <script src="../plugins/elementui/index.js"></script>
+<!--    <script src="../plugins/elementui/index.js"></script>-->
+    <script src="//unpkg.com/element-ui"></script>
+    <script src="//unpkg.com/element-ui/lib/umd/locale/en.js"></script>
+    <script>
+        ELEMENT.locale(ELEMENT.lang.en)
+    </script>
     <script src="../js/axios-0.18.0.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
 
@@ -119,7 +124,7 @@
                         <el-date-picker
                                 v-model="formData.birthday"
                                 type="date"
-                                placeholder="选择日期时间">
+                                placeholder="Select date and time">
                         </el-date-picker>
                     </div>
                 </div>
@@ -172,6 +177,28 @@
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
+
+                                    <el-row>
+                                        <el-col :span="24">
+                                            <el-form-item label="description">
+
+
+                                                <el-upload
+                                                        class="upload-demo"
+                                                        drag
+                                                        action="https://jsonplaceholder.typicode.com/posts/"
+                                                        multiple>
+                                                    <i class="el-icon-upload"></i>
+                                                    <div class="el-upload__text">Drag the file here, or <em>click to upload</em></div>.
+                                                    <div class="el-upload__tip" slot="tip">Only jpg/png files can be uploaded, and no more than 500kb</div>.
+                                                </el-upload
+
+
+
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+
                                 </el-form>
                             </el-tab-pane>
                             <el-tab-pane label="order information" name="second">
@@ -212,11 +239,11 @@
 
             <!-- 编辑标签弹层 -->
             <div class="add-form">
-                <el-dialog title="编辑用户" :visible.sync="dialogFormVisible4Edit">
+                <el-dialog title="Edit Court " :visible.sync="dialogFormVisible4Edit">
 
                     <template>
                         <el-tabs v-model="activeName" type="card">
-                            <el-tab-pane label="基本信息" name="first">
+                            <el-tab-pane label="Information" name="first">
                                 <el-form label-position="right" label-width="100px">
 
 
@@ -248,6 +275,30 @@
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
+
+
+                                    <el-row>
+                                        <el-col :span="24">
+                                            <el-form-item label="description">
+
+
+                                                    <el-upload
+                                                            class="upload-demo"
+                                                            drag
+                                                            action="https://jsonplaceholder.typicode.com/posts/"
+                                                            multiple>
+                                                        <i class="el-icon-upload"></i>
+                                                        <div class="el-upload__text">Drag the file here, or <em>click to upload</em></div>.
+                                                        <div class="el-upload__tip" slot="tip">Only jpg/png files can be uploaded, and no more than 500kb</div>.
+                                                    </el-upload
+
+
+
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+
+
                                 </el-form>
                             </el-tab-pane>
                             <el-tab-pane label="order list" name="second">
@@ -340,8 +391,8 @@
                     this.currentUser = response.data;
                     console.log("success", response.data);
                 } else {
-                    this.$message.error(response.statusText);
-                    this.$message.error("Not Data.");
+                    // this.$message.error(response.statusText);
+                    // this.$message.error("Not Data.");
                 }
             }).catch((error) => {
                 console.log(error);
@@ -457,6 +508,7 @@
                     description: description,
                     userId: this.currentUser.id,
                 };
+                this.formData.description = description;
 
                 console.log(orderData);
                 if (this.formData.description) {  // Only add description if provided
@@ -477,7 +529,7 @@
                             // Get JWT token from cookies
                             const token = this.getCookie('jwtToken');
                             if (!token) {
-                                this.$message.error("Not authenticated.");
+                                // this.$message.error("Not authenticated.");
                                 return;
                             }
 
@@ -498,7 +550,7 @@
                                 if (response.data.flag) {
 
                                 } else {
-                                    this.$message.error(response.data.message);
+                                    // this.$message.error(response.data.message);
                                 }
                             }).catch((error) => {
                                 console.log(error);
@@ -510,7 +562,7 @@
 
 
                     } else {
-                        this.$message.error(response.data.message);
+                        // this.$message.error(response.data.message);
                     }
                 }).catch((error) => {
                     console.log(error);
@@ -527,7 +579,7 @@
                     // Get JWT token from cookies
                     const token = this.getCookie('jwtToken');
                     if (!token) {
-                        this.$message.error("Not authenticated.");
+                        // this.$message.error("Not authenticated.");
                         return;
                     }
 
@@ -550,7 +602,7 @@
                         if (response.data) {
                             this.$message.success(response.data.message);
                         } else {
-                            this.$message.error(response.data.message);
+                            // this.$message.error(response.data.message);
                         }
                     }).catch((error) => {
                         console.log(error);
@@ -565,7 +617,7 @@
                 // Get JWT token from cookies
                 const token = this.getCookie('jwtToken');
                 if (!token) {
-                    this.$message.error("Not authenticated.");
+                    // this.$message.error("Not authenticated.");
                     return;
                 }
 
@@ -588,7 +640,7 @@
                     if (response.data.flag) {
                         this.$message.success(response.data.message);
                     } else {
-                        this.$message.error(response.data.message);
+                        // this.$message.error(response.data.message);
                     }
                 }).catch((error) => {
                     console.log(error);
@@ -613,7 +665,7 @@
                 // Get JWT token from cookies
                 const token = this.getCookie('jwtToken');
                 if (!token) {
-                    this.$message.error("Not authenticated.");
+                    // this.$message.error("Not authenticated.");
                     return;
                 }
 
@@ -635,8 +687,8 @@
 
                         this.pagination.total = response.data.length;
                     } else {
-                        this.$message.error(response.statusText);
-                        this.$message.error("Not Data.");
+                        // this.$message.error(response.statusText);
+                        // this.$message.error("Not Data.");
                     }
                 }).catch((error) => {
                     console.log(error);
@@ -663,7 +715,7 @@
                     if (res.data.flag) {
                         this.tableData = res.data.data;
                     } else {
-                        this.$message.error(res.data.message);
+                        // this.$message.error(res.data.message);
                     }
                 }).catch((error) => {
                     console.log(error);
@@ -682,7 +734,7 @@
                 // Get JWT token from cookies
                 const token = this.getCookie('jwtToken');
                 if (!token) {
-                    this.$message.error("Not authenticated.");
+                    // this.$message.error("Not authenticated.");
                     return;
                 }
 
@@ -708,11 +760,11 @@
                         // 弹出编辑框
                         this.dialogFormVisible4Edit = true;
                     } else {
-                        this.$message.error("No Data.");
+                        // this.$message.error("No Data.");
                     }
                 }).catch((error) => {
                     console.log(error);
-                    this.$message.error(error.message || "Network Error");
+                    // this.$message.error(error.message || "Network Error");
                 }).finally(() => {
                     this.showMessage("Get courts data request completed.");
                 });
@@ -731,7 +783,7 @@
                         // Get JWT token from cookies
                         const token = this.getCookie('jwtToken');
                         if (!token) {
-                            this.$message.error("Not authenticated.");
+                            // this.$message.error("Not authenticated.");
                             return;
                         }
 
@@ -774,7 +826,7 @@
 
 
                             } else {
-                                this.$message.error(response.data.message);
+                                // this.$message.error(response.data.message);
                             }
                         }).catch((error) => {
                             console.log(error);
@@ -792,7 +844,7 @@
                     // Get JWT token from cookies
                     const token = this.getCookie('jwtToken');
                     if (!token) {
-                        this.$message.error("Not authenticated.");
+                        // this.$message.error("Not authenticated.");
                         return;
                     }
 
@@ -817,7 +869,7 @@
 
 
                         } else {
-                            this.$message.error(response.data.message);
+                            // this.$message.error(response.data.message);
                         }
                     }).catch((error) => {
                         console.log(error);
@@ -835,10 +887,10 @@
                 let errorMsg = error.response.data.message;
                 console.log(errorMsg); //正确
                 if (errorMsg != null) {
-                    this.$message.error(errorMsg);
+                    // this.$message.error(errorMsg);
                     return;
                 }
-                this.$message.error("网络异常");
+                // this.$message.error("网络异常");
             }
         }
     })
