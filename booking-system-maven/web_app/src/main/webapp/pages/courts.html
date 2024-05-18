@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badminton Booking System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-zinc-100 p-4">
+<div class="max-w-6xl mx-auto">
+
+    <!-- Table Section -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-8 p-4">
+        <h2 class="text-2xl font-bold mb-4">Court List</h2>
+        <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
+            <el-table-column type="index" align="center" label="序号"></el-table-column>
+            <el-table-column label="用户编号" align="center">
+                <template slot-scope="scope">
+                    <img :src="scope.row.image ? scope.row.image : './img/logingBg.gif'" alt="User Image" width="100">
+                </template>
+            </el-table-column>
+            <el-table-column prop="courtName" label="Court Name" align="center"></el-table-column>
+            <el-table-column label="Status" align="center">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.status == null ? 'NO SET' : scope.row.status == 1 ? 'available' : 'not available'}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="description" label="Description" align="center"></el-table-column>
+            <el-table-column label="Operations" align="center">
+                <template slot-scope="scope">
+                    <button class="bg-blue-500 text-white px-3 py-1 rounded mr-2" @click="handleUpdate(scope.row)">Edit</button>
+                    <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleDelete(scope.row)">Delete</button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </div>
+
+    <!-- Court Cards Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src="https://placehold.co/400x300" alt="Badminton Court" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h2 class="text-2xl font-bold mb-2">Playground1</h2>
+                <div class="flex justify-between items-center mb-4">
+                    <button class="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
+                    <button class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                </div>
+                <button class="w-full bg-green-500 text-white px-3 py-1 rounded">Order & Date</button>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src="https://placehold.co/400x300" alt="Badminton Court" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h2 class="text-2xl font-bold mb-2">Playground2</h2>
+                <div class="flex justify-between items-center mb-4">
+                    <button class="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
+                    <button class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                </div>
+                <button class="w-full bg-green-500 text-white px-3 py-1 rounded">Order & Date</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Section -->
+    <div class="max-w-sm mx-auto mt-8 bg-white p-4 shadow-lg rounded-lg">
+        <h2 class="text-xl font-bold mb-4">March 2023</h2>
+        <div class="grid grid-cols-7 gap-1 text-center">
+            <div class="font-bold">Sun</div>
+            <div class="font-bold">Mon</div>
+            <div class="font-bold">Tue</div>
+            <div class="font-bold">Wed</div>
+            <div class="font-bold">Thu</div>
+            <div class="font-bold">Fri</div>
+            <div class="font-bold">Sat</div>
+
+            <div class="py-1">1</div>
+            <div class="py-1">2</div>
+            <div class="py-1">3</div>
+            <div class="py-1">4</div>
+            <div class="py-1">5</div>
+            <div class="py-1">6</div>
+            <div class="py-1">7</div>
+            <div class="py-1">8</div>
+            <div class="py-1">9</div>
+            <div class="py-1">10</div>
+            <div class="py-1">11</div>
+            <div class="py-1">12</div>
+            <div class="py-1">13</div>
+            <div class="py-1">14</div>
+            <div class="py-1">15</div>
+            <div class="py-1">16</div>
+            <div class="py-1">17</div>
+            <div class="py-1">18</div>
+            <div class="py-1">19</div>
+            <div class="py-1">20</div>
+            <div class="py-1">21</div>
+            <div class="py-1">22</div>
+            <div class="py-1">23</div>
+            <div class="py-1">24</div>
+            <div class="py-1">25</div>
+            <div class="py-1">26</div>
+            <div class="py-1">27</div>
+            <div class="py-1">28</div>
+            <div class="py-1">29</div>
+            <div class="py-1">30</div>
+            <div class="py-1">31</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Include Vue.js and Element UI -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '.max-w-6xl',
+        data: {
+            dataList: [] // This will hold the data for the table
+        },
+        methods: {
+            handleUpdate(row) {
+                // Handle the update operation
+            },
+            handleDelete(row) {
+                // Handle the delete operation
+            },
+            // Pagination query method (updated)
+            findPage(currentPage) {
+                if (currentPage) {
+                    this.pagination.currentPage = currentPage;
+                }
+                // Pagination conditions
+                let param = {
+                    currentPage: this.pagination.currentPage,
+                    pageSize: this.pagination.pageSize,
+                    queryString: this.pagination.queryString
+                };
+
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    this.$message.error("Not authenticated.");
+                    return;
+                }
+
+                // Use axios to send a POST request with URL encoded form data
+                axios.get(this.backend_url + "/api/courts", {
+                    headers: {
+                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                    }
+                }).then((response) => {
+                    this.dialogFormVisible = false;
+                    console.log(response)
+                    if (response.data && Array.isArray(response.data)) {
+                        // Request succeeded
+                        console.log("response.statusText", response.statusText)
+
+                        this.dataList = response.data;
+                        this.showMessage("success", response.data.length);
+
+                        this.pagination.total = response.data.length;
+                    } else {
+                        this.$message.error(response.statusText);
+                        this.$message.error("No Data.");
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.showMessage(error);
+                }).finally(() => {
+                    // this.findPage();
+                    this.showMessage("get courts data successful");
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

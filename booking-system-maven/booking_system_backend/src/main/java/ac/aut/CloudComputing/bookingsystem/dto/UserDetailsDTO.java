@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import ac.aut.CloudComputing.bookingsystem.service.GrantedAuthoritySerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,22 +45,14 @@ public class UserDetailsDTO implements UserDetails{
 
 
     @Override
+    @JsonIgnore //If the authorities field is not necessary for the OrderDTO, we can simply ignore it during serialization.
+//    @JsonSerialize(contentUsing = GrantedAuthoritySerializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         // 角色集合
         List<GrantedAuthority> authorities = new ArrayList<>();
         // 角色必须以`ROLE_`开头，数据库中没有，则在这里加
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-
-        
-        //
-        // 添加用户拥有的多个角色
-//        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-//        Set<Role> roles = user.getRoles();
-//        for (Role role : roles) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
-//        }
-        
     	return authorities;
     }
 //

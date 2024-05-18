@@ -7,7 +7,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-04-29T17:24:39+1200",
+    date = "2024-05-18T13:52:28+1200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.3 (Oracle Corporation)"
 )
 public class CourtMapperImpl implements CourtMapper {

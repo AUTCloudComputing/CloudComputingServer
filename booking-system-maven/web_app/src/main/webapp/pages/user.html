@@ -1,529 +1,529 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- 页面meta -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>booking system</title>
-        <meta name="description" content="booking system">
-        <meta name="keywords" content="booking system">
-        <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
-        <!-- 引入样式 -->
-        <link rel="stylesheet" href="../plugins/elementui/index.css">
-        <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../css/style.css">
-        <!-- 引入组件库 -->
-        <script type="text/javascript" src="../js/jquery.min.js"></script>
-        <script src="../js/vue.js"></script>
-        <script src="../plugins/elementui/index.js"></script>
-        <script src="../js/axios-0.18.0.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>booking system</title>
+    <meta name="description" content="booking system">
+    <meta name="keywords" content="booking system">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-        <style>
-            .avatar-uploader .el-upload {
-                border: 1px dashed #d9d9d9;
-                border-radius: 6px;
-                cursor: pointer;
-                position: relative;
-                overflow: hidden;
-            }
-            .avatar-uploader .el-upload:hover {
-                border-color: #409EFF;
-            }
-            .avatar-uploader-icon {
-                font-size: 28px;
-                color: #8c939d;
-                width: 178px;
-                height: 178px;
-                line-height: 178px;
-                text-align: center;
-            }
-            .avatar {
-                width: 178px;
-                height: 178px;
-                display: block;
-            }
-            .datatable {
-                position: relative;
-                box-sizing: border-box;
-                -webkit-box-flex: 1;
-                width: 100%;
-                max-width: 100%;
-                font-size: 14px;
-                color: rgb(96, 98, 102);
-                overflow: hidden;
-                flex: 1 1 0%;
-            }
-            .datatable td, .datatable th {
-                padding: 12px 0;
-                min-width: 0;
-                -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-                text-overflow: ellipsis;
-                vertical-align: middle;
-                position: relative;
-                text-align: left;
-            }
-        </style>
-    </head>
-    <body class="hold-transition">
-        <div id="app">
-            <div class="content-header">
-                <h1>用户管理<small>系统设置</small></h1>
-                <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>系统设置</el-breadcrumb-item>
-                    <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-                </el-breadcrumb>
+    <!-- 引入组件库 -->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+
+        .datatable {
+            position: relative;
+            box-sizing: border-box;
+            -webkit-box-flex: 1;
+            width: 100%;
+            max-width: 100%;
+            font-size: 14px;
+            color: rgb(96, 98, 102);
+            overflow: hidden;
+            flex: 1 1 0%;
+        }
+
+        .datatable td, .datatable th {
+            padding: 12px 0;
+            min-width: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            position: relative;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="hold-transition">
+<div id="app">
+    <div class="content-header">
+        <h1>Badminton booking system<small>Courts page</small></h1>
+        <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
+            <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+            <el-breadcrumb-item>court</el-breadcrumb-item>
+            <el-breadcrumb-item>court management</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+    <div class="app-container">
+        <div class="box">
+
+            <div class="filter-container">
+                <el-input placeholder="court information" v-model="pagination.queryString" style="width: 200px;"
+                          class="filter-item" @keyup.enter.native="handleFilter"></el-input>
+                <el-button @click="findPage(1)" class="dalfBut">Search</el-button>
+                <el-button type="primary" class="butT" @click="handleCreate()">Add New Court</el-button>
             </div>
-            <div class="app-container">
-                <div class="box">
-                    <div class="filter-container">
-                        <el-input placeholder="档案号/姓名" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-                        <el-button @click="findPage(1)" class="dalfBut">查询</el-button>
-                        <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
+
+
+
+            <!-- Court Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div v-for="court in dataList" :key="court.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <img :src="court.image ? court.image : './../img/logingBg.gif'" alt="Badminton Court"
+                         class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h2 class="text-2xl font-bold mb-2">{{ court.courtName }}</h2>
+                        <h2 class="text-2xl font-bold mb-2">{{ court.description }}</h2>
+                        <div class="flex justify-between items-center mb-4">
+                            <button class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit Court
+                            </button>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleCourtDelete(court)">
+                                Delete Court
+                            </button>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleOrderDelete(court)">
+                                Cancel Order
+                            </button>
+                        </div>
+                        <button class="w-full bg-green-500 text-white px-3 py-1 rounded" @click="handleNewOrder(court)">
+                            Order & Date
+                        </button>
+                        <el-date-picker
+                                v-model="formData.birthday"
+                                type="date"
+                                placeholder="选择日期时间">
+                        </el-date-picker>
                     </div>
-
-                    <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
-                        <el-table-column type="index" align="center" label="序号"></el-table-column>
-                        <el-table-column prop="id" label="用户编号" align="center"></el-table-column>
-                        <el-table-column prop="courtName" label="courtName" align="center"></el-table-column>
-                        <!--- gender 性别 适用性别 -->
-                        <el-table-column label="status" align="center">
-                            <template slot-scope="scope">
-                                <span>{{ scope.row.status == null ? 'NO SET' : scope.row.status == 1 ? 'avaiable' : 'not avaiable'}}</span>
-                            </template>
-                        </el-table-column>
-
-                        <el-table-column  id="rowgender" label="生日" align="center">
-                            <template slot-scope="scope">
-                                <span>{{ scope.row.birthday | dateTransform }}</span>
-                            </template>
-                        </el-table-column>
-
-                        <el-table-column prop="telephone" label="联系电话" align="center"></el-table-column>
-                        <el-table-column prop="password" label="密码" align="center"></el-table-column>
-                        <el-table-column prop="description" label="description" align="center"></el-table-column>
-                        <el-table-column label="是否启用" align="center">
-                            <template slot-scope="scope">
-                                <span>{{ scope.row.station == null ? '是' : scope.row.station == '1' ? '是' : '否'}}</span>
-                            </template>
-                        </el-table-column>
-
-                        <el-table-column label="操作" align="center">
-                            <template slot-scope="scope">
-                                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)" >编辑</el-button>
-                                <el-button size="mini" type="danger" @click="handleDelete(scope.row)" >删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-
-                    <div class="pagination-container">
-                        <el-pagination
-                            class="pagiantion"
-                            @current-change="handleCurrentChange"
-                            :current-page="pagination.currentPage"
-                            :page-size="pagination.pageSize"
-                            layout="total, prev, pager, next, jumper"
-                            :total="pagination.total">
-                        </el-pagination>
-                    </div>
-
-                    <!-- 新增标签弹层 -->
-                    <div class="add-form">
-                        <el-dialog title="新增用户" :visible.sync="dialogFormVisible">
-
-                            <template>
-                                <el-tabs v-model="activeName" type="card">
-                                    <el-tab-pane label="基本信息" name="first">
-                                        <el-form label-position="right" label-width="100px">
-                                            <el-row>
-                                                <el-col :span="12">
-                                                    <!-- //TODO:需要变成勾选框-->
-                                                    <el-form-item label="是否启用">
-
-
-                                                        <el-input v-model="formData.station"/>
-                                                    </el-form-item>
-                                                </el-col>
-                                                <el-col :span="12">
-                                                    <!-- //TODO:需要变成pick日期选择器，并且格式化给后端-->、
-                                                    <el-form-item label="生日">
-<!--                                                        <el-input v-model="formData.birthday"/>-->
-                                                    <el-date-picker
-                                                            v-model="formData.birthday"
-                                                            type="date"
-                                                            placeholder="选择日期">
-                                                    </el-date-picker>
-                                                    </el-form-item>
-
-
-                                                </el-col>
-<!--                                                //TODO: 体检插件展示-->
-                                                <!--                                                <div class="date">-->
-<!--                                                    <label>体检日期</label>-->
-<!--                                                    <i class="icon-date" ></i>-->
-<!--                                                    <input v-model="orderInfo.orderDate" type="text" class="picktime" readonly>-->
-<!--                                                </div>-->
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="12">
-                                                    <el-form-item label="status">
-                                                        <el-select v-model="formData.status">
-                                                            <el-option label="NOT SET" value=0></el-option>
-                                                            <el-option label="avaiable" value=1></el-option>
-                                                            <el-option label="not avaiable" value=2></el-option>
-                                                        </el-select>
-                                                    </el-form-item>
-                                                </el-col>
-                                                <el-col :span="12">
-                                                    <el-form-item label="courtName">
-                                                        <el-input v-model="formData.courtName"/>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="12">
-                                                    <el-form-item label="密码">
-                                                        <el-input v-model="formData.password"/>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-<!--                                            <el-row>-->
-<!--                                                <el-col :span="24">-->
-<!--                                                    <el-form-item label="上传图片">-->
-<!--                                                        &lt;!&ndash;-->
-<!--                                                          el-upload：上传组件-->
-<!--                                                          action：上传的提交地址-->
-<!--                                                          auto-upload：选中文件后是否自动上传-->
-<!--                                                          name：上传文件的名称，服务端可以根据名称获得上传的文件对象-->
-<!--                                                          show-file-list：是否显示已上传文件列表-->
-<!--                                                          on-success：文件上传成功时的钩子-->
-<!--                                                          before-upload：上传文件之前的钩子-->
-<!--                                                        &ndash;&gt;-->
-<!--                                                        <el-upload-->
-<!--                                                                class="avatar-uploader"-->
-<!--                                                                :action="backend_url+'/setmeal/upload.do'"-->
-<!--                                                                :auto-upload="autoUpload"-->
-<!--                                                                name="imgFile"-->
-<!--                                                                :show-file-list="false"-->
-<!--                                                                :on-success="handleAvatarSuccess"-->
-<!--                                                                :before-upload="beforeAvatarUpload">-->
-<!--                                                            &lt;!&ndash;用于上传图片预览&ndash;&gt;-->
-<!--                                                            <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-<!--                                                            &lt;!&ndash;用于展示上传图标&ndash;&gt;-->
-<!--                                                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-<!--                                                        </el-upload>-->
-<!--                                                    </el-form-item>-->
-<!--                                                </el-col>-->
-<!--                                            </el-row>-->
-                                            <el-row>
-                                                <el-col :span="24">
-                                                    <el-form-item label="联系电话">
-                                                        <el-input v-model="formData.telephone" type="textarea"></el-input>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="24">
-                                                    <el-form-item label="description">
-                                                        <el-input v-model="formData.description" type="textarea"></el-input>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-                                        </el-form>
-                                    </el-tab-pane>
-                                    <el-tab-pane label="order information" name="second">
-										<div class="checkScrol">
-											<table class="datatable">
-												<thead>
-												<tr>
-													<th>选择</th>
-													<th>角色序号</th>
-													<th>角色名称</th>
-													<th>角色关键字</th>
-                                                    <th>角色描述</th>
-												</tr>
-												</thead>
-												<tbody>
-												<tr v-for="c in tableData">
-													<td>
-														<input :id="c.id" v-model="checkgroupIds" type="checkbox" :value="c.id">
-													</td>
-													<td><label :for="c.id">{{c.id}}</label></td>
-													<td><label :for="c.id">{{c.name}}</label></td>
-                                                    <td><label :for="c.id">{{c.keyword}}</label></td>
-                                                    <td><label :for="c.id">{{c.description}}</label></td>
-												</tr>
-												</tbody>
-											</table>
-										</div>
-                                    </el-tab-pane>
-                                </el-tabs>
-                            </template>
-                            <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible = false">cancel</el-button>
-                                <el-button type="primary" @click="handleAdd()">confirm</el-button>
-                            </div>
-                        </el-dialog>
-                    </div>
-
-
-
-                    <!-- 编辑标签弹层 -->
-                    <div class="add-form">
-                        <el-dialog title="编辑用户" :visible.sync="dialogFormVisible4Edit">
-
-                            <template>
-                                <el-tabs v-model="activeName" type="card">
-                                    <el-tab-pane label="基本信息" name="first">
-                                        <el-form label-position="right" label-width="100px">
-                                            <el-row>
-                                                <el-col :span="12">
-                                                    <!-- //TODO:需要变成勾选框-->
-
-                                                    <el-form-item label="是否启用">
-                                                        <el-input v-model="formData.station"/>
-                                                    </el-form-item>
-                                                </el-col>
-                                                <el-col :span="12">
-                                                    <!-- //TODO:需要变成pick日期选择器，并且格式化给后端-->、
-
-
-
-                                                    <el-form-item label="生日">
-<!--                                                        <el-input v-model="formData.birthday"/>-->
-                                                        <el-date-picker
-                                                                v-model="formData.birthday"
-                                                                type="date"
-                                                                placeholder="选择日期">
-                                                        </el-date-picker>
-                                                    </el-form-item>
-                                                </el-col>
-                                                <!--                                                //TODO: 体检插件展示-->
-                                                <!--                                                <div class="date">-->
-                                                <!--                                                    <label>体检日期</label>-->
-                                                <!--                                                    <i class="icon-date" ></i>-->
-                                                <!--                                                    <input v-model="orderInfo.orderDate" type="text" class="picktime" readonly>-->
-                                                <!--                                                </div>-->
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="12">
-                                                    <el-form-item label="status">
-                                                        <el-select v-model="formData.status">
-                                                            <el-option label="NOT SET" value=0></el-option>
-                                                            <el-option label="avaiable" value=1></el-option>
-                                                            <el-option label="not avaiable" value=2></el-option>
-                                                        </el-select>
-                                                    </el-form-item>
-                                                </el-col>
-                                                <el-col :span="12">
-                                                    <el-form-item label="court name">
-                                                        <el-input v-model="formData.courtName"/>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="12">
-                                                    <el-form-item label="密码">
-                                                        <el-input v-model="formData.password"/>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-                                            <!--                                            <el-row>-->
-                                            <!--                                                <el-col :span="24">-->
-                                            <!--                                                    <el-form-item label="上传图片">-->
-                                            <!--                                                        &lt;!&ndash;-->
-                                            <!--                                                          el-upload：上传组件-->
-                                            <!--                                                          action：上传的提交地址-->
-                                            <!--                                                          auto-upload：选中文件后是否自动上传-->
-                                            <!--                                                          name：上传文件的名称，服务端可以根据名称获得上传的文件对象-->
-                                            <!--                                                          show-file-list：是否显示已上传文件列表-->
-                                            <!--                                                          on-success：文件上传成功时的钩子-->
-                                            <!--                                                          before-upload：上传文件之前的钩子-->
-                                            <!--                                                        &ndash;&gt;-->
-                                            <!--                                                        <el-upload-->
-                                            <!--                                                                class="avatar-uploader"-->
-                                            <!--                                                                :action="backend_url+'/setmeal/upload.do'"-->
-                                            <!--                                                                :auto-upload="autoUpload"-->
-                                            <!--                                                                name="imgFile"-->
-                                            <!--                                                                :show-file-list="false"-->
-                                            <!--                                                                :on-success="handleAvatarSuccess"-->
-                                            <!--                                                                :before-upload="beforeAvatarUpload">-->
-                                            <!--                                                            &lt;!&ndash;用于上传图片预览&ndash;&gt;-->
-                                            <!--                                                            <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-                                            <!--                                                            &lt;!&ndash;用于展示上传图标&ndash;&gt;-->
-                                            <!--                                                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-                                            <!--                                                        </el-upload>-->
-                                            <!--                                                    </el-form-item>-->
-                                            <!--                                                </el-col>-->
-                                            <!--                                            </el-row>-->
-                                            <el-row>
-                                                <el-col :span="24">
-                                                    <el-form-item label="联系电话">
-                                                        <el-input v-model="formData.telephone" type="textarea"></el-input>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col :span="24">
-                                                    <el-form-item label="description">
-                                                        <el-input v-model="formData.description" type="textarea"></el-input>
-                                                    </el-form-item>
-                                                </el-col>
-                                            </el-row>
-                                        </el-form>
-                                    </el-tab-pane>
-                                    <el-tab-pane label="角色信息" name="second">
-                                        <div class="checkScrol">
-                                            <table class="datatable">
-                                                <thead>
-                                                <tr>
-                                                    <th>选择</th>
-                                                    <th>角色序号</th>
-                                                    <th>角色名称</th>
-                                                    <th>角色关键字</th>
-                                                    <th>角色描述</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr v-for="c in tableData">
-                                                    <td>
-                                                        <input :id="c.id" v-model="checkgroupIds" type="checkbox" :value="c.id">
-                                                    </td>
-                                                    <td><label :for="c.id">{{c.id}}</label></td>
-                                                    <td><label :for="c.id">{{c.name}}</label></td>
-                                                    <td><label :for="c.id">{{c.keyword}}</label></td>
-                                                    <td><label :for="c.id">{{c.description}}</label></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </el-tab-pane>
-                                </el-tabs>
-                            </template>
-                            <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
-                                <el-button type="primary" @click="handleEdit()">确定</el-button>
-                            </div>
-                        </el-dialog>
-                    </div>
-
-
-
                 </div>
             </div>
+
+            <div class="pagination-container">
+                <el-pagination
+                        class="pagiantion"
+                        @current-change="handleCurrentChange"
+                        :current-page="pagination.currentPage"
+                        :page-size="pagination.pageSize"
+                        layout="total, prev, pager, next, jumper"
+                        :total="pagination.total">
+                </el-pagination>
+            </div>
+
+            <!-- 新增标签弹层 -->
+            <div class="add-form">
+                <el-dialog title="Add new court" :visible.sync="dialogFormVisible">
+
+                    <template>
+                        <el-tabs v-model="activeName" type="card">
+                            <el-tab-pane label="court information" name="first">
+                                <el-form label-position="right" label-width="100px">
+
+
+                                    <el-row>
+                                        <el-col :span="12">
+                                            <el-form-item label="status">
+                                                <el-select v-model="formData.status">
+                                                    <el-option label="NOT SET" value=0></el-option>
+                                                    <el-option label="avaiable" value=1></el-option>
+                                                    <el-option label="not avaiable" value=2></el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <el-form-item label="courtName">
+                                                <el-input v-model="formData.courtName"/>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+
+
+
+                                    <el-row>
+                                        <el-col :span="24">
+                                            <el-form-item label="description">
+                                                <el-input v-model="formData.description" type="textarea"></el-input>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-tab-pane>
+                            <el-tab-pane label="order information" name="second">
+                                <div class="checkScrol">
+                                    <table class="datatable">
+                                        <thead>
+                                        <tr>
+                                            <th>选择</th>
+                                            <th>角色序号</th>
+                                            <th>角色名称</th>
+                                            <th>角色关键字</th>
+                                            <th>角色描述</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="c in tableData">
+                                            <td>
+                                                <input :id="c.id" v-model="checkgroupIds" type="checkbox" :value="c.id">
+                                            </td>
+                                            <td><label :for="c.id">{{c.id}}</label></td>
+                                            <td><label :for="c.id">{{c.name}}</label></td>
+                                            <td><label :for="c.id">{{c.keyword}}</label></td>
+                                            <td><label :for="c.id">{{c.description}}</label></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </template>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">cancel</el-button>
+                        <el-button type="primary" @click="handleAdd()">confirm</el-button>
+                    </div>
+                </el-dialog>
+            </div>
+
+
+            <!-- 编辑标签弹层 -->
+            <div class="add-form">
+                <el-dialog title="编辑用户" :visible.sync="dialogFormVisible4Edit">
+
+                    <template>
+                        <el-tabs v-model="activeName" type="card">
+                            <el-tab-pane label="基本信息" name="first">
+                                <el-form label-position="right" label-width="100px">
+
+
+                                    <el-row>
+                                        <el-col :span="12">
+                                            <el-form-item label="status">
+                                                <el-select v-model="formData.status">
+                                                    <el-option label="NOT SET" value=0></el-option>
+                                                    <el-option label="avaiable" value=1></el-option>
+                                                    <el-option label="not avaiable" value=2></el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <el-form-item label="court name">
+                                                <el-input v-model="formData.courtName"/>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+
+
+
+
+
+                                    <el-row>
+                                        <el-col :span="24">
+                                            <el-form-item label="description">
+                                                <el-input v-model="formData.description" type="textarea"></el-input>
+                                            </el-form-item>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-tab-pane>
+                            <el-tab-pane label="order list" name="second">
+                                <div class="checkScrol">
+                                    <table class="datatable">
+                                        <thead>
+                                        <tr>
+                                            <th>选择</th>
+                                            <th>角色序号</th>
+                                            <th>角色名称</th>
+                                            <th>角色关键字</th>
+                                            <th>角色描述</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="c in tableData">
+                                            <td>
+                                                <input :id="c.id" v-model="checkgroupIds" type="checkbox" :value="c.id">
+                                            </td>
+                                            <td><label :for="c.id">{{c.id}}</label></td>
+                                            <td><label :for="c.id">{{c.name}}</label></td>
+                                            <td><label :for="c.id">{{c.keyword}}</label></td>
+                                            <td><label :for="c.id">{{c.description}}</label></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </template>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible4Edit = false">Cancel</el-button>
+                        <el-button type="primary" @click="handleEdit()">Confirm</el-button>
+                    </div>
+                </el-dialog>
+            </div>
+
+
         </div>
-    </body>
+    </div>
+</div>
+</body>
 
-    <script>
-        var vue = new Vue({
-            el: '#app',
-            data:{
-                autoUpload:true,//自动上传
-                imageUrl:null,//模型数据，用于上传图片完成后图片预览
-                activeName:'first',//添加/编辑窗口Tab标签名称
-                pagination: {//分页相关属性
-                    currentPage: 1,
-                    pageSize:10,
-                    total:100,
-                    queryString:null,
-                },
-                dataList: [],//列表数据
-                formData: {},//表单数据
-                tableData:[],//添加表单窗口中角色列表数据
-                checkgroupIds:[],//添加表单窗口中角色复选框对应id
-                dialogFormVisible: false,//控制添加窗口显示/隐藏
-                dialogFormVisible4Edit:false,
-                backend_url:"http://chenyilong.com"
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            autoUpload: true,//自动上传
+            imageUrl: null,//模型数据，用于上传图片完成后图片预览
+            activeName: 'first',//添加/编辑窗口Tab标签名称
+            pagination: {//分页相关属性
+                currentPage: 1,
+                pageSize: 10,
+                total: 100,
+                queryString: null,
             },
-            created() {
-                const token = this.getCookie('jwtToken');
-                console.log("Token on role.html:", token);
+            dataList: [],//列表数据
+            formData: {},//表单数据
+            tableData: [],//添加表单窗口中角色列表数据
+            checkgroupIds: [],//添加表单窗口中角色复选框对应id
+            dialogFormVisible: false,//控制添加窗口显示/隐藏
+            dialogFormVisible4Edit: false,
+            backend_url: "http://chenyilong.com",
+            currentUser: null,
+            currentCourtId: null
 
-                if (!token) {
-                    console.error("No token found in cookies.");
-                    this.$message.error("Not authenticated.");
-                } else {
-                    this.showMessage("Token found: " + token);
+        },
+        // Hook function, executed automatically after the initialization of the VUE object is complete
+        created() {
+            this.findPage();
+
+            // Get JWT token from cookies
+            const token = this.getCookie('jwtToken');
+            if (!token) {
+                this.$message.error("Not authenticated.");
+                return;
+            }
+            // Use axios to send a POST request with URL encoded form data
+            axios.get(this.backend_url + "/api/users/me", {
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
                 }
-            },
-            filters: {
-                dateTransform: (value) => {
-                    // let index = value.lastIndexOf('.');
-                    // let result = value.substr(0, index);
-                    console.log(value);
-                    if (value == null) {
-                        return "未设置";
-                    }
+            }).then((response) => {
+                console.log(response)
+                if (response.data) {
+                    //请求成功
+                    //数据集和总数赋值给模型
+                    console.log("response.statusText", response.statusText)
+
+                    this.currentUser = response.data;
+                    console.log("success", response.data);
+                } else {
+                    this.$message.error(response.statusText);
+                    this.$message.error("Not Data.");
+                }
+            }).catch((error) => {
+                console.log(error);
+                this.showMessage(error);
+            }).finally(() => {
+                // this.findPage();
+                this.showMessage("get user data successful");
+            });
+        },
+        filters: {
+            dateTransform: (value) => {
+                // let index = value.lastIndexOf('.');
+                // let result = value.substr(0, index);
+                console.log(value);
+                if (value == null) {
+                    return "未设置";
+                }
 // return value;
 //*one more thing*
 
-                    <!--- TODO:  总结时间戳处理方法-->
-                    //https://forums.asp.net/t/1987249.aspx?How+can+i+convert+Date+1365715800000+format+to+MM+dd+yyyy
-                    var result1 = moment(value).format("YYYY-MM-DD"); //json string
+                <!--- TODO:  总结时间戳处理方法-->
+                //https://forums.asp.net/t/1987249.aspx?How+can+i+convert+Date+1365715800000+format+to+MM+dd+yyyy
+                var result1 = moment(value).format("YYYY-MM-DD"); //json string
 
-                    // var date = new Date(long.Parse(ticks));
-                    // let result1 = date.toISOString().slice(0, 10);
+                // var date = new Date(long.Parse(ticks));
+                // let result1 = date.toISOString().slice(0, 10);
 
-                    // let formatDate = value.toISOString().slice(0, 10);
-                    console.log(value + "----"  + "-----" + result1);
-                    return result1;
-                },
+                // let formatDate = value.toISOString().slice(0, 10);
+                console.log(value + "----" + "-----" + result1);
+                return result1;
+            },
+        },
+        methods: {
+            getCookie(name) {
+                let matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                return matches ? decodeURIComponent(matches[1]) : undefined;
+            },
+            // handleUpdate(court) {
+            //     // Handle the update operation
+            //     alert('Edit: ' + court.courtName);
+            // },
+            // handleDelete(court) {
+            //     // Handle the delete operation
+            //     alert('Delete: ' + court.courtName);
+            // },
+
+            handleSizeChange(size) {
+                this.pagination.pageSize = size;
+                this.findPage(this.pagination.currentPage);
+            },
+            // handleCurrentChange(page) {
+            //     this.pagination.currentPage = page;
+            //     this.findPage(this.pagination.currentPage);
+            // },
+            //图片上传完成后自动执行
+            handleAvatarSuccess(response, file, fileList) {
+                // 与axios的请求回调参数不同，这里response <==> Result
+                this.imageUrl = response.data;
+                this.$message({
+                    message: response.message,
+                    type: response.flag ? 'success' : 'error'
+                });
+                //设置模型数据（图片名称），后续提交ajax请求时会提交到后台最终保存到数据库
+                this.formData.img = response.data;
             },
 
 
+            //上传图片之前执行
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+                if (!isJPG) {
+                    this.$message.error('上传用户图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传用户图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            handleNewOrder(court) {
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    this.$message.error("Not authenticated.");
+                    return;
+                }
 
-            methods: {
-                getCookie(name) {
-                    let matches = document.cookie.match(new RegExp(
-                        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-                    ));
-                    return matches ? decodeURIComponent(matches[1]) : undefined;
-                },
-				//图片上传完成后自动执行
-                handleAvatarSuccess(response, file,fileList) {
-                    // 与axios的请求回调参数不同，这里response <==> Result
-                    this.imageUrl = response.data;
-                    this.$message({
-                        message: response.message,
-                        type: response.flag ? 'success' : 'error'
-                    });
-                    //设置模型数据（图片名称），后续提交ajax请求时会提交到后台最终保存到数据库
-                    this.formData.img = response.data;
-                },
+                // Prepare the date in the required format
+                const formatDate = (date) => {
+                    return new Date(date).toISOString();
+                };
+                var date;
+                    var now = new Date();
+                    date = this.formData.birthday;
+                //
+                // // 获取起始日期的日期元素，当年、当月、当日、当周(本月第一天是周几)
+                this.currentDay = date.getDate();
+                this.currentYear = date.getFullYear();
+                this.currentMonth = date.getMonth() + 1;
+                this.currentWeek = date.getDay(); // //本月第一天是周几（周日0 周六 6）2019-6-1 是周六
+                // console.log(this.currentYear+" "+" "+this.currentMonth+" "+this.currentDay+" week:"+this.currentWeek );
 
+                var description = this.currentUser.username + " ordered this court on " + this.currentYear+"/"+""+this.currentMonth+"/"+this.currentDay+ ".";
+                // Prepare the data object to send as JSON
+                const orderData = {
+                    courtId: court.id,
+                    status: 1,  // Ensure status is sent as a number
+                    businessId: "1000000",  // Business ID as a string
+                    orderDay: this.formData.birthday,  // Assuming birthday is the order day
+                    createDay: now,  // Assuming birthday is the order day
+                    description: description,
+                    userId: this.currentUser.id,
+                };
 
-                //上传图片之前执行
-                beforeAvatarUpload(file) {
-                    const isJPG = file.type === 'image/jpeg';
-                    const isLt2M = file.size / 1024 / 1024 < 2;
-                    if (!isJPG) {
-                        this.$message.error('上传用户图片只能是 JPG 格式!');
+                console.log(orderData);
+                if (this.formData.description) {  // Only add description if provided
+                    orderData.description = this.formData.description;
+                }
+
+                // Use axios to send a POST request with JSON data
+                axios.post(this.backend_url + "/api/orders", orderData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Include the token in the Authorization header
+                        'Content-Type': 'application/json'  // Set content type to JSON
                     }
-                    if (!isLt2M) {
-                        this.$message.error('上传用户图片大小不能超过 2MB!');
+                }).then((response) => {
+                    console.log(response);
+                    if (response.data) {
+                        this.$message.success("The order confirmation was successful!");
+
+                            // Get JWT token from cookies
+                            const token = this.getCookie('jwtToken');
+                            if (!token) {
+                                this.$message.error("Not authenticated.");
+                                return;
+                            }
+
+                            // Prepare URLSearchParams to properly encode the data for sending as form data
+                            const params = new FormData();
+                            params.append('courtName', court.courtName);
+                            params.append('status', court.status.toString());  // Ensure status is sent as a string
+                            params.append('description', response.data.description);
+
+                            // Use axios to send a POST request with URL encoded form data
+                            axios.put(this.backend_url + "/api/courts/" + court.id, params, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                }
+                            }).then((response) => {
+                                this.dialogFormVisible = false;
+                                if (response.data.flag) {
+
+                                } else {
+                                    this.$message.error(response.data.message);
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                                this.showMessage(error);
+                            }).finally(() => {
+                                this.findPage();
+                            });
+
+
+
+                    } else {
+                        this.$message.error(response.data.message);
                     }
-                    return isJPG && isLt2M;
-                },
-                //添加
-                handleEdit () {
-                    this.dialogFormVisible4Edit = false;
-                    axios.post(this.backend_url+"/user/edit.do?roleIds=" + this.checkgroupIds,this.formData).then((response)=> {
-                        this.dialogFormVisible = false;
-                        if(response.data.flag){
-                            this.$message.success( response.data.message);
-                        }else{
-                            this.$message.error(response.data.message);
-                        }
-                    }).catch((error)=>{
-                        console.log(error);
-                        this.showMessage(error);
-                    }).finally(()=> {
-                        this.findPage();
-                    });
-                },
-                handleAdd() {
+                }).catch((error) => {
+                    console.log(error);
+                    this.showMessage(error);
+                }).finally(() => {
+                    this.findPage();
+                });
+            },
+
+            //添加
+            handleEdit() {
+                this.dialogFormVisible4Edit = false;
+                this.formData;
                     // Get JWT token from cookies
                     const token = this.getCookie('jwtToken');
                     if (!token) {
@@ -540,14 +540,14 @@
                     }
 
                     // Use axios to send a POST request with URL encoded form data
-                    axios.post(this.backend_url + "/api/courts", params, {
+                    axios.put(this.backend_url + "/api/courts/" + this.currentCourtId, params, {
                         headers: {
                             'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
                             'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
                         }
                     }).then((response) => {
                         this.dialogFormVisible = false;
-                        if (response.data.flag) {
+                        if (response.data) {
                             this.$message.success(response.data.message);
                         } else {
                             this.$message.error(response.data.message);
@@ -558,19 +558,237 @@
                     }).finally(() => {
                         this.findPage();
                     });
-                },
-                //分页查询
-                findPage(currentPage) {
-                    if(currentPage){
-                        this.pagination.currentPage = currentPage;
-                    }
-                    //分页条件
-                    let param = {
-                        currentPage:this.pagination.currentPage,
-                        pageSize:this.pagination.pageSize,
-                        queryString:this.pagination.queryString
-                    };
 
+
+            },
+            handleAdd() {
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    this.$message.error("Not authenticated.");
+                    return;
+                }
+
+                // Prepare URLSearchParams to properly encode the data for sending as form data
+                const params = new FormData();
+                params.append('courtName', this.formData.courtName);
+                params.append('status', this.formData.status.toString());  // Ensure status is sent as a string
+                if (this.formData.description) {  // Only append description if it is provided
+                    params.append('description', this.formData.description);
+                }
+
+                // Use axios to send a POST request with URL encoded form data
+                axios.post(this.backend_url + "/api/courts", params, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                    }
+                }).then((response) => {
+                    this.dialogFormVisible = false;
+                    if (response.data.flag) {
+                        this.$message.success(response.data.message);
+                    } else {
+                        this.$message.error(response.data.message);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.showMessage(error);
+                }).finally(() => {
+                    this.findPage();
+                });
+            },
+            //分页查询
+            //分页查询
+            findPage(currentPage) {
+                if (currentPage) {
+                    this.pagination.currentPage = currentPage;
+                }
+                //分页条件
+                let param = {
+                    currentPage: this.pagination.currentPage,
+                    pageSize: this.pagination.pageSize,
+                    queryString: this.pagination.queryString
+                };
+
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    this.$message.error("Not authenticated.");
+                    return;
+                }
+
+                // Use axios to send a POST request with URL encoded form data
+                axios.get(this.backend_url + "/api/courts", {
+                    headers: {
+                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                    }
+                }).then((response) => {
+                    this.dialogFormVisible = false;
+                    console.log(response)
+                    if (response.data && Array.isArray(response.data)) {
+                        //请求成功
+                        //数据集和总数赋值给模型
+                        console.log("response.statusText", response.statusText)
+
+                        this.dataList = response.data;
+                        // this.showMessage("success", response.data.length);
+
+                        this.pagination.total = response.data.length;
+                    } else {
+                        this.$message.error(response.statusText);
+                        this.$message.error("Not Data.");
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.showMessage(error);
+                }).finally(() => {
+                    // this.findPage();
+                    this.showMessage("get courts data successful");
+                });
+            },
+
+            // 重置表单
+            resetForm() {
+                this.formData = {};
+                this.activeName = 'first';
+                this.checkgroupIds = [];
+                this.imageUrl = null;
+            },
+            // 弹出添加窗口
+            handleCreate() {
+                this.dialogFormVisible = true;
+                this.resetForm();
+                //TODO:  等待角色管理书写完毕，再进行设置，回写。
+                axios.get(this.backend_url + "/role/findAll.do").then((res) => {
+                    if (res.data.flag) {
+                        this.tableData = res.data.data;
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.showMessage(error);
+                });
+            },
+            // 弹出编辑窗口
+            handleUpdate(row) {
+                // 重置表单
+                this.resetForm();
+                this.checkgroupIds = [];
+                this.currentCourtId = row.id;
+                // 激活编辑框第一个tab
+                this.activeName = 'first';
+
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    this.$message.error("Not authenticated.");
+                    return;
+                }
+
+                // Use axios to send a GET request with URL encoded form data
+                axios.get(this.backend_url + "/api/courts/" + row.id, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                    }
+                }).then((response) => {
+                    console.log(response);
+
+                    // Check if response data exists and is correctly structured
+                    if (response) {
+                        // Request succeeded
+                        console.log("response.statusText", response.statusText);
+                        console.log(response.data);
+
+                        // Update the formData model with the received data
+                        this.formData = response.data;  // Correctly assign the data
+                        // can use showMessage with object , cannot append tail string.
+                        // this.showMessage("success", "Data retrieved successfully.response.data:", response.data);
+
+                        // 弹出编辑框
+                        this.dialogFormVisible4Edit = true;
+                    } else {
+                        this.$message.error("No Data.");
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.$message.error(error.message || "Network Error");
+                }).finally(() => {
+                    this.showMessage("Get courts data request completed.");
+                });
+            }
+            ,
+
+            //切换页码
+            handleCurrentChange(currentPage) {
+                this.pagination.currentPage = currentPage;
+                this.findPage();
+            },
+            handleOrderDelete(court) {
+                //alert(row.id);
+                this.$confirm("Confirm deleting the currently selected Order record?\n", "warning", {type: 'warning'}).then(() => {
+                    //点击确定按钮时只需此处代码
+                        // Get JWT token from cookies
+                        const token = this.getCookie('jwtToken');
+                        if (!token) {
+                            this.$message.error("Not authenticated.");
+                            return;
+                        }
+
+                        // Prepare URLSearchParams to properly encode the data for sending as form data
+                        const params = new FormData();
+                        params.append('courtName', court.courtName);
+                        params.append('status', court.status.toString());  // Ensure status is sent as a string
+                        params.append('description', "");
+
+                        // Use axios to send a POST request with URL encoded form data
+                        axios.put(this.backend_url + "/api/courts/" + court.id, params, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                            }
+                        }).then((response) => {
+                            this.dialogFormVisible = false;
+                            if (response.data) {
+                                this.$message.success("deleted the currently selected Order record");
+
+                                // Use axios to send a POST request with URL encoded form data
+                                axios.delete(this.backend_url + "/api/orders/" + court.orderId, params, {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                    }
+                                }).then((response) => {
+                                    this.dialogFormVisible = false;
+                                    if (response.data) {
+
+                                    } else {
+
+                                    }
+                                }).catch((error) => {
+                                    console.log(error);
+                                }).finally(() => {
+
+                                });
+
+
+
+                            } else {
+                                this.$message.error(response.data.message);
+                            }
+                        }).catch((error) => {
+                            console.log(error);
+                            this.showMessage(error);
+                        }).finally(() => {
+                            this.findPage();
+                        });
+
+                });
+            },
+            handleCourtDelete(court) {
+                //alert(row.id);
+                this.$confirm("Confirm deleting the currently selected Court?\n", "warning", {type: 'warning'}).then(() => {
+                    //点击确定按钮时只需此处代码
                     // Get JWT token from cookies
                     const token = this.getCookie('jwtToken');
                     if (!token) {
@@ -578,15 +796,26 @@
                         return;
                     }
 
+                    // Prepare URLSearchParams to properly encode the data for sending as form data
+                    const params = new FormData();
+                    params.append('courtName', court.courtName);
+                    params.append('status', court.status.toString());  // Ensure status is sent as a string
+                    params.append('description', "");
+
                     // Use axios to send a POST request with URL encoded form data
-                    axios.get(this.backend_url + "/api/courts", {
+                    axios.delete(this.backend_url + "/api/courts/" + court.id, {
                         headers: {
+                            'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
                             'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
                         }
                     }).then((response) => {
                         this.dialogFormVisible = false;
-                        if (response.data.flag) {
-                            this.$message.success(response.data.message);
+                        if (response.data) {
+                            this.$message.success("deleted the currently selected Court");
+
+
+
+
                         } else {
                             this.$message.error(response.data.message);
                         }
@@ -594,121 +823,24 @@
                         console.log(error);
                         this.showMessage(error);
                     }).finally(() => {
-                        // this.findPage();
-                        this.showMessage("get courts data successful");
-                    });
-                },
-                // 重置表单
-                resetForm() {
-                    this.formData = {};
-                    this.activeName='first';
-                    this.checkgroupIds = [];
-                    this.imageUrl = null;
-                },
-                // 弹出添加窗口
-                handleCreate() {
-                    this.dialogFormVisible = true;
-                    this.resetForm();
-                    //TODO:  等待角色管理书写完毕，再进行设置，回写。
-                    axios.get(this.backend_url+"/role/findAll.do").then((res)=> {
-                        if (res.data.flag) {
-                            this.tableData = res.data.data;
-                        } else {
-                            this.$message.error(res.data.message);
-                        }
-                    }).catch((error)=>{
-                        console.log(error);
-                        this.showMessage(error);
-                    });
-                },       
-                // 弹出编辑窗口
-                handleUpdate(row) {
-                    //重置表单
-                    this.resetForm();
-                    this.checkgroupIds=[];
-                    // 激活编辑框第一个tab
-                    this.activeName='first';
-                    //请求回显数据  检查组数据 关联的检查项id集和  所有的检查项
-                    //请求检查组数据
-                    axios.get(this.backend_url+"/user/findById.do?id="+row.id).then((response)=>{
-                        if(response.data.flag){
-                            //弹出编辑框
-                            this.dialogFormVisible4Edit = true;
-                            //更新模型-关联的检查组信息
-                            this.formData = response.data.data;
-                        } else {
-                            //失败消息提醒
-                            this.$message.error(response.data.message);
-                        }
-                    }).catch((error)=>{
-                        console.log(error);
-                        this.$message.error("网络异常");
+                        this.findPage();
                     });
 
-                    //请求检查项数据
-                    axios.get(this.backend_url+"/role/findAll.do").then((response)=>{
-                        if(response.data.flag){
-                            //更新模型-检查项数据
-                            this.tableData = response.data.data;
-                        }else{
-                            //失败消息提醒
-                            this.$message.error(response.data.message);
-                        }
-                    }).catch((error)=>{
-                        console.log(error);
-                        this.$message.error("网络异常");
-                    });
+                });
+            },
 
-                    //请求关联的检查项id集和
-                    axios.get(this.backend_url+"/user/findRoleIdsByUserId.do?id="+row.id).then((response)=>{
-                        if(response.data.flag){
-                            //更新模型-关联检查项id集合
-                            this.checkgroupIds = response.data.data;
-                        }else{
-                            //失败消息提醒
-                            this.$message.error(response.data.message);
-                        }
-                    }).catch((error)=>{
-                        console.log(error);
-                        this.$message.error("网络异常");
-                    });
-                },
-                //切换页码
-                handleCurrentChange(currentPage) {
-                    this.pagination.currentPage = currentPage;
-                    this.findPage();
-                },
-                handleDelete(row) {
-                    //alert(row.id);
-                    this.$confirm("确认删除当前选中记录吗？","提示",{type:'warning'}).then(()=>{
-                        //点击确定按钮时只需此处代码
-                        axios.post(this.backend_url+"/user/delete.do?id="+row.id).then((response)=>{
-                            if(response.data.flag){
-                                //成功
-                                this.$message.success(response.data.message);
-                                this.findPage();
-                            } else {
-                                // 失败
-                                this.$message.error(response.data.message);
-                            }
-                        }).catch((error)=>{
-                            this.showMessage(error);
-                        });
-                    });
-                },
-
-                //后台异常提示
-                showMessage(error) {
-                    console.log(error);
-                    let errorMsg = error.response.data.message;
-                    console.log(errorMsg); //正确
-                    if (errorMsg != null) {
-                        this.$message.error(errorMsg);
-                        return;
-                    }
-                    this.$message.error("网络异常");
+            //后台异常提示
+            showMessage(error) {
+                console.log(error);
+                let errorMsg = error.response.data.message;
+                console.log(errorMsg); //正确
+                if (errorMsg != null) {
+                    this.$message.error(errorMsg);
+                    return;
                 }
+                this.$message.error("网络异常");
             }
-        })
-    </script>
+        }
+    })
+</script>
 </html>

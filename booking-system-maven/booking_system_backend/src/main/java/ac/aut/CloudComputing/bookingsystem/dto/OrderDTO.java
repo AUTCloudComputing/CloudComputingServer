@@ -1,7 +1,9 @@
 package ac.aut.CloudComputing.bookingsystem.dto;
 
-import ac.aut.CloudComputing.bookingsystem.model.User;
-import ac.aut.CloudComputing.bookingsystem.model.Court;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperFieldModel;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTyped;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -13,21 +15,27 @@ public class OrderDTO {
 
     @Schema(description = "The unique identifier of the order")
     private String id;
- 
+
     @Schema(description = "The user associated with the order")
-    private UserDetailsDTO user;
-    
+    private String userId;
+//    private UserDetailsDTO user;
 
     @Schema(description = "The court ID associated with the order")
-    private String courtId; 
- 
+    private String courtId;
+
     @Schema(description = "The order day")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
     private Date orderDay;
 
     @Schema(description = "The cancel day")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
     private Date cancelDay;
 
     @Schema(description = "The create day")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
     private Date createDay;
 
     @Schema(description = "The business ID associated with the order")
@@ -38,5 +46,4 @@ public class OrderDTO {
 
     @Schema(description = "The status of the order", example = "1")
     private int status;
-
 }

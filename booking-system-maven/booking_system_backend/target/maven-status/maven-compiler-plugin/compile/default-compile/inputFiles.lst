@@ -8,6 +8,7 @@
 /Users/chenyilong/Documents/GitHub/CloudComputingServer/booking-system-maven/booking_system_backend/src/main/java/ac/aut/CloudComputing/bookingsystem/repository/CourtRepository.java
 /Users/chenyilong/Documents/GitHub/CloudComputingServer/booking-system-maven/booking_system_backend/src/main/java/ac/aut/CloudComputing/bookingsystem/repository/OrderRepository.java
 /Users/chenyilong/Documents/GitHub/CloudComputingServer/booking-system-maven/booking_system_backend/src/main/java/ac/aut/CloudComputing/bookingsystem/config/SwaggerConfig.java
+/Users/chenyilong/Documents/GitHub/CloudComputingServer/booking-system-maven/booking_system_backend/src/main/java/ac/aut/CloudComputing/bookingsystem/service/GrantedAuthoritySerializer.java
 /Users/chenyilong/Documents/GitHub/CloudComputingServer/booking-system-maven/booking_system_backend/src/main/java/ac/aut/CloudComputing/bookingsystem/model/User.java
 /Users/chenyilong/Documents/GitHub/CloudComputingServer/booking-system-maven/booking_system_backend/src/main/java/ac/aut/CloudComputing/bookingsystem/repository/UserRepositoryImpl.java
 /Users/chenyilong/Documents/GitHub/CloudComputingServer/booking-system-maven/booking_system_backend/src/main/java/ac/aut/CloudComputing/bookingsystem/config/SecurityConfiguration.java
