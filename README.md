@@ -1,7 +1,39 @@
 # CloudComputingServer
 ![Blue Modern Badminton Tournament Facebook Cover](booking-system-maven/web_app/src/main/webapp/img/logingBg.gif)
 
-Technical Introduction:
+## User's manual
+
+![Screen Shot 2024-05-18 at 19.08.45](assets/Screen%20Shot%202024-05-18%20at%2019.08.45.png)
+
+![Screen Shot 2024-05-18 at 19.09.17](assets/Screen%20Shot%202024-05-18%20at%2019.09.17.png)
+
+
+![Screen Shot 2024-05-18 at 19.09.22](assets/Screen%20Shot%202024-05-18%20at%2019.09.22.png)
+
+
+![Screen Shot 2024-05-18 at 19.09.34](assets/Screen%20Shot%202024-05-18%20at%2019.09.34.png)
+
+![Screen Shot 2024-05-18 at 19.09.36](assets/Screen%20Shot%202024-05-18%20at%2019.09.36.png)
+![Screen Shot 2024-05-18 at 19.11.16](assets/Screen%20Shot%202024-05-18%20at%2019.11.16.png)
+![Screen Shot 2024-05-18 at 19.11.20](assets/Screen%20Shot%202024-05-18%20at%2019.11.20.png)
+![Screen Shot 2024-05-18 at 19.11.26](assets/Screen%20Shot%202024-05-18%20at%2019.11.26.png)
+![Screen Shot 2024-05-18 at 19.11.51](assets/Screen%20Shot%202024-05-18%20at%2019.11.51.png)
+![Screen Shot 2024-05-18 at 19.12.01](assets/Screen%20Shot%202024-05-18%20at%2019.12.01.png)
+![Screen Shot 2024-05-18 at 19.12.14](assets/Screen%20Shot%202024-05-18%20at%2019.12.14.png)
+![Screen Shot 2024-05-18 at 19.12.22](assets/Screen%20Shot%202024-05-18%20at%2019.12.22.png)
+![Screen Shot 2024-05-18 at 19.12.27](assets/Screen%20Shot%202024-05-18%20at%2019.12.27.png)
+![Screen Shot 2024-05-18 at 19.12.33](assets/Screen%20Shot%202024-05-18%20at%2019.12.33.png)
+![Screen Shot 2024-05-18 at 19.12.54](assets/Screen%20Shot%202024-05-18%20at%2019.12.54.png)
+
+![Screen Shot 2024-05-18 at 19.13.01](assets/Screen%20Shot%202024-05-18%20at%2019.13.01.png)
+![Screen Shot 2024-05-18 at 19.13.06](assets/Screen%20Shot%202024-05-18%20at%2019.13.06.png)
+![Screen Shot 2024-05-18 at 19.13.12](assets/Screen%20Shot%202024-05-18%20at%2019.13.12.png)
+![Screen Shot 2024-05-18 at 19.13.20](assets/Screen%20Shot%202024-05-18%20at%2019.13.20.png)
+![Screen Shot 2024-05-18 at 19.13.26](assets/Screen%20Shot%202024-05-18%20at%2019.13.26.png)
+![Screen Shot 2024-05-18 at 19.13.32](assets/Screen%20Shot%202024-05-18%20at%2019.13.32.png)
+
+
+## Technical Introduction:
 Proposal type: Option B (develop a web application and deploy the application in the cloud)
 Stakeholders: sport playground business owner and customer
 Cloud Computing Platform: AWS 
