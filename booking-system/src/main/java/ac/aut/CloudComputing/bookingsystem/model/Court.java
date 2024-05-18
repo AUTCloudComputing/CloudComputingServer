@@ -1,3 +1,4 @@
+//This is used for dynomoDB court model
 package ac.aut.CloudComputing.bookingsystem.model;
 
 import org.springframework.data.annotation.Id; 
