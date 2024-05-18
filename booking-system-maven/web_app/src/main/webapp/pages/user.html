@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="../plugins/elementui/index.css">
     <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <!-- 引入组件库 -->
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script src="../js/vue.js"></script>
@@ -91,44 +93,73 @@
                 <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
             </div>
 
-            <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
-                <el-table-column type="index" align="center" label="序号"></el-table-column>
-                <el-table-column label="用户编号" align="center">
-                    <template slot-scope="scope">
-                        <img :src="scope.row.image ? scope.row.image : './../img/logingBg.gif'" alt="User Image" width="100">
-                    </template>
-                </el-table-column>
-                <el-table-column prop="courtName" label="courtName" align="center"></el-table-column>
-                <!--- gender 性别 适用性别 -->
-                <el-table-column label="status" align="center">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.status == null ? 'NO SET' : scope.row.status == 1 ? 'available' : 'not available'}}</span>
-                    </template>
-                </el-table-column>
+            <!--            <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>-->
+            <!--                <el-table-column type="index" align="center" label="序号"></el-table-column>-->
+            <!--                <el-table-column label="用户编号" align="center">-->
+            <!--                    <template slot-scope="scope">-->
+            <!--                        <img :src="scope.row.image ? scope.row.image : './../img/logingBg.gif'" alt="User Image" width="100">-->
+            <!--                    </template>-->
+            <!--                </el-table-column>-->
+            <!--                <el-table-column prop="courtName" label="courtName" align="center"></el-table-column>-->
+            <!--                &lt;!&ndash;- gender 性别 适用性别 &ndash;&gt;-->
+            <!--                <el-table-column label="status" align="center">-->
+            <!--                    <template slot-scope="scope">-->
+            <!--                        <span>{{ scope.row.status == null ? 'NO SET' : scope.row.status == 1 ? 'available' : 'not available'}}</span>-->
+            <!--                    </template>-->
+            <!--                </el-table-column>-->
 
-                <el-table-column id="rowgender" label="生日" align="center">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.birthday | dateTransform }}</span>
-                    </template>
-                </el-table-column>
+            <!--                <el-table-column id="rowgender" label="生日" align="center">-->
+            <!--                    <template slot-scope="scope">-->
+            <!--                        <span>{{ scope.row.birthday | dateTransform }}</span>-->
+            <!--                    </template>-->
+            <!--                </el-table-column>-->
 
-                <el-table-column prop="telephone" label="联系电话" align="center"></el-table-column>
-                <el-table-column prop="password" label="密码" align="center"></el-table-column>
-                <el-table-column prop="description" label="description" align="center"></el-table-column>
-                <el-table-column label="是否启用" align="center">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.station == null ? '是' : scope.row.station == '1' ? '是' : '否'}}</span>
-                    </template>
-                </el-table-column>
+            <!--                <el-table-column prop="telephone" label="联系电话" align="center"></el-table-column>-->
+            <!--                <el-table-column prop="password" label="密码" align="center"></el-table-column>-->
+            <!--                <el-table-column prop="description" label="description" align="center"></el-table-column>-->
+            <!--                <el-table-column label="是否启用" align="center">-->
+            <!--                    <template slot-scope="scope">-->
+            <!--                        <span>{{ scope.row.station == null ? '是' : scope.row.station == '1' ? '是' : '否'}}</span>-->
+            <!--                    </template>-->
+            <!--                </el-table-column>-->
 
-                <el-table-column label="操作" align="center">
-                    <template slot-scope="scope">
-                        <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+            <!--                <el-table-column label="操作" align="center">-->
+            <!--                    <template slot-scope="scope">-->
+            <!--                        <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>-->
+            <!--                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>-->
+            <!--                    </template>-->
+            <!--                </el-table-column>-->
+            <!--            </el-table>-->
 
+            <!-- Court Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div v-for="court in dataList" :key="court.id" class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <img :src="court.image ? court.image : './../img/logingBg.gif'" alt="Badminton Court"
+                         class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h2 class="text-2xl font-bold mb-2">{{ court.courtName }}</h2>
+                        <h2 class="text-2xl font-bold mb-2">{{ court.description }}</h2>
+                        <div class="flex justify-between items-center mb-4">
+                            <button class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit
+                            </button>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleDelete(court)">
+                                Delete
+                            </button>
+                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleDelete(court)">
+                                Cancel
+                            </button>
+                        </div>
+                        <button class="w-full bg-green-500 text-white px-3 py-1 rounded" @click="handleNewOrder(court)">
+                            Order & Date
+                        </button>
+                        <el-date-picker
+                                v-model="formData.birthday"
+                                type="date"
+                                placeholder="选择日期时间">
+                        </el-date-picker>
+                    </div>
+                </div>
+            </div>
 
             <div class="pagination-container">
                 <el-pagination
@@ -444,21 +475,45 @@
             checkgroupIds: [],//添加表单窗口中角色复选框对应id
             dialogFormVisible: false,//控制添加窗口显示/隐藏
             dialogFormVisible4Edit: false,
-            backend_url: "http://chenyilong.com"
+            backend_url: "http://chenyilong.com",
+            currentUser: null
+
         },
         // Hook function, executed automatically after the initialization of the VUE object is complete
         created() {
-            const token = this.getCookie('jwtToken');
-            console.log("Token on role.html:", token);
-            if (!token) {
-                console.error("No token found in cookies.");
-                this.$message.error("Not authenticated.");
-            } else {
-                this.showMessage("Token found: " + token);
-            }
+            this.findPage();
 
-            //钩子函数，VUE对象初始化完成后自动执行
-                this.findPage(1);
+            // Get JWT token from cookies
+            const token = this.getCookie('jwtToken');
+            if (!token) {
+                this.$message.error("Not authenticated.");
+                return;
+            }
+            // Use axios to send a POST request with URL encoded form data
+            axios.get(this.backend_url + "/api/users/me", {
+                headers: {
+                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                }
+            }).then((response) => {
+                console.log(response)
+                if (response.data) {
+                    //请求成功
+                    //数据集和总数赋值给模型
+                    console.log("response.statusText", response.statusText)
+
+                    this.currentUser = response.data;
+                    console.log("success", response.data);
+                } else {
+                    this.$message.error(response.statusText);
+                    this.$message.error("Not Data.");
+                }
+            }).catch((error) => {
+                console.log(error);
+                this.showMessage(error);
+            }).finally(() => {
+                // this.findPage();
+                this.showMessage("get user data successful");
+            });
         },
         filters: {
             dateTransform: (value) => {
@@ -490,6 +545,23 @@
                 ));
                 return matches ? decodeURIComponent(matches[1]) : undefined;
             },
+            // handleUpdate(court) {
+            //     // Handle the update operation
+            //     alert('Edit: ' + court.courtName);
+            // },
+            // handleDelete(court) {
+            //     // Handle the delete operation
+            //     alert('Delete: ' + court.courtName);
+            // },
+
+            handleSizeChange(size) {
+                this.pagination.pageSize = size;
+                this.findPage(this.pagination.currentPage);
+            },
+            // handleCurrentChange(page) {
+            //     this.pagination.currentPage = page;
+            //     this.findPage(this.pagination.currentPage);
+            // },
             //图片上传完成后自动执行
             handleAvatarSuccess(response, file, fileList) {
                 // 与axios的请求回调参数不同，这里response <==> Result
@@ -515,6 +587,66 @@
                 }
                 return isJPG && isLt2M;
             },
+            handleNewOrder(court) {
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    this.$message.error("Not authenticated.");
+                    return;
+                }
+
+                // Prepare the date in the required format
+                const formatDate = (date) => {
+                    return new Date(date).toISOString();
+                };
+                var date;
+                    var now = new Date();
+                    // date = new Date(this.formatDate(now.getFullYear(), now.getMonth()+1, 1));
+                //
+                // // 获取起始日期的日期元素，当年、当月、当日、当周(本月第一天是周几)
+                // this.currentDay = date.getDate();
+                // this.currentYear = date.getFullYear();
+                // this.currentMonth = date.getMonth() + 1;
+                // this.currentWeek = date.getDay(); // //本月第一天是周几（周日0 周六 6）2019-6-1 是周六
+                // console.log(this.currentYear+" "+" "+this.currentMonth+" "+this.currentDay+" week:"+this.currentWeek );
+
+
+                // Prepare the data object to send as JSON
+                const orderData = {
+                    courtId: court.id,
+                    status: 1,  // Ensure status is sent as a number
+                    businessId: "1000000",  // Business ID as a string
+                    orderDay: this.formData.birthday,  // Assuming birthday is the order day
+                    createDay: now,  // Assuming birthday is the order day
+                    description: court.description,
+                    userId: this.currentUser.id,
+                };
+                console.log(orderData);
+                if (this.formData.description) {  // Only add description if provided
+                    orderData.description = this.formData.description;
+                }
+
+                // Use axios to send a POST request with JSON data
+                axios.post(this.backend_url + "/api/orders", orderData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Include the token in the Authorization header
+                        'Content-Type': 'application/json'  // Set content type to JSON
+                    }
+                }).then((response) => {
+                    console.log(response);
+                    if (response.data.flag) {
+                        this.$message.success(response.data.message);
+                    } else {
+                        this.$message.error(response.data.message);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.showMessage(error);
+                }).finally(() => {
+                    this.findPage();
+                });
+            },
+
             //添加
             handleEdit() {
                 this.dialogFormVisible4Edit = false;
@@ -602,7 +734,7 @@
                         console.log("response.statusText", response.statusText)
 
                         this.dataList = response.data;
-                        this.showMessage("success", response.data.length);
+                        // this.showMessage("success", response.data.length);
 
                         this.pagination.total = response.data.length;
                     } else {
@@ -643,56 +775,52 @@
             },
             // 弹出编辑窗口
             handleUpdate(row) {
-                //重置表单
+                // 重置表单
                 this.resetForm();
                 this.checkgroupIds = [];
                 // 激活编辑框第一个tab
                 this.activeName = 'first';
-                //请求回显数据  检查组数据 关联的检查项id集和  所有的检查项
-                //请求检查组数据
-                axios.get(this.backend_url + "/user/findById.do?id=" + row.id).then((response) => {
-                    if (response.data.flag) {
-                        //弹出编辑框
+
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    this.$message.error("Not authenticated.");
+                    return;
+                }
+
+                // Use axios to send a GET request with URL encoded form data
+                axios.get(this.backend_url + "/api/courts/" + row.id, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                    }
+                }).then((response) => {
+                    console.log(response);
+
+                    // Check if response data exists and is correctly structured
+                    if (response) {
+                        // Request succeeded
+                        console.log("response.statusText", response.statusText);
+                        console.log(response.data);
+
+                        // Update the formData model with the received data
+                        this.formData = response.data;  // Correctly assign the data
+                        // can use showMessage with object , cannot append tail string.
+                        // this.showMessage("success", "Data retrieved successfully.response.data:", response.data);
+
+                        // 弹出编辑框
                         this.dialogFormVisible4Edit = true;
-                        //更新模型-关联的检查组信息
-                        this.formData = response.data.data;
                     } else {
-                        //失败消息提醒
-                        this.$message.error(response.data.message);
+                        this.$message.error("No Data.");
                     }
                 }).catch((error) => {
                     console.log(error);
-                    this.$message.error("网络异常");
+                    this.$message.error(error.message || "Network Error");
+                }).finally(() => {
+                    this.showMessage("Get courts data request completed.");
                 });
+            }
+            ,
 
-                //请求检查项数据
-                axios.get(this.backend_url + "/role/findAll.do").then((response) => {
-                    if (response.data.flag) {
-                        //更新模型-检查项数据
-                        this.tableData = response.data.data;
-                    } else {
-                        //失败消息提醒
-                        this.$message.error(response.data.message);
-                    }
-                }).catch((error) => {
-                    console.log(error);
-                    this.$message.error("网络异常");
-                });
-
-                //请求关联的检查项id集和
-                axios.get(this.backend_url + "/user/findRoleIdsByUserId.do?id=" + row.id).then((response) => {
-                    if (response.data.flag) {
-                        //更新模型-关联检查项id集合
-                        this.checkgroupIds = response.data.data;
-                    } else {
-                        //失败消息提醒
-                        this.$message.error(response.data.message);
-                    }
-                }).catch((error) => {
-                    console.log(error);
-                    this.$message.error("网络异常");
-                });
-            },
             //切换页码
             handleCurrentChange(currentPage) {
                 this.pagination.currentPage = currentPage;

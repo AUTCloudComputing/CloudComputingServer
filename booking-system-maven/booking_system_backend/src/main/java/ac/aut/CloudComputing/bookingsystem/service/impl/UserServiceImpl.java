@@ -85,9 +85,9 @@ public class UserServiceImpl implements UserService {
     	// Map UserRegisterDTO to User entity
         User user = new User();
 
-        user = UserMapper.INSTANCE.userRegisterDTOToUser(dto);
+//        user = UserMapper.INSTANCE.userRegisterDTOToUser(dto);
 
-//        BeanUtils.copyProperties(dto,user);
+        BeanUtils.copyProperties(dto,user);
 
         // Upload profile image to S3
 		/*
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
         //trick
         if(!StringUtils.isNullOrEmpty(dto.getEmail()) 
         		&&  dto.getEmail().endsWith("@autuni.ac.nz"))
-        	user.setRole("ADMIN");
+        {	user.setRole("ADMIN"); }
         
         userRepository.save(user);
         

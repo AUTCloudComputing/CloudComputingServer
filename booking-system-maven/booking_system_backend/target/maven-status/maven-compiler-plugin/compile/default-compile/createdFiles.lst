@@ -13,6 +13,7 @@ ac/aut/CloudComputing/bookingsystem/service/OrderService.class
 ac/aut/CloudComputing/bookingsystem/service/impl/OrderServiceImpl.class
 ac/aut/CloudComputing/bookingsystem/config/DynamoDBConfig.class
 ac/aut/CloudComputing/bookingsystem/service/JwtService.class
+ac/aut/CloudComputing/bookingsystem/service/GrantedAuthoritySerializer.class
 ac/aut/CloudComputing/bookingsystem/dto/UserRegisterDTO.class
 ac/aut/CloudComputing/bookingsystem/repository/CourtRepository.class
 ac/aut/CloudComputing/bookingsystem/mapper/OrderMapper.class

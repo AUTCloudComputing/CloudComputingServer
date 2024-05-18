@@ -61,17 +61,17 @@ public class OrderServiceImpl implements OrderService {
         
 
         if(dto.getCourtId()!=null) {
-	        CourtRspDTO courtDto= courtService.getCourtById(dto.getCourtId());
-	        if(courtDto!=null) {
-	        	order.setCourt(CourtMapper.INSTANCE.CourtRspDTO2Court(courtDto));
-	        }
+//	        CourtRspDTO courtDto= courtService.getCourtById(dto.getCourtId());
+//	        if(courtDto!=null) {
+	        	order.setCourtId(dto.getCourtId());
+//	        }
         }
         
-        if(dto.getUser()!=null && dto.getUser().getId()!=null) {
-	        UserDetailsDTO userDto= userService.getUserById(dto.getUser().getId());
-	        if(userDto!=null) {
-	        	order.setUser(UserMapper.INSTANCE.userDetailsDTOToUser(userDto));
-	        }
+        if(dto.getUserId()!=null) {
+//	        UserDetailsDTO userDto= userService.getUserById(dto.getUserId());
+//	        if(userDto!=null) {
+	        	order.setUserId(dto.getUserId());
+//	        }
         }
         
         
@@ -84,20 +84,20 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No Order found with id: " + id));
         BeanUtils.copyProperties(dto, order);
-        
+
 
         if(dto.getCourtId()!=null) {
-	        CourtRspDTO courtDto= courtService.getCourtById(dto.getCourtId());
-	        if(courtDto!=null) {
-	        	order.setCourt(CourtMapper.INSTANCE.CourtRspDTO2Court(courtDto));
-	        }
+//	        CourtRspDTO courtDto= courtService.getCourtById(dto.getCourtId());
+//	        if(courtDto!=null) {
+            order.setCourtId(dto.getCourtId());
+//	        }
         }
         
-        if(dto.getUser()!=null && dto.getUser().getId()!=null) {
-	        UserDetailsDTO userDto= userService.getUserById(dto.getUser().getId());
-	        if(userDto!=null) {
-	        	order.setUser(UserMapper.INSTANCE.userDetailsDTOToUser(userDto));
-	        }
+        if(dto.getUserId()!=null  ) {
+//	        UserDetailsDTO userDto= userService.getUserById(dto.getUserId().getId());
+//	        if(userDto!=null) {
+	        	order.setUserId(dto.getUserId());
+//	        }
         }
         
         

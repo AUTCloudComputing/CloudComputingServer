@@ -22,12 +22,9 @@ public class Order  {
     
     @DynamoDBAttribute
     private String userId; // Reference to the user who placed the order
-     
+
     @DynamoDBAttribute
-    private User user; // Reference to the user who placed the order
-    
-    @DynamoDBAttribute
-    private Court court; // Reference to the court
+    private String courtId; // Reference to the user who placed the order
 
     @DynamoDBAttribute(attributeName = "order_day")
     private Date orderDay;
