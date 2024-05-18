@@ -78,58 +78,22 @@
     <div class="content-header">
         <h1>Badminton booking system<small>Courts page</small></h1>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>系统设置</el-breadcrumb-item>
-            <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
+            <el-breadcrumb-item>court</el-breadcrumb-item>
+            <el-breadcrumb-item>court management</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
     <div class="app-container">
         <div class="box">
 
             <div class="filter-container">
-                <el-input placeholder="档案号/姓名" v-model="pagination.queryString" style="width: 200px;"
+                <el-input placeholder="court information" v-model="pagination.queryString" style="width: 200px;"
                           class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-                <el-button @click="findPage(1)" class="dalfBut">查询</el-button>
-                <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
+                <el-button @click="findPage(1)" class="dalfBut">Search</el-button>
+                <el-button type="primary" class="butT" @click="handleCreate()">Add New Court</el-button>
             </div>
 
-            <!--            <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>-->
-            <!--                <el-table-column type="index" align="center" label="序号"></el-table-column>-->
-            <!--                <el-table-column label="用户编号" align="center">-->
-            <!--                    <template slot-scope="scope">-->
-            <!--                        <img :src="scope.row.image ? scope.row.image : './../img/logingBg.gif'" alt="User Image" width="100">-->
-            <!--                    </template>-->
-            <!--                </el-table-column>-->
-            <!--                <el-table-column prop="courtName" label="courtName" align="center"></el-table-column>-->
-            <!--                &lt;!&ndash;- gender 性别 适用性别 &ndash;&gt;-->
-            <!--                <el-table-column label="status" align="center">-->
-            <!--                    <template slot-scope="scope">-->
-            <!--                        <span>{{ scope.row.status == null ? 'NO SET' : scope.row.status == 1 ? 'available' : 'not available'}}</span>-->
-            <!--                    </template>-->
-            <!--                </el-table-column>-->
 
-            <!--                <el-table-column id="rowgender" label="生日" align="center">-->
-            <!--                    <template slot-scope="scope">-->
-            <!--                        <span>{{ scope.row.birthday | dateTransform }}</span>-->
-            <!--                    </template>-->
-            <!--                </el-table-column>-->
-
-            <!--                <el-table-column prop="telephone" label="联系电话" align="center"></el-table-column>-->
-            <!--                <el-table-column prop="password" label="密码" align="center"></el-table-column>-->
-            <!--                <el-table-column prop="description" label="description" align="center"></el-table-column>-->
-            <!--                <el-table-column label="是否启用" align="center">-->
-            <!--                    <template slot-scope="scope">-->
-            <!--                        <span>{{ scope.row.station == null ? '是' : scope.row.station == '1' ? '是' : '否'}}</span>-->
-            <!--                    </template>-->
-            <!--                </el-table-column>-->
-
-            <!--                <el-table-column label="操作" align="center">-->
-            <!--                    <template slot-scope="scope">-->
-            <!--                        <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>-->
-            <!--                        <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>-->
-            <!--                    </template>-->
-            <!--                </el-table-column>-->
-            <!--            </el-table>-->
 
             <!-- Court Cards Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -140,13 +104,13 @@
                         <h2 class="text-2xl font-bold mb-2">{{ court.courtName }}</h2>
                         <h2 class="text-2xl font-bold mb-2">{{ court.description }}</h2>
                         <div class="flex justify-between items-center mb-4">
-                            <button class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit
+                            <button class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit Court
                             </button>
-                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleDelete(court)">
-                                Delete
+                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleCourtDelete(court)">
+                                Delete Court
                             </button>
-                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleDelete(court)">
-                                Cancel
+                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleOrderDelete(court)">
+                                Cancel Order
                             </button>
                         </div>
                         <button class="w-full bg-green-500 text-white px-3 py-1 rounded" @click="handleNewOrder(court)">
@@ -174,41 +138,14 @@
 
             <!-- 新增标签弹层 -->
             <div class="add-form">
-                <el-dialog title="新增用户" :visible.sync="dialogFormVisible">
+                <el-dialog title="Add new court" :visible.sync="dialogFormVisible">
 
                     <template>
                         <el-tabs v-model="activeName" type="card">
-                            <el-tab-pane label="基本信息" name="first">
+                            <el-tab-pane label="court information" name="first">
                                 <el-form label-position="right" label-width="100px">
-                                    <el-row>
-                                        <el-col :span="12">
-                                            <!-- //TODO:需要变成勾选框-->
-                                            <el-form-item label="是否启用">
 
 
-                                                <el-input v-model="formData.station"/>
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <!-- //TODO:需要变成pick日期选择器，并且格式化给后端-->、
-                                            <el-form-item label="生日">
-                                                <!--                                                        <el-input v-model="formData.birthday"/>-->
-                                                <el-date-picker
-                                                        v-model="formData.birthday"
-                                                        type="date"
-                                                        placeholder="选择日期">
-                                                </el-date-picker>
-                                            </el-form-item>
-
-
-                                        </el-col>
-                                        <!--                                                //TODO: 体检插件展示-->
-                                        <!--                                                <div class="date">-->
-                                        <!--                                                    <label>体检日期</label>-->
-                                        <!--                                                    <i class="icon-date" ></i>-->
-                                        <!--                                                    <input v-model="orderInfo.orderDate" type="text" class="picktime" readonly>-->
-                                        <!--                                                </div>-->
-                                    </el-row>
                                     <el-row>
                                         <el-col :span="12">
                                             <el-form-item label="status">
@@ -225,48 +162,9 @@
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
-                                    <el-row>
-                                        <el-col :span="12">
-                                            <el-form-item label="密码">
-                                                <el-input v-model="formData.password"/>
-                                            </el-form-item>
-                                        </el-col>
-                                    </el-row>
-                                    <!--                                            <el-row>-->
-                                    <!--                                                <el-col :span="24">-->
-                                    <!--                                                    <el-form-item label="上传图片">-->
-                                    <!--                                                        &lt;!&ndash;-->
-                                    <!--                                                          el-upload：上传组件-->
-                                    <!--                                                          action：上传的提交地址-->
-                                    <!--                                                          auto-upload：选中文件后是否自动上传-->
-                                    <!--                                                          name：上传文件的名称，服务端可以根据名称获得上传的文件对象-->
-                                    <!--                                                          show-file-list：是否显示已上传文件列表-->
-                                    <!--                                                          on-success：文件上传成功时的钩子-->
-                                    <!--                                                          before-upload：上传文件之前的钩子-->
-                                    <!--                                                        &ndash;&gt;-->
-                                    <!--                                                        <el-upload-->
-                                    <!--                                                                class="avatar-uploader"-->
-                                    <!--                                                                :action="backend_url+'/setmeal/upload.do'"-->
-                                    <!--                                                                :auto-upload="autoUpload"-->
-                                    <!--                                                                name="imgFile"-->
-                                    <!--                                                                :show-file-list="false"-->
-                                    <!--                                                                :on-success="handleAvatarSuccess"-->
-                                    <!--                                                                :before-upload="beforeAvatarUpload">-->
-                                    <!--                                                            &lt;!&ndash;用于上传图片预览&ndash;&gt;-->
-                                    <!--                                                            <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-                                    <!--                                                            &lt;!&ndash;用于展示上传图标&ndash;&gt;-->
-                                    <!--                                                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-                                    <!--                                                        </el-upload>-->
-                                    <!--                                                    </el-form-item>-->
-                                    <!--                                                </el-col>-->
-                                    <!--                                            </el-row>-->
-                                    <el-row>
-                                        <el-col :span="24">
-                                            <el-form-item label="联系电话">
-                                                <el-input v-model="formData.telephone" type="textarea"></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                    </el-row>
+
+
+
                                     <el-row>
                                         <el-col :span="24">
                                             <el-form-item label="description">
@@ -320,34 +218,8 @@
                         <el-tabs v-model="activeName" type="card">
                             <el-tab-pane label="基本信息" name="first">
                                 <el-form label-position="right" label-width="100px">
-                                    <el-row>
-                                        <el-col :span="12">
-                                            <!-- //TODO:需要变成勾选框-->
-
-                                            <el-form-item label="是否启用">
-                                                <el-input v-model="formData.station"/>
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <!-- //TODO:需要变成pick日期选择器，并且格式化给后端-->、
 
 
-                                            <el-form-item label="生日">
-                                                <!--                                                        <el-input v-model="formData.birthday"/>-->
-                                                <el-date-picker
-                                                        v-model="formData.birthday"
-                                                        type="date"
-                                                        placeholder="选择日期">
-                                                </el-date-picker>
-                                            </el-form-item>
-                                        </el-col>
-                                        <!--                                                //TODO: 体检插件展示-->
-                                        <!--                                                <div class="date">-->
-                                        <!--                                                    <label>体检日期</label>-->
-                                        <!--                                                    <i class="icon-date" ></i>-->
-                                        <!--                                                    <input v-model="orderInfo.orderDate" type="text" class="picktime" readonly>-->
-                                        <!--                                                </div>-->
-                                    </el-row>
                                     <el-row>
                                         <el-col :span="12">
                                             <el-form-item label="status">
@@ -364,48 +236,11 @@
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
-                                    <el-row>
-                                        <el-col :span="12">
-                                            <el-form-item label="密码">
-                                                <el-input v-model="formData.password"/>
-                                            </el-form-item>
-                                        </el-col>
-                                    </el-row>
-                                    <!--                                            <el-row>-->
-                                    <!--                                                <el-col :span="24">-->
-                                    <!--                                                    <el-form-item label="上传图片">-->
-                                    <!--                                                        &lt;!&ndash;-->
-                                    <!--                                                          el-upload：上传组件-->
-                                    <!--                                                          action：上传的提交地址-->
-                                    <!--                                                          auto-upload：选中文件后是否自动上传-->
-                                    <!--                                                          name：上传文件的名称，服务端可以根据名称获得上传的文件对象-->
-                                    <!--                                                          show-file-list：是否显示已上传文件列表-->
-                                    <!--                                                          on-success：文件上传成功时的钩子-->
-                                    <!--                                                          before-upload：上传文件之前的钩子-->
-                                    <!--                                                        &ndash;&gt;-->
-                                    <!--                                                        <el-upload-->
-                                    <!--                                                                class="avatar-uploader"-->
-                                    <!--                                                                :action="backend_url+'/setmeal/upload.do'"-->
-                                    <!--                                                                :auto-upload="autoUpload"-->
-                                    <!--                                                                name="imgFile"-->
-                                    <!--                                                                :show-file-list="false"-->
-                                    <!--                                                                :on-success="handleAvatarSuccess"-->
-                                    <!--                                                                :before-upload="beforeAvatarUpload">-->
-                                    <!--                                                            &lt;!&ndash;用于上传图片预览&ndash;&gt;-->
-                                    <!--                                                            <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
-                                    <!--                                                            &lt;!&ndash;用于展示上传图标&ndash;&gt;-->
-                                    <!--                                                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-                                    <!--                                                        </el-upload>-->
-                                    <!--                                                    </el-form-item>-->
-                                    <!--                                                </el-col>-->
-                                    <!--                                            </el-row>-->
-                                    <el-row>
-                                        <el-col :span="24">
-                                            <el-form-item label="联系电话">
-                                                <el-input v-model="formData.telephone" type="textarea"></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                    </el-row>
+
+
+
+
+
                                     <el-row>
                                         <el-col :span="24">
                                             <el-form-item label="description">
@@ -415,7 +250,7 @@
                                     </el-row>
                                 </el-form>
                             </el-tab-pane>
-                            <el-tab-pane label="角色信息" name="second">
+                            <el-tab-pane label="order list" name="second">
                                 <div class="checkScrol">
                                     <table class="datatable">
                                         <thead>
@@ -444,8 +279,8 @@
                         </el-tabs>
                     </template>
                     <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
-                        <el-button type="primary" @click="handleEdit()">确定</el-button>
+                        <el-button @click="dialogFormVisible4Edit = false">Cancel</el-button>
+                        <el-button type="primary" @click="handleEdit()">Confirm</el-button>
                     </div>
                 </el-dialog>
             </div>
@@ -476,7 +311,8 @@
             dialogFormVisible: false,//控制添加窗口显示/隐藏
             dialogFormVisible4Edit: false,
             backend_url: "http://chenyilong.com",
-            currentUser: null
+            currentUser: null,
+            currentCourtId: null
 
         },
         // Hook function, executed automatically after the initialization of the VUE object is complete
@@ -601,16 +437,16 @@
                 };
                 var date;
                     var now = new Date();
-                    // date = new Date(this.formatDate(now.getFullYear(), now.getMonth()+1, 1));
+                    date = this.formData.birthday;
                 //
                 // // 获取起始日期的日期元素，当年、当月、当日、当周(本月第一天是周几)
-                // this.currentDay = date.getDate();
-                // this.currentYear = date.getFullYear();
-                // this.currentMonth = date.getMonth() + 1;
-                // this.currentWeek = date.getDay(); // //本月第一天是周几（周日0 周六 6）2019-6-1 是周六
+                this.currentDay = date.getDate();
+                this.currentYear = date.getFullYear();
+                this.currentMonth = date.getMonth() + 1;
+                this.currentWeek = date.getDay(); // //本月第一天是周几（周日0 周六 6）2019-6-1 是周六
                 // console.log(this.currentYear+" "+" "+this.currentMonth+" "+this.currentDay+" week:"+this.currentWeek );
 
-
+                var description = this.currentUser.username + " ordered this court on " + this.currentYear+"/"+""+this.currentMonth+"/"+this.currentDay+ ".";
                 // Prepare the data object to send as JSON
                 const orderData = {
                     courtId: court.id,
@@ -618,9 +454,10 @@
                     businessId: "1000000",  // Business ID as a string
                     orderDay: this.formData.birthday,  // Assuming birthday is the order day
                     createDay: now,  // Assuming birthday is the order day
-                    description: court.description,
+                    description: description,
                     userId: this.currentUser.id,
                 };
+
                 console.log(orderData);
                 if (this.formData.description) {  // Only add description if provided
                     orderData.description = this.formData.description;
@@ -634,8 +471,44 @@
                     }
                 }).then((response) => {
                     console.log(response);
-                    if (response.data.flag) {
-                        this.$message.success(response.data.message);
+                    if (response.data) {
+                        this.$message.success("The order confirmation was successful!");
+
+                            // Get JWT token from cookies
+                            const token = this.getCookie('jwtToken');
+                            if (!token) {
+                                this.$message.error("Not authenticated.");
+                                return;
+                            }
+
+                            // Prepare URLSearchParams to properly encode the data for sending as form data
+                            const params = new FormData();
+                            params.append('courtName', court.courtName);
+                            params.append('status', court.status.toString());  // Ensure status is sent as a string
+                            params.append('description', response.data.description);
+
+                            // Use axios to send a POST request with URL encoded form data
+                            axios.put(this.backend_url + "/api/courts/" + court.id, params, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                }
+                            }).then((response) => {
+                                this.dialogFormVisible = false;
+                                if (response.data.flag) {
+
+                                } else {
+                                    this.$message.error(response.data.message);
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                                this.showMessage(error);
+                            }).finally(() => {
+                                this.findPage();
+                            });
+
+
+
                     } else {
                         this.$message.error(response.data.message);
                     }
@@ -650,19 +523,43 @@
             //添加
             handleEdit() {
                 this.dialogFormVisible4Edit = false;
-                axios.post(this.backend_url + "/user/edit.do?roleIds=" + this.checkgroupIds, this.formData).then((response) => {
-                    this.dialogFormVisible = false;
-                    if (response.data.flag) {
-                        this.$message.success(response.data.message);
-                    } else {
-                        this.$message.error(response.data.message);
+                this.formData;
+                    // Get JWT token from cookies
+                    const token = this.getCookie('jwtToken');
+                    if (!token) {
+                        this.$message.error("Not authenticated.");
+                        return;
                     }
-                }).catch((error) => {
-                    console.log(error);
-                    this.showMessage(error);
-                }).finally(() => {
-                    this.findPage();
-                });
+
+                    // Prepare URLSearchParams to properly encode the data for sending as form data
+                    const params = new FormData();
+                    params.append('courtName', this.formData.courtName);
+                    params.append('status', this.formData.status.toString());  // Ensure status is sent as a string
+                    if (this.formData.description) {  // Only append description if it is provided
+                        params.append('description', this.formData.description);
+                    }
+
+                    // Use axios to send a POST request with URL encoded form data
+                    axios.put(this.backend_url + "/api/courts/" + this.currentCourtId, params, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                            'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                        }
+                    }).then((response) => {
+                        this.dialogFormVisible = false;
+                        if (response.data) {
+                            this.$message.success(response.data.message);
+                        } else {
+                            this.$message.error(response.data.message);
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                        this.showMessage(error);
+                    }).finally(() => {
+                        this.findPage();
+                    });
+
+
             },
             handleAdd() {
                 // Get JWT token from cookies
@@ -778,6 +675,7 @@
                 // 重置表单
                 this.resetForm();
                 this.checkgroupIds = [];
+                this.currentCourtId = row.id;
                 // 激活编辑框第一个tab
                 this.activeName = 'first';
 
@@ -826,22 +724,108 @@
                 this.pagination.currentPage = currentPage;
                 this.findPage();
             },
-            handleDelete(row) {
+            handleOrderDelete(court) {
                 //alert(row.id);
-                this.$confirm("确认删除当前选中记录吗？", "提示", {type: 'warning'}).then(() => {
+                this.$confirm("Confirm deleting the currently selected Order record?\n", "warning", {type: 'warning'}).then(() => {
                     //点击确定按钮时只需此处代码
-                    axios.post(this.backend_url + "/user/delete.do?id=" + row.id).then((response) => {
-                        if (response.data.flag) {
-                            //成功
-                            this.$message.success(response.data.message);
+                        // Get JWT token from cookies
+                        const token = this.getCookie('jwtToken');
+                        if (!token) {
+                            this.$message.error("Not authenticated.");
+                            return;
+                        }
+
+                        // Prepare URLSearchParams to properly encode the data for sending as form data
+                        const params = new FormData();
+                        params.append('courtName', court.courtName);
+                        params.append('status', court.status.toString());  // Ensure status is sent as a string
+                        params.append('description', "");
+
+                        // Use axios to send a POST request with URL encoded form data
+                        axios.put(this.backend_url + "/api/courts/" + court.id, params, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                            }
+                        }).then((response) => {
+                            this.dialogFormVisible = false;
+                            if (response.data) {
+                                this.$message.success("deleted the currently selected Order record");
+
+                                // Use axios to send a POST request with URL encoded form data
+                                axios.delete(this.backend_url + "/api/orders/" + court.orderId, params, {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                    }
+                                }).then((response) => {
+                                    this.dialogFormVisible = false;
+                                    if (response.data) {
+
+                                    } else {
+
+                                    }
+                                }).catch((error) => {
+                                    console.log(error);
+                                }).finally(() => {
+
+                                });
+
+
+
+                            } else {
+                                this.$message.error(response.data.message);
+                            }
+                        }).catch((error) => {
+                            console.log(error);
+                            this.showMessage(error);
+                        }).finally(() => {
                             this.findPage();
+                        });
+
+                });
+            },
+            handleCourtDelete(court) {
+                //alert(row.id);
+                this.$confirm("Confirm deleting the currently selected Court?\n", "warning", {type: 'warning'}).then(() => {
+                    //点击确定按钮时只需此处代码
+                    // Get JWT token from cookies
+                    const token = this.getCookie('jwtToken');
+                    if (!token) {
+                        this.$message.error("Not authenticated.");
+                        return;
+                    }
+
+                    // Prepare URLSearchParams to properly encode the data for sending as form data
+                    const params = new FormData();
+                    params.append('courtName', court.courtName);
+                    params.append('status', court.status.toString());  // Ensure status is sent as a string
+                    params.append('description', "");
+
+                    // Use axios to send a POST request with URL encoded form data
+                    axios.delete(this.backend_url + "/api/courts/" + court.id, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                            'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                        }
+                    }).then((response) => {
+                        this.dialogFormVisible = false;
+                        if (response.data) {
+                            this.$message.success("deleted the currently selected Court");
+
+
+
+
                         } else {
-                            // 失败
                             this.$message.error(response.data.message);
                         }
                     }).catch((error) => {
+                        console.log(error);
                         this.showMessage(error);
+                    }).finally(() => {
+                        this.findPage();
                     });
+
                 });
             },
 
