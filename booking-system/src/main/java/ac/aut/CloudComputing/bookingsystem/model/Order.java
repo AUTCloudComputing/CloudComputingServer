@@ -1,3 +1,4 @@
+//This is used for dynomoDB order model
 package ac.aut.CloudComputing.bookingsystem.model;
 
 import java.util.Date;
