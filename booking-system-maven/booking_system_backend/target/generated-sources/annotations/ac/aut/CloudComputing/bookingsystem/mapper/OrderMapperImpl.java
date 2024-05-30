@@ -6,8 +6,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-18T13:52:28+1200",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.3 (Oracle Corporation)"
+    date = "2024-05-31T07:58:55+1200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240417-1011, environment: Java 17.0.10 (Eclipse Adoptium)"
 )
 public class OrderMapperImpl implements OrderMapper {
 
@@ -19,15 +19,15 @@ public class OrderMapperImpl implements OrderMapper {
 
         OrderDTO orderDTO = new OrderDTO();
 
-        orderDTO.setId( order.getId() );
-        orderDTO.setUserId( order.getUserId() );
-        orderDTO.setCourtId( order.getCourtId() );
-        orderDTO.setOrderDay( order.getOrderDay() );
-        orderDTO.setCancelDay( order.getCancelDay() );
-        orderDTO.setCreateDay( order.getCreateDay() );
         orderDTO.setBusinessId( order.getBusinessId() );
+        orderDTO.setCancelDay( order.getCancelDay() );
+        orderDTO.setCourtId( order.getCourtId() );
+        orderDTO.setCreateDay( order.getCreateDay() );
         orderDTO.setDescription( order.getDescription() );
+        orderDTO.setId( order.getId() );
+        orderDTO.setOrderDay( order.getOrderDay() );
         orderDTO.setStatus( order.getStatus() );
+        orderDTO.setUserId( order.getUserId() );
 
         return orderDTO;
     }
