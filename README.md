@@ -92,6 +92,7 @@ Nginx Config:
 start nginx
 
  ```shell
+sudo yum install nginx
 nginx
  ```
 
