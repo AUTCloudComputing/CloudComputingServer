@@ -34,17 +34,17 @@
             <div class="box ordersetting">
                 <el-card class="box-card">
                     <div class="boxMain">
-                        <el-button style="margin-bottom: 20px;margin-right: 20px" type="primary" @click="downloadTemplate()">模板下载</el-button>
+                        <el-button style="margin-bottom: 20px;margin-right: 20px" type="primary" @click="downloadTemplate()">Download Template</el-button>
                         <el-upload action="http://api.oms.health.itcast.com:9002/ordersetting/upload.do"
                                    name="excelFile"
                                    :show-file-list="false"
                                    :on-success="handleSuccess"
                                    :before-upload="beforeUpload">
-                            <el-button type="primary">上传文件</el-button>
+                            <el-button type="primary">Upload Files</el-button>
                         </el-upload>
                     </div>
                     <div>
-                        操作说明：请点击"模板下载"按钮获取模板文件，在模板文件中录入预约设置数据后点击"上传文件"按钮上传模板文件。
+                        Operation instructions: Please click the "Template Download" button to obtain the template file, enter the reservation setting data in the template file and click the "Upload File" button to upload the template file.
                     </div>
                 </el-card>
                 <div class="calendar">
@@ -89,20 +89,20 @@
                                                 <template v-if="obj.date == dayobject.day.getDate()">
                                                     <template v-if="obj.number > obj.reservations">
                                                         <div class="usual">
-                                                            <p>可预约{{obj.number}}人</p>
-                                                            <p>已预约{{obj.reservations}}人</p>
+                                                            <p>Available{{obj.number}}人</p>
+                                                            <p>Booked{{obj.reservations}}人</p>
                                                         </div>
                                                     </template>
                                                     <template v-else>
                                                         <div class="fulled">
-                                                            <p>可预约{{obj.number}}人</p>
-                                                            <p>已预约{{obj.reservations}}人</p>
-                                                            <p>已满</p>
+                                                            <p>Available{{obj.number}}人</p>
+                                                            <p>Booked{{obj.reservations}}人</p>
+                                                            <p>Full</p>
                                                         </div>
                                                     </template>
                                                 </template>
                                             </template>
-                                            <button v-if="dayobject.day > today" @click="handleOrderSet(dayobject.day)" class="orderbtn">设置</button>
+                                            <button v-if="dayobject.day > today" @click="handleOrderSet(dayobject.day)" class="orderbtn">Set Up</button>
                                         </template>
 
                                     </div>
