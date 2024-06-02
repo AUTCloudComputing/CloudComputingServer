@@ -44,18 +44,20 @@
 <body class="hold-transition">
 <div id="app">
     <div class="content-header">
-        <h1>Reservation Menu<small>Menu</small></h1>
+
+        <h1>Reservation<small></small></h1>
         <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
-            <el-breadcrumb-item :to="{ path: '/' }">Main Page</el-breadcrumb-item>
-            <el-breadcrumb-item>Reservation List</el-breadcrumb-item>
-            <el-breadcrumb-item>Reservation Management</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">Main</el-breadcrumb-item>
+            <el-breadcrumb-item>Pages</el-breadcrumb-item>
+            <el-breadcrumb-item>Reservation</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
     <div class="app-container">
         <div class="box">
             <div class="filter-container">
-                <el-input placeholder="编码/名称/助记码" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-                <el-button @click="findPage(1)" class="dalfBut">Inquire</el-button>
+
+                <el-input placeholder="Search" v-model="pagination.queryString" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"></el-input>
+                <el-button @click="findPage(1)" class="dalfBut">Check</el-button>
                 <el-button type="primary" class="butT" @click="handleCreate()">New</el-button>
             </div>
             <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
