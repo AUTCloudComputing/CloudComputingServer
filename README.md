@@ -157,8 +157,4 @@ http {
 
  ```
 
-
-## CICD
-
-To Do LIST:
 - using-secrets-in-github-actions to save secrets key instead of git ignore. (Reference: https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions ) 
