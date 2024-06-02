@@ -7,8 +7,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-18T13:52:28+1200",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.3 (Oracle Corporation)"
+    date = "2024-05-31T07:58:55+1200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.38.0.v20240417-1011, environment: Java 17.0.10 (Eclipse Adoptium)"
 )
 public class UserMapperImpl implements UserMapper {
 
@@ -20,13 +20,13 @@ public class UserMapperImpl implements UserMapper {
 
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
 
-        userDetailsDTO.setId( user.getId() );
-        userDetailsDTO.setUserName( user.getUserName() );
         userDetailsDTO.setEmail( user.getEmail() );
-        userDetailsDTO.setRole( user.getRole() );
+        userDetailsDTO.setId( user.getId() );
         userDetailsDTO.setPassword( user.getPassword() );
         userDetailsDTO.setProfileImageS3Key( user.getProfileImageS3Key() );
+        userDetailsDTO.setRole( user.getRole() );
         userDetailsDTO.setStatus( user.getStatus() );
+        userDetailsDTO.setUserName( user.getUserName() );
 
         return userDetailsDTO;
     }
@@ -39,9 +39,9 @@ public class UserMapperImpl implements UserMapper {
 
         User user = new User();
 
-        user.setUserName( dto.getUserName() );
         user.setEmail( dto.getEmail() );
         user.setPassword( dto.getPassword() );
+        user.setUserName( dto.getUserName() );
 
         return user;
     }
@@ -54,11 +54,11 @@ public class UserMapperImpl implements UserMapper {
 
         User user = new User();
 
-        user.setId( dto.getId() );
         user.setEmail( dto.getEmail() );
+        user.setId( dto.getId() );
         user.setPassword( dto.getPassword() );
-        user.setRole( dto.getRole() );
         user.setProfileImageS3Key( dto.getProfileImageS3Key() );
+        user.setRole( dto.getRole() );
         user.setStatus( dto.getStatus() );
 
         return user;
