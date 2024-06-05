@@ -536,7 +536,7 @@
 
                             if (!this.is_admin) {
 
-                                return;
+                                // return;
                             }
                             // Prepare URLSearchParams to properly encode the data for sending as form data
                             const params = new FormData();
@@ -558,7 +558,7 @@
                                 }
                             }).catch((error) => {
                                 console.log(error);
-                                this.showMessage(error);
+                                // this.showMessage(error);
                             }).finally(() => {
                                 this.findPage();
                             });
@@ -570,7 +570,7 @@
                     }
                 }).catch((error) => {
                     console.log(error);
-                    this.showMessage(error);
+                    // this.showMessage(error);
                 }).finally(() => {
                     this.findPage();
                 });
