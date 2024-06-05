@@ -398,10 +398,7 @@
                 }
             }).catch((error) => {
                 console.log(error);
-                this.showMessage(error);
             }).finally(() => {
-                // this.findPage();
-                this.showMessage("get user data successful");
                 this.findPage();
             });
         },
