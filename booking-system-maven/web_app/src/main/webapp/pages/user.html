@@ -718,8 +718,20 @@
                         //请求成功
                         //数据集和总数赋值给模型
                         console.log("response.statusText", response.statusText)
+                        var courtList = response.data;
+                        // this.dataList = response.data;
 
-                        this.dataList = response.data;
+                        // Iterate over the orderList to delete the orders related to the court
+                        courtList.forEach(court => {
+                            this.orderList.forEach(order => {
+                            if (order.courtId === court.id) {
+                               if (!court.description) {
+                                   court.description = order.description;
+                               }
+                            }
+                        });
+                        });
+                        this.dataList = courtList;
                         // this.showMessage("success", response.data.length);
 
                         this.pagination.total = response.data.length;
