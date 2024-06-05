@@ -836,7 +836,7 @@
                             return;
                         }
 
-                        if (is_admin) {
+                        if (this.is_admin) {
                             // Prepare URLSearchParams to properly encode the data for sending as form data
                             const params = new FormData();
                             params.append('courtName', court.courtName);
