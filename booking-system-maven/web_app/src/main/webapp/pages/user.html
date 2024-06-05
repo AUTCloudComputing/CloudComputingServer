@@ -693,7 +693,7 @@
                     this.showMessage(error);
                 }).finally(() => {
                     // this.findPage();
-                    this.showMessage("get courts data successful");
+                    this.$message.success("get courts data successful");
                 });
             },
 
@@ -764,7 +764,7 @@
                     console.log(error);
                     // this.$message.error(error.message || "Network Error");
                 }).finally(() => {
-                    this.showMessage("Get courts data request completed.");
+                    this.$message.success("Get courts data request completed.");
                 });
             }
             ,
