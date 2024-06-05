@@ -536,7 +536,7 @@
 
                             if (!this.is_admin) {
 
-                                // return;
+                                return;
                             }
                             // Prepare URLSearchParams to properly encode the data for sending as form data
                             const params = new FormData();
@@ -865,6 +865,10 @@
                                         }).then((response) => {
                                             if (response.data) {
                                                 // this.$message.success("Order deleted successfully");
+
+                                                this.findPage();
+
+
                                             } else {
                                                 // this.$message.error("Failed to delete order");
                                             }
