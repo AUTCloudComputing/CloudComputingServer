@@ -114,7 +114,7 @@
                             <button v-if="is_admin" class="bg-red-500 text-white px-3 py-1 rounded" @click="handleCourtDelete(court)">
                                 Delete Court
                             </button>
-                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleOrderDelete(court)">
+                            <button v-if="is_admin || (court.description && court.description.includes(username))" class="bg-red-500 text-white px-3 py-1 rounded" @click="handleOrderDelete(court)">
                                 Cancel Order
                             </button>
                         </div>
@@ -363,6 +363,7 @@
             dialogFormVisible4Edit: false,
             backend_url: "https://chenyilong.com",
             currentUser: null,
+            username: null,
             currentCourtId: null,
             is_admin: true
 
@@ -389,6 +390,7 @@
                     console.log("response.statusText", response.statusText)
 
                     this.currentUser = response.data;
+                    this.username = this.currentUser.username
                     this.is_admin = !!(this.currentUser && this.currentUser.role && this.currentUser.role.includes("ADMIN"));
 
                 } else {
