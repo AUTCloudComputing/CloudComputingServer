@@ -390,8 +390,8 @@
 
                     this.currentUser = response.data;
                     this.is_admin = !!(this.currentUser && this.currentUser.role && this.currentUser.role.includes("ADMIN"));
+                    this.findPage();
 
-                    console.log("success", response.data);
                 } else {
                     // this.$message.error(response.statusText);
                     // this.$message.error("Not Data.");
@@ -399,7 +399,6 @@
             }).catch((error) => {
                 console.log(error);
             }).finally(() => {
-                this.findPage();
             });
         },
         filters: {
