@@ -655,7 +655,7 @@
             },
             //分页查询
             //分页查询
-            findOrder() {
+            findOrderList() {
 
                 // Get JWT token from cookies
                 const token = this.getCookie('jwtToken');
@@ -705,7 +705,7 @@
                 if (!token) {
                     return;
                 }
-
+                this.findOrderList()
                 // Use axios to send a POST request with URL encoded form data
                 axios.get(this.backend_url + "/api/courts", {
                     headers: {
@@ -824,6 +824,31 @@
                             return;
                         }
 
+                    for (order in this.orderList) {
+                        if (order.courtId === court.id) {
+                            axios.delete(this.backend_url + "/api/orders/" + order.id, params, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                }
+                            }).then((response) => {
+                                this.dialogFormVisible = false;
+                                if (response.data) {
+
+                                } else {
+
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                            }).finally(() => {
+
+                            });
+
+                        }
+                    }
+
+
+
                         // Prepare URLSearchParams to properly encode the data for sending as form data
                         const params = new FormData();
                         params.append('courtName', court.courtName);
@@ -841,26 +866,24 @@
                             if (response.data) {
                                 this.$message.success("deleted the currently selected Order record");
 
-                                // Use axios to send a POST request with URL encoded form data
-                                axios.delete(this.backend_url + "/api/orders/" + court.orderId, params, {
-                                    headers: {
-                                        'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
-                                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
-                                    }
-                                }).then((response) => {
-                                    this.dialogFormVisible = false;
-                                    if (response.data) {
-
-                                    } else {
-
-                                    }
-                                }).catch((error) => {
-                                    console.log(error);
-                                }).finally(() => {
-
-                                });
-
-
+                                // // Use axios to send a POST request with URL encoded form data
+                                // axios.delete(this.backend_url + "/api/orders/" + court.orderId, params, {
+                                //     headers: {
+                                //         'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                //         'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                //     }
+                                // }).then((response) => {
+                                //     this.dialogFormVisible = false;
+                                //     if (response.data) {
+                                //
+                                //     } else {
+                                //
+                                //     }
+                                // }).catch((error) => {
+                                //     console.log(error);
+                                // }).finally(() => {
+                                //
+                                // });
 
                             } else {
                                 // this.$message.error(response.data.message);
