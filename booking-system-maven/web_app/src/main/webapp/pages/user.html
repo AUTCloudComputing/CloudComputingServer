@@ -824,28 +824,7 @@
                             return;
                         }
 
-                    for (order in this.orderList) {
-                        if (order.courtId === court.id) {
-                            axios.delete(this.backend_url + "/api/orders/" + order.id, params, {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
-                                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
-                                }
-                            }).then((response) => {
-                                this.dialogFormVisible = false;
-                                if (response.data) {
 
-                                } else {
-
-                                }
-                            }).catch((error) => {
-                                console.log(error);
-                            }).finally(() => {
-
-                            });
-
-                        }
-                    }
 
 
 
@@ -865,6 +844,8 @@
                             this.dialogFormVisible = false;
                             if (response.data) {
                                 this.$message.success("deleted the currently selected Order record");
+
+
 
                                 // // Use axios to send a POST request with URL encoded form data
                                 // axios.delete(this.backend_url + "/api/orders/" + court.orderId, params, {
@@ -893,6 +874,31 @@
                             this.showMessage(error);
                         }).finally(() => {
                             this.findPage();
+
+
+                            for (var order in this.orderList) {
+                                if (order.courtId === court.id) {
+                                    axios.delete(this.backend_url + "/api/orders/" + order.id, params, {
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                            'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                        }
+                                    }).then((response) => {
+                                        this.dialogFormVisible = false;
+                                        if (response.data) {
+
+                                        } else {
+
+                                        }
+                                    }).catch((error) => {
+                                        console.log(error);
+                                    }).finally(() => {
+
+                                    });
+
+                                }
+                            }
+
                         });
 
                 });
