@@ -390,7 +390,6 @@
 
                     this.currentUser = response.data;
                     this.is_admin = !!(this.currentUser && this.currentUser.role && this.currentUser.role.includes("ADMIN"));
-                    this.findPage();
 
                 } else {
                     // this.$message.error(response.statusText);
@@ -399,6 +398,7 @@
             }).catch((error) => {
                 console.log(error);
             }).finally(() => {
+                this.findPage();
             });
         },
         filters: {
@@ -883,7 +883,7 @@
             //后台异常提示
             showMessage(error) {
                 console.log(error);
-                let errorMsg = error.response.data.message;
+                let errorMsg = ""
                 console.log(errorMsg); //正确
                 if (errorMsg != null) {
                     // this.$message.error(errorMsg);
