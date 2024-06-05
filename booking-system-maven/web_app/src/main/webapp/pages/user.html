@@ -523,7 +523,6 @@
                 }).then((response) => {
                     console.log(response);
                     if (response.data) {
-                        this.$message.success("The order confirmation was successful!");
 
                             // Get JWT token from cookies
                             const token = this.getCookie('jwtToken');
@@ -546,8 +545,8 @@
                                 }
                             }).then((response) => {
                                 this.dialogFormVisible = false;
-                                if (response.data.flag) {
-
+                                if (response.data) {
+                                    this.$message.success("The order confirmation was successful!");
                                 } else {
                                     // this.$message.error(response.data.message);
                                 }
@@ -883,13 +882,16 @@
             //后台异常提示
             showMessage(error) {
                 console.log(error);
-                let errorMsg = ""
+                let errorMsg = null;
+                try {
+                    errorMsg = error.response.data.message;
+                } catch (e) {}
                 console.log(errorMsg); //正确
                 if (errorMsg != null) {
-                    // this.$message.error(errorMsg);
+                    this.$message.error(errorMsg);
                     return;
                 }
-                // this.$message.error("网络异常");
+                this.$message.error("network anomaly!");
             }
         }
     })
