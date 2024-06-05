@@ -92,10 +92,10 @@
         <div class="box">
 
             <div class="filter-container">
-                <el-input placeholder="Search Court Here" v-model="pagination.queryString" style="width: 200px;"
-                          class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-                <el-button @click="findPage(1)" class="dalfBut">Search</el-button>
-                <el-button type="primary" class="butT" @click="handleCreate()">Add New Court</el-button>
+                <!-- <el-input placeholder="Search Court Here" v-model="pagination.queryString" style="width: 200px;" -->
+                <!-- class="filter-item" @keyup.enter.native="handleFilter"></el-input> -->
+                <!-- <el-button @click="findPage(1)" class="dalfBut">Search</el-button> -->
+                <el-button v-if="is_admin" type="primary" class="butT" @click="handleCreate()">Add New Court</el-button>
             </div>
 
 
@@ -109,9 +109,9 @@
                         <h2 class="text-2xl font-bold mb-2">{{ court.courtName }}</h2>
                         <h2 class="text-2xl font-bold mb-2">{{ court.description }}</h2>
                         <div class="flex justify-between items-center mb-4">
-                            <button class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit Court
+                            <button v-if="is_admin" class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit Court
                             </button>
-                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleCourtDelete(court)">
+                            <button v-if="is_admin" class="bg-red-500 text-white px-3 py-1 rounded" @click="handleCourtDelete(court)">
                                 Delete Court
                             </button>
                             <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleOrderDelete(court)">
@@ -363,12 +363,12 @@
             dialogFormVisible4Edit: false,
             backend_url: "https://chenyilong.com",
             currentUser: null,
-            currentCourtId: null
+            currentCourtId: null,
+            is_admin: true
 
         },
         // Hook function, executed automatically after the initialization of the VUE object is complete
         created() {
-            this.findPage();
 
             // Get JWT token from cookies
             const token = this.getCookie('jwtToken');
@@ -389,6 +389,8 @@
                     console.log("response.statusText", response.statusText)
 
                     this.currentUser = response.data;
+                    this.is_admin = !!(this.currentUser && this.currentUser.role && this.currentUser.role.includes("ADMIN"));
+
                     console.log("success", response.data);
                 } else {
                     // this.$message.error(response.statusText);
@@ -400,6 +402,7 @@
             }).finally(() => {
                 // this.findPage();
                 this.showMessage("get user data successful");
+                this.findPage();
             });
         },
         filters: {
