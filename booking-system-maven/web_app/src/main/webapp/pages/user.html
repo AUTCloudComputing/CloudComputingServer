@@ -879,6 +879,8 @@
                             }).catch((error) => {
                                 console.log(error);
                                 // this.$message.error("Error deleting order");
+                            }).finally(() => {
+                                this.findPage();
                             });
                         }
                     });
