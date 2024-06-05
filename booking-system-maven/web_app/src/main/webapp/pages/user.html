@@ -684,8 +684,7 @@
                 }).catch((error) => {
                     console.log(error);
                 }).finally(() => {
-                    // this.findPage();
-                    // this.$message.success("get courts data successful");
+
                 });
             },
 
@@ -705,7 +704,32 @@
                 if (!token) {
                     return;
                 }
-                this.findOrderList()
+
+                // Use axios to send a POST request with URL encoded form data
+                axios.get(this.backend_url + "/api/orders", {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Include the token in the Authorization header
+                        'Content-Type': 'application/json'  // Set content type to JSON
+                    }
+                }).then((response) => {
+                    this.dialogFormVisible = false;
+                    console.log(response)
+                    if (response.data && Array.isArray(response.data)) {
+                        //请求成功
+                        //数据集和总数赋值给模型
+                        console.log("response.statusText", response.statusText)
+                        this.orderList = response.data;
+                    } else {
+                        // this.$message.error(response.statusText);
+                        // this.$message.error("Not Data.");
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+
+
+
+
                 // Use axios to send a POST request with URL encoded form data
                 axios.get(this.backend_url + "/api/courts", {
                     headers: {
@@ -746,7 +770,9 @@
                     // this.findPage();
                     // this.$message.success("get courts data successful");
                 });
-            },
+
+                });
+                },
 
             // 重置表单
             resetForm() {
