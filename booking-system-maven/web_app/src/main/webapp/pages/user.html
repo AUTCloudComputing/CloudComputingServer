@@ -852,13 +852,13 @@
                                             }
                                         }).then((response) => {
                                             if (response.data) {
-                                                this.$message.success("Order deleted successfully");
+                                                // this.$message.success("Order deleted successfully");
                                             } else {
-                                                this.$message.error("Failed to delete order");
+                                                // this.$message.error("Failed to delete order");
                                             }
                                         }).catch((error) => {
                                             console.log(error);
-                                            this.$message.error("Error deleting order");
+                                            // this.$message.error("Error deleting order");
                                         });
                                     }
                                 });
