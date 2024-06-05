@@ -836,6 +836,32 @@
                             return;
                         }
 
+                        if (is_admin) {
+                            // Prepare URLSearchParams to properly encode the data for sending as form data
+                            const params = new FormData();
+                            params.append('courtName', court.courtName);
+                            params.append('status', court.status.toString());  // Ensure status is sent as a string
+                            params.append('description', "");
+
+                            // Use axios to send a POST request with URL encoded form data
+                            axios.put(this.backend_url + "/api/courts/" + court.id, params, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                }
+                            }).then((response) => {
+                                this.dialogFormVisible = false;
+                                if (response.data) {
+                                } else {
+                                    // this.$message.error(response.data.message);
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                            }).finally(() => {
+                                this.findPage();
+                            });
+                        }
+
                     // Iterate over the orderList to delete the orders related to the court
                     this.orderList.forEach(order => {
                         if (order.courtId === court.id) {
