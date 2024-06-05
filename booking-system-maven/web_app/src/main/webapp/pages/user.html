@@ -839,6 +839,8 @@
                     // Iterate over the orderList to delete the orders related to the court
                     this.orderList.forEach(order => {
                         if (order.courtId === court.id) {
+                            order.description = null;
+                            court.description = null;
                             axios.delete(this.backend_url + "/api/orders/" + order.id, {
                                 headers: {
                                     'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
