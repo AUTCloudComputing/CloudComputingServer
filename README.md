@@ -19,7 +19,15 @@ User role password: password123
 User role username: customer02
 User role password: password123
 
+
+
+This is the API documents:
  
+http://54.89.63.70:5000/swagger-ui/index.html
+ 
+and at the end of the report , we also give a list of API.
+
+
 ## User's manual
 
 ![Screen Shot 2024-05-18 at 19.08.45](assets/Screen%20Shot%202024-05-18%20at%2019.08.45.png)
@@ -81,7 +89,15 @@ host | mock host | description
 -|-|-
 127.0.0.1|              chenyilong.com | mock host
 
-API document: Swagger, document URL for localhost: http://chenyilong.com:5000/swagger-ui/index.html
+API document: Swagger, document URL for localhost:  
+
+
+This is the API documents:
+ 
+http://54.89.63.70:5000/swagger-ui/index.html
+ 
+ 
+
 
 Deployment on the cloud: deploy client side and back end (Restful API) on  AWS Lambda.
 
