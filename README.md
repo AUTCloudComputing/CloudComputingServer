@@ -4,6 +4,20 @@
 
 Access to Web Client Link: https://chenyilong.com/pages/login.html
 
+----------------
+ 
+Admin role username: elon2_admin
+Admin role password: password123
+ 
+---------------
+ 
+User role username: customer
+User role password: password123
+ 
+---------------
+ 
+User role username: customer02
+User role password: password123
 
  
 ## User's manual
