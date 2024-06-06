@@ -92,10 +92,10 @@
         <div class="box">
 
             <div class="filter-container">
-                <el-input placeholder="Search Court Here" v-model="pagination.queryString" style="width: 200px;"
-                          class="filter-item" @keyup.enter.native="handleFilter"></el-input>
-                <el-button @click="findPage(1)" class="dalfBut">Search</el-button>
-                <el-button type="primary" class="butT" @click="handleCreate()">Add New Court</el-button>
+                <!-- <el-input placeholder="Search Court Here" v-model="pagination.queryString" style="width: 200px;" -->
+                <!-- class="filter-item" @keyup.enter.native="handleFilter"></el-input> -->
+                <!-- <el-button @click="findPage(1)" class="dalfBut">Search</el-button> -->
+                <el-button v-if="is_admin" type="primary" class="butT" @click="handleCreate()">Add New Court</el-button>
             </div>
 
 
@@ -109,23 +109,22 @@
                         <h2 class="text-2xl font-bold mb-2">{{ court.courtName }}</h2>
                         <h2 class="text-2xl font-bold mb-2">{{ court.description }}</h2>
                         <div class="flex justify-between items-center mb-4">
-                            <button class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit Court
+                            <button v-if="is_admin" class="bg-blue-500 text-white px-3 py-1 rounded" @click="handleUpdate(court)">Edit Court
                             </button>
-                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleCourtDelete(court)">
+                            <button v-if="is_admin" class="bg-red-500 text-white px-3 py-1 rounded" @click="handleCourtDelete(court)">
                                 Delete Court
                             </button>
-                            <button class="bg-red-500 text-white px-3 py-1 rounded" @click="handleOrderDelete(court)">
+                            <button v-if="is_admin || (court.description && court.description.includes(username))" class="bg-red-500 text-white px-3 py-1 rounded" @click="handleOrderDelete(court)">
                                 Cancel Order
                             </button>
                         </div>
-                        <button class="w-full bg-green-500 text-white px-3 py-1 rounded" @click="handleNewOrder(court)">
-                            Order & Date
-                        </button>
-                        <el-date-picker
-                                v-model="formData.birthday"
-                                type="date"
-                                placeholder="Select date and time">
-                        </el-date-picker>
+
+
+                        <div v-if="is_admin || !court.description">
+                            <button class="w-full bg-green-500 text-white px-3 py-1 rounded" @click="handleNewOrder(court)">Order & Date</button>
+                            <el-date-picker v-model="formData.birthday" type="date" placeholder="Select date and time"></el-date-picker>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -206,11 +205,11 @@
                                     <table class="datatable">
                                         <thead>
                                         <tr>
-                                            <th>选择</th>
-                                            <th>角色序号</th>
-                                            <th>角色名称</th>
-                                            <th>角色关键字</th>
-                                            <th>角色描述</th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -306,11 +305,11 @@
                                     <table class="datatable">
                                         <thead>
                                         <tr>
-                                            <th>选择</th>
-                                            <th>角色序号</th>
-                                            <th>角色名称</th>
-                                            <th>角色关键字</th>
-                                            <th>角色描述</th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -356,6 +355,7 @@
                 queryString: null,
             },
             dataList: [],//列表数据
+            orderList: [],//列表数据
             formData: {},//表单数据
             tableData: [],//添加表单窗口中角色列表数据
             checkgroupIds: [],//添加表单窗口中角色复选框对应id
@@ -363,12 +363,13 @@
             dialogFormVisible4Edit: false,
             backend_url: "https://chenyilong.com",
             currentUser: null,
-            currentCourtId: null
+            username: null,
+            currentCourtId: null,
+            is_admin: true
 
         },
         // Hook function, executed automatically after the initialization of the VUE object is complete
         created() {
-            this.findPage();
 
             // Get JWT token from cookies
             const token = this.getCookie('jwtToken');
@@ -389,17 +390,17 @@
                     console.log("response.statusText", response.statusText)
 
                     this.currentUser = response.data;
-                    console.log("success", response.data);
+                    this.username = this.currentUser.username
+                    this.is_admin = !!(this.currentUser && this.currentUser.role && this.currentUser.role.includes("ADMIN"));
+
                 } else {
                     // this.$message.error(response.statusText);
                     // this.$message.error("Not Data.");
                 }
             }).catch((error) => {
                 console.log(error);
-                this.showMessage(error);
             }).finally(() => {
-                // this.findPage();
-                this.showMessage("get user data successful");
+                this.findPage();
             });
         },
         filters: {
@@ -533,6 +534,10 @@
                                 return;
                             }
 
+                            if (!this.is_admin) {
+
+                                // return;
+                            }
                             // Prepare URLSearchParams to properly encode the data for sending as form data
                             const params = new FormData();
                             params.append('courtName', court.courtName);
@@ -547,14 +552,13 @@
                                 }
                             }).then((response) => {
                                 this.dialogFormVisible = false;
-                                if (response.data.flag) {
-
+                                if (response.data) {
                                 } else {
                                     // this.$message.error(response.data.message);
                                 }
                             }).catch((error) => {
                                 console.log(error);
-                                this.showMessage(error);
+                                // this.showMessage(error);
                             }).finally(() => {
                                 this.findPage();
                             });
@@ -566,7 +570,7 @@
                     }
                 }).catch((error) => {
                     console.log(error);
-                    this.showMessage(error);
+                    // this.showMessage(error);
                 }).finally(() => {
                     this.findPage();
                 });
@@ -651,6 +655,39 @@
             },
             //分页查询
             //分页查询
+            findOrderList() {
+
+                // Get JWT token from cookies
+                const token = this.getCookie('jwtToken');
+                if (!token) {
+                    return;
+                }
+
+                // Use axios to send a POST request with URL encoded form data
+                axios.get(this.backend_url + "/api/orders", {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Include the token in the Authorization header
+                        'Content-Type': 'application/json'  // Set content type to JSON
+                    }
+                }).then((response) => {
+                    this.dialogFormVisible = false;
+                    console.log(response)
+                    if (response.data && Array.isArray(response.data)) {
+                        //请求成功
+                        //数据集和总数赋值给模型
+                        console.log("response.statusText", response.statusText)
+                        this.orderList = response.data;
+                    } else {
+                        // this.$message.error(response.statusText);
+                        // this.$message.error("Not Data.");
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+
+                });
+            },
+
             findPage(currentPage) {
                 if (currentPage) {
                     this.pagination.currentPage = currentPage;
@@ -665,9 +702,33 @@
                 // Get JWT token from cookies
                 const token = this.getCookie('jwtToken');
                 if (!token) {
-                    // this.$message.error("Not authenticated.");
                     return;
                 }
+
+                // Use axios to send a POST request with URL encoded form data
+                axios.get(this.backend_url + "/api/orders", {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Include the token in the Authorization header
+                        'Content-Type': 'application/json'  // Set content type to JSON
+                    }
+                }).then((response) => {
+                    this.dialogFormVisible = false;
+                    console.log(response)
+                    if (response.data && Array.isArray(response.data)) {
+                        //请求成功
+                        //数据集和总数赋值给模型
+                        console.log("response.statusText", response.statusText)
+                        this.orderList = response.data;
+                    } else {
+                        // this.$message.error(response.statusText);
+                        // this.$message.error("Not Data.");
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+
+
+
 
                 // Use axios to send a POST request with URL encoded form data
                 axios.get(this.backend_url + "/api/courts", {
@@ -681,8 +742,20 @@
                         //请求成功
                         //数据集和总数赋值给模型
                         console.log("response.statusText", response.statusText)
+                        var courtList = response.data;
+                        // this.dataList = response.data;
 
-                        this.dataList = response.data;
+                        // Iterate over the orderList to delete the orders related to the court
+                        courtList.forEach(court => {
+                            this.orderList.forEach(order => {
+                            if (order.courtId === court.id) {
+                               if (!court.description) {
+                                   court.description = order.description;
+                               }
+                            }
+                        });
+                        });
+                        this.dataList = courtList;
                         // this.showMessage("success", response.data.length);
 
                         this.pagination.total = response.data.length;
@@ -695,9 +768,11 @@
                     this.showMessage(error);
                 }).finally(() => {
                     // this.findPage();
-                    this.showMessage("get courts data successful");
+                    // this.$message.success("get courts data successful");
                 });
-            },
+
+                });
+                },
 
             // 重置表单
             resetForm() {
@@ -766,7 +841,7 @@
                     console.log(error);
                     // this.$message.error(error.message || "Network Error");
                 }).finally(() => {
-                    this.showMessage("Get courts data request completed.");
+                    this.$message.success("Get courts data request completed.");
                 });
             }
             ,
@@ -787,53 +862,83 @@
                             return;
                         }
 
-                        // Prepare URLSearchParams to properly encode the data for sending as form data
-                        const params = new FormData();
-                        params.append('courtName', court.courtName);
-                        params.append('status', court.status.toString());  // Ensure status is sent as a string
-                        params.append('description', "");
+                        if (this.is_admin) {
+                            // Prepare URLSearchParams to properly encode the data for sending as form data
+                            const params = new FormData();
+                            params.append('courtName', court.courtName);
+                            params.append('status', court.status.toString());  // Ensure status is sent as a string
+                            params.append('description', "");
 
-                        // Use axios to send a POST request with URL encoded form data
-                        axios.put(this.backend_url + "/api/courts/" + court.id, params, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
-                                'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
-                            }
-                        }).then((response) => {
-                            this.dialogFormVisible = false;
-                            if (response.data) {
-                                this.$message.success("deleted the currently selected Order record");
+                            // Use axios to send a POST request with URL encoded form data
+                            axios.put(this.backend_url + "/api/courts/" + court.id, params, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                }
+                            }).then((response) => {
+                                this.dialogFormVisible = false;
+                                if (response.data) {
+                                } else {
+                                    // this.$message.error(response.data.message);
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                            }).finally(() => {
+                                this.findPage();
+                            });
+                        }
 
-                                // Use axios to send a POST request with URL encoded form data
-                                axios.delete(this.backend_url + "/api/orders/" + court.orderId, params, {
-                                    headers: {
-                                        'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
-                                        'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
-                                    }
-                                }).then((response) => {
-                                    this.dialogFormVisible = false;
-                                    if (response.data) {
+                    // Iterate over the orderList to delete the orders related to the court
+                    this.orderList.forEach(order => {
+                        if (order.courtId === court.id) {
+                            order.description = null;
+                            court.description = null;
+                            axios.delete(this.backend_url + "/api/orders/" + order.id, {
+                                headers: {
+                                    'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                }
+                            }).then((response) => {
+                                if (response.data) {
+                                    // this.$message.success("Order deleted successfully");
+                                    this.$message.success("deleted the currently selected Order record");
 
-                                    } else {
+                                    this.findPage();
+                                    // Prepare URLSearchParams to properly encode the data for sending as form data
+                                    const params = new FormData();
+                                    params.append('courtName', court.courtName);
+                                    params.append('status', court.status.toString());  // Ensure status is sent as a string
+                                    params.append('description', "");
 
-                                    }
-                                }).catch((error) => {
-                                    console.log(error);
-                                }).finally(() => {
+                                    // Use axios to send a POST request with URL encoded form data
+                                    axios.put(this.backend_url + "/api/courts/" + court.id, params, {
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',  // Set content type as URL encoded form
+                                            'Authorization': `Bearer ${token}`  // Include the token in the Authorization header
+                                        }
+                                    }).then((response) => {
+                                        this.dialogFormVisible = false;
+                                        if (response.data) {
+                                        } else {
+                                            // this.$message.error(response.data.message);
+                                        }
+                                    }).catch((error) => {
+                                        console.log(error);
+                                    }).finally(() => {
+                                        this.findPage();
+                                    });
 
-                                });
+                                } else {
+                                    // this.$message.error("Failed to delete order");
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                                // this.$message.error("Error deleting order");
+                            }).finally(() => {
+                                this.findPage();
+                            });
+                        }
+                    });
 
-
-
-                            } else {
-                                // this.$message.error(response.data.message);
-                            }
-                        }).catch((error) => {
-                            console.log(error);
-                            this.showMessage(error);
-                        }).finally(() => {
-                            this.findPage();
-                        });
 
                 });
             },
@@ -883,14 +988,20 @@
 
             //后台异常提示
             showMessage(error) {
-                console.log(error);
-                let errorMsg = error.response.data.message;
-                console.log(errorMsg); //正确
-                if (errorMsg != null) {
-                    // this.$message.error(errorMsg);
+                console.log("error:", error);
+                if (error == null) {
                     return;
                 }
-                // this.$message.error("网络异常");
+                let errorMsg = null;
+                try {
+                    errorMsg = error.response.data.message;
+                } catch (e) {}
+                console.log(errorMsg); //正确
+                if (errorMsg != null) {
+                    this.$message.error(errorMsg);
+                    return;
+                }
+                this.$message.error("network anomaly!");
             }
         }
     })
